@@ -27,21 +27,20 @@ class TeamMatchData {
     constructor (match, team) {
         this.match = match;
         this.team = team;
+        // retrieving the data from the json file
+        aHigh = data[team][match].aHigh;
+        aHighFail = data[team][match].aHighFail;
+        aLow = data[team][match].aLow;
+        aLowFail = data[team][match].aLowFail;
+        tHigh = data[team][match].aHigh;
+        tHighFail = data[team][match].tHighFail;
+        tLow = data[team][match].tLow;
+        tLowFail = data[team][match].tLowFail;
+        climbAttempted = data[team][match].climbAttempted;
+        climbActual = data[team][match].climbActual;
+        climbTime = data[team][match].climbTime;
+        defenseOffense = data[team][match].defenseOffense;
     }
-
-    // retrieving the data from the json file
-    aHigh = data[team][match].aHigh;
-    aHighFail = data[team][match].aHighFail;
-    aLow = data[team][match].aLow;
-    aLowFail = data[team][match].aLowFail;
-    tHigh = data[team][match].aHigh;
-    tHighFail = data[team][match].tHighFail;
-    tLow = data[team][match].tLow;
-    tLowFail = data[team][match].tLowFail;
-    climbAttempted = data[team][match].climbAttempted;
-    climbActual = data[team][match].climbActual;
-    climbTime = data[team][match].climbTime;
-    defenseOffense = data[team][match].defenseOffense;
     
     getAutoHigh() {
         return aHigh;
@@ -140,19 +139,19 @@ class AllianceData {
         this.Opp1 = Opp1;
         this.Opp2 = Opp2;
         this.Opp3 = Opp3;
+        team1 = new TeamMatchData(match, T1);
+        team2 = new TeamMatchData(match, T2);
+        team3 = new TeamMatchData(match, T3);
+        team4 = new TeamMatchData(match, Opp1);
+        team5 = new TeamMatchData(match, Opp2);
+        team6 = new TeamMatchData(match, Opp3);
+        matchPoints = this.getAllianceMatchPoints;
+        oppMatchPoints = this.getOppAllianceMatchPoints;
+        cargoBonus = this.getCargoBonus;
+        hangarBonus = this.getHangarBonus;
+        tieBonus = this.getTieBonus;
     }
-
-    team1 = new TeamMatchData(match, T1);
-    team2 = new TeamMatchData(match, T2);
-    team3 = new TeamMatchData(match, T3);
-    team4 = new TeamMatchData(match, Opp1);
-    team5 = new TeamMatchData(match, Opp2);
-    team6 = new TeamMatchData(match, Opp3);
-    matchPoints = this.getAllianceMatchPoints;
-    oppMatchPoints = this.getOppAllianceMatchPoints;
-    cargoBonus = this.getCargoBonus;
-    hangarBonus = this.getHangarBonus;
-    tieBonus = this.getTieBonus;
+    
  
     getAllianceMatchPoints() {
         return team1.getTeamMatchPoints() + team2.getTeamMatchPoints() + team3.getTeamMatchPoints();
@@ -203,9 +202,8 @@ class TeamData {
 
     constructor (team) {
         this.team = team;
+        team_ = await tba.getTeam(team); //get team data from tba+store in var _team
     }
-
-    team_ = await tba.getTeam(team); //get team data from tba+store in var _team
 
     getTeamNickname() {
         return team_.nickname;
@@ -373,17 +371,16 @@ class MatchData {
 
     constructor (match) {
         this.match = match;
+        event = await tba.getEvent('casj', 2017); // SVR 2017
+        matches = await tba.getMatchesAtEvent(event);
+        teams = tba.getTeamsInMatch(matches[match]); // 12th match
+        R1 = teams.red[0];
+        R2 = teams.red[1];
+        R3 = teams.red[2];
+        B1 = teams.blue[0];
+        B2 = teams.blue[1];
+        B3 = teams.blue[2];
     }
-
-    event = await tba.getEvent('casj', 2017); // SVR 2017
-    matches = await tba.getMatchesAtEvent(event);
-    teams = tba.getTeamsInMatch(matches[match]); // 12th match
-    R1 = teams.red[0];
-    R2 = teams.red[1];
-    R3 = teams.red[2];
-    B1 = teams.blue[0];
-    B2 = teams.blue[1];
-    B3 = teams.blue[2];
     
     getR1() {
         return R1;
