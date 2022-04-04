@@ -47,6 +47,7 @@ const authClient = new google.auth.JWT(
 
             const title = [ "team",
                             "match",
+                            //(change when taxi) "taxi",
                             "aHigh",
                             "aHighFail",
                             "aLow",
@@ -74,9 +75,9 @@ const authClient = new google.auth.JWT(
                 }
                 team[rows[row][0]][rows[row][1]] = {};
                 for (let col = 2; col < rows[row].length; col++){
-                    if (col == 6 || col == 9){
+                    if (col == 6 /*(change when taxi) 7*/ || col == 9 /*(change when taxi) 10*/){
                         rows[row][col + 1] = parseInt(rows[row][col]) + parseInt(rows[row][col+1]);
-                    } else if (col == 14){
+                    } else if (col == 14 /*(change when taxi) 15*/){
                         rows[row][col + 1] = parseInt(rows[row][col]) - parseInt(rows[row][col+1]);
                     }
                     else{

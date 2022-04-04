@@ -232,6 +232,7 @@ class TeamData {
       
         const teamTotals = {
 
+            /*(change when taxi) taxis : parseInt(0), */
             aHighs : parseInt(0),
             aHighsF : parseInt(0),
             aLows : parseInt(0),
@@ -258,7 +259,11 @@ class TeamData {
     
         for (const [key, match] of Object.entries(team)){
     
-            for (let i = 0; i < 8; i++){
+            /*(change when taxi) if (match['taxi'] == 'Yes'){
+                teamTotals['taxis']++;
+            }*/
+
+            for (let i = 0/*(change when taxi) 1*/; i < 8/*(change when taxi) 9*/; i++){
                 teamTotals[Object.keys(teamTotals)[i]] += parseInt(match[Object.keys(match)[i]]);
             }
     
@@ -301,6 +306,7 @@ class TeamData {
 
         const teamRates = {
 
+            /*(change when taxi) taxiRate : parseInt(0),*/
             aHighRate : parseInt(0),
             aLowRate : parseInt(0),
             
@@ -313,8 +319,8 @@ class TeamData {
             lowSucessRate : parseInt(0),
         }
 
-        let i;
-        for (i = 0; i < 8; i++){
+        let i = 0/*(change when taxi) 1*/;
+        for (i = i; i < 8 /*(change when taxi) 9*/; i++){
             if (totals[Object.keys(totals)[i]] + totals[Object.keys(totals)[i+1]] == 0){
                 teamRates[Object.keys(teamRates)[i/2]] = 'N/A';
                 i++;
@@ -323,7 +329,7 @@ class TeamData {
                 i++;
             }
         }
-        for (i = i; i < 16; i++){
+        for (i = i; i < 16 /*(change when taxi) 17*/; i++){
             if (totals[Object.keys(totals)[i+1]] == 0){
                 teamRates[Object.keys(teamRates)[i/2]] = 'N/A';
                 i++;
@@ -335,6 +341,9 @@ class TeamData {
         return teamRates;
     }
 
+    /* (change when taxi) getTaxiRate(){
+        return teamData['averages']['taxisAvg'] + '%';
+    }*/
     getAverageHighAutoBalls(){
         return teamData['averages']['aHighsAvg'];
     }
