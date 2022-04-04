@@ -1,6 +1,10 @@
 
 const fs = require("fs");
 
+//to get blue alliance data
+var BlueAlliance = require("bluealliance");
+var tba = new BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
+
 fs.readFile("./data.json", "utf8", (err, jsonString) => {
 
     if (err) {
@@ -23,21 +27,21 @@ class TeamMatchData {
     constructor (match, team) {
         this.match = match;
         this.team = team;
-
-        // retrieving the data from the json file
-        const aHigh = data[team][match].aHigh;
-        const aHighFail = data[team][match].aHighFail;
-        const aLow = data[team][match].aLow;
-        const aLowFail = data[team][match].aLowFail;
-        const tHigh = data[team][match].aHigh;
-        const tHighFail = data[team][match].tHighFail;
-        const tLow = data[team][match].tLow;
-        const tLowFail = data[team][match].tLowFail;
-        const climbAttempted = data[team][match].climbAttempted;
-        const climbActual = data[team][match].climbActual;
-        const climbTime = data[team][match].climbTime;
-        const defenseOffense = data[team][match].defenseOffense;
     }
+
+    // retrieving the data from the json file
+    aHigh = data[team][match].aHigh;
+    aHighFail = data[team][match].aHighFail;
+    aLow = data[team][match].aLow;
+    aLowFail = data[team][match].aLowFail;
+    tHigh = data[team][match].aHigh;
+    tHighFail = data[team][match].tHighFail;
+    tLow = data[team][match].tLow;
+    tLowFail = data[team][match].tLowFail;
+    climbAttempted = data[team][match].climbAttempted;
+    climbActual = data[team][match].climbActual;
+    climbTime = data[team][match].climbTime;
+    defenseOffense = data[team][match].defenseOffense;
     
     getAutoHigh() {
         return aHigh;
@@ -107,21 +111,21 @@ class TeamMatchData {
         return 0;
     }
 
-    getHangerPoints() {
-        hangerPoints = 0;
+    getHangarPoints() {
+        hangarPoints = 0;
         if (getClimbSuccess() == "Traversal") {
-            hangerPoints += 15;
+            hangarPoints += 15;
         } else if (getClimbSuccess() == "High") {
-            hangerPoints += 10;
+            hangarPoints += 10;
         } else if (getClimbSuccess() == "Mid") {
-            hangerPoints += 6;
+            hangarPoints += 6;
         } else if (getClimbSuccess() == "Low") {
-            hangerPoints += 4;
+            hangarPoints += 4;
         }
-        return hangerPoints;
+        return hangarPoints;
     }
     getTeamMatchPoints() {
-        return getTaxiPoints() + getAutoPoints() + getTeleopPoints() + getHangerPoints();
+        return getTaxiPoints() + getAutoPoints() + getTeleopPoints() + getHangarPoints();
     }
 }
 
@@ -136,18 +140,19 @@ class AllianceData {
         this.Opp1 = Opp1;
         this.Opp2 = Opp2;
         this.Opp3 = Opp3;
-        team1 = new TeamMatchData(match, T1);
-        team2 = new TeamMatchData(match, T2);
-        team3 = new TeamMatchData(match, T3);
-        team4 = new TeamMatchData(match, Opp1);
-        team5 = new TeamMatchData(match, Opp2);
-        team6 = new TeamMatchData(match, Opp3);
-        matchPoints = this.getAllianceMatchPoints;
-        oppMatchPoints = this.getOppAllianceMatchPoints;
-        cargoBonus = this.getCargoBonus;
-        hangerBonus = this.getHangerBonus;
-        tieBonus = this.getTieBonus;
     }
+
+    team1 = new TeamMatchData(match, T1);
+    team2 = new TeamMatchData(match, T2);
+    team3 = new TeamMatchData(match, T3);
+    team4 = new TeamMatchData(match, Opp1);
+    team5 = new TeamMatchData(match, Opp2);
+    team6 = new TeamMatchData(match, Opp3);
+    matchPoints = this.getAllianceMatchPoints;
+    oppMatchPoints = this.getOppAllianceMatchPoints;
+    cargoBonus = this.getCargoBonus;
+    hangarBonus = this.getHangarBonus;
+    tieBonus = this.getTieBonus;
  
     getAllianceMatchPoints() {
         return team1.getTeamMatchPoints() + team2.getTeamMatchPoints() + team3.getTeamMatchPoints();
@@ -173,10 +178,10 @@ class AllianceData {
         }
         return rankingPoint;
     }
-    getHangerBonus() {
+    getHangarBonus() {
         rankingPoint = 0;
-        totalHangerPoints = getHangerPoints(match, team1) + getHangerPoints(match, team2) + getHangerPoints(match, team3);
-        if (totalHangerPoints >= 16) {
+        totalHangarPoints = getHangarPoints(match, team1) + getHangarPoints(match, team2) + getHangarPoints(match, team3);
+        if (totalHangarPoints >= 16) {
             rankingPoint++;
         }
         return rankingPoint;
@@ -190,13 +195,23 @@ class AllianceData {
     }
 
     getRankingPoints() {
-        return cargoBonus + hangerBonus + tieBonus;
+        return cargoBonus + hangarBonus + tieBonus;
     }
 }
 
 class TeamData {
+
     constructor (team) {
         this.team = team;
+    }
+
+    team_ = await tba.getTeam(team); //get team data from tba+store in var _team
+
+    getTeamNickname() {
+        return team_.nickname;
+    }
+    getTeamRank() {
+        return team_.rank;
     }
 
     getData(data){
@@ -359,28 +374,38 @@ class MatchData {
     constructor (match) {
         this.match = match;
     }
+
+    event = await tba.getEvent('casj', 2017); // SVR 2017
+    matches = await tba.getMatchesAtEvent(event);
+    teams = tba.getTeamsInMatch(matches[match]); // 12th match
+    R1 = teams.red[0];
+    R2 = teams.red[1];
+    R3 = teams.red[2];
+    B1 = teams.blue[0];
+    B2 = teams.blue[1];
+    B3 = teams.blue[2];
     
     getR1() {
+        return R1;
     }
     getR2() {
+        return R2;
     }
     getR3() {
+        return R3;
     }
     getB1() {
+        return B1;
     }
     getB2() {
+        return B2;
     }
     getB3() {
+        return B3;
     }
-    getTeamNumber(pos) {
-    }
+    // getTeamNumber(pos) {
+    //     return tba.getTeamsInMatch(matches[match]);
+    // }
 
     //get probability calculations from another class
 }
-
-
-
-
-
-
-
