@@ -151,9 +151,9 @@ class AllianceData {
         hangarBonus = this.getHangarBonus;
         tieBonus = this.getTieBonus;
     }
-    
  
     getAllianceMatchPoints() {
+        console.log("hi");
         return team1.getTeamMatchPoints() + team2.getTeamMatchPoints() + team3.getTeamMatchPoints();
     }
     getOppAllianceMatchPoints() {
@@ -439,7 +439,7 @@ class MatchData {
     }
     
     getR1() {
-        return R1;
+        return "working";
     }
     getR2() {
         return R2;
