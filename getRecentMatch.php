@@ -9,11 +9,11 @@
 
 <form action="recentMatch.php" method="post">
 
-<select id="match">"
+<select name="match">
 
 <?php
-    for ($x = getMostRecentlyScoutedMatch(); $x >= 1; $x--) {
-      echo "<option value="{$x}">Match {$x}</option>";
+    for ($x = 4; $x >= 1; $x--) { //4->most recent match scouted
+      echo "<option value=\"{$x}\" id=\"{$x}\">Match {$x}</option>";
     }
 ?>
 
