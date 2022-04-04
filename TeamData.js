@@ -1,10 +1,9 @@
-const fs = require("fs");
-var BlueAlliance = require("bluealliance");
-var tba = new BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
-
-
 class TeamDatax {
     constructor (team) {
+
+        this.fs = require("fs");
+        this.BlueAlliance = require("bluealliance");
+        this.tba = new this.BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
 
         try{
             this.data = require('./data.json');
@@ -16,7 +15,7 @@ class TeamDatax {
         this.teamNum = parseInt(team);
         this.teamMatches = this.data[team];
         this.teamData = {};
-        this.team_ = tba.getTeam(this.teamNum); //get team data from tba+store in var _team
+        this.team_ = this.tba.getTeam(this.teamNum); //get team data from tba+store in var _team
         this.getData()
     }
 
@@ -177,7 +176,6 @@ class TeamDatax {
         return this.teamData['averages']['tLowsAvg'];
     }
     getAverageTeleScore(){
-        console.log(this.teamData['averages']['tLowsAvg']);
         return this.teamData['averages']['tLowsAvg'] * 1 + this.teamData['averages']['tHighsAvg'] * 2;
     }
     getHighTeleRate(){
@@ -248,9 +246,14 @@ class TeamDatax {
 class Probability {
     
     constructor (match){
-        event = tba.getEvent('casj', 2017); // SVR 2017
-        matches = tba.getMatchesAtEvent(event);
-        teams = tba.getTeamsInMatch(matches[match]);
+
+        this.fs = require("fs");
+        this.BlueAlliance = require("bluealliance");
+        this.tba = new this.BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
+
+        event = this.tba.getEvent('casj', 2017); // SVR 2017
+        matches = this.tba.getMatchesAtEvent(event);
+        teams = this.tba.getTeamsInMatch(matches[match]);
         R1 = teams.red[0];
         R2 = teams.red[1];
         R3 = teams.red[2];
