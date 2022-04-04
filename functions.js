@@ -200,8 +200,10 @@ class AllianceData {
 
 class TeamData {
 
+    
     constructor (team) {
         this.team = team;
+        teamData = {};
         team_ = await tba.getTeam(team); //get team data from tba+store in var _team
     }
 
@@ -214,17 +216,15 @@ class TeamData {
 
     getData(data){
     
-        const tastyData = {};
-    
-        for (const [key, value] of Object.entries(data)){
-        const totals = this.cycleData(value, data);
-        const averages = this.getAvgs(value, totals);
+        
+        const totals = this.cycleData(team, data);
+        const averages = this.getAvgs(team, totals);
         const rates = this.getRates(totals);
-        tastyData[key] = {};
-        tastyData[key]['totals'] = totals;
-        tastyData[key]['averages'] = averages;
-        tastyData[key]['rates'] = rates;
-        }
+        teamData = {};
+        teamData['totals'] = totals;
+        teamData['averages'] = averages;
+        teamData['rates'] = rates;
+        
         return tastyData;
     }
 
@@ -335,31 +335,87 @@ class TeamData {
         return teamRates;
     }
 
-    getAutoHighRate() {   
+    getAverageHighAutoBalls(){
+        return teamData['averages']['aHighsAvg'];
+    }
+    getAverageLowAutoBalls(){
+        return teamData['averages']['aLowsAvg'];
+    }
+    getAverageAutoScore(){ //doesnt include taxi??
+        return teamData['averages']['aLowsAvg'] * 2 + teamData['averages']['aHighsAvg'] * 4;
+    }
+    getHighAutoRate(){
+        return teamData['rates']['aHighRate'] + '%';
+    }
+    getLowAutoRate(){
+        return teamData['rates']['aLowRate'] + '%';
     }
     
-    getAutoLowRate() {   
+    getAverageHighTeleBalls(){
+        return teamData['averages']['tHighsAvg'];
+    }
+    getAverageLowTeleBalls(){
+        return teamData['averages']['tLowsAvg'];
+    }
+    getAverageTeleScore(){
+        return teamData['averages']['tLowsAvg'] * 1 + teamData['averages']['tHighsAvg'] * 2;
+    }
+    getHighTeleRate(){
+        return teamData['rates']['tHighRate'] + '%';
+    }
+    getLowTeleRate(){
+        return teamData['rates']['tLowRate'] + '%';
+    }
+    
+    getTraversalRate(){
+        return teamData['rates']['travSucessRate'] + '%';
+    }
+    getHighClimbRate(){
+        return teamData['rates']['highSucessRate'] + '%';
+    }
+    getMidClimbRate(){
+        return teamData['rates']['midSucessRate'] + '%';
+    }
+    getLowClimbRate(){
+        return teamData['rates']['lowSucessRate'] + '%';
+    }
+    
+    getAverageScore(){
+        
+        let a = teamData['averages']['travsSAvg'];
+        if (a == 'N/A'){
+            a = 0;
+        }
+        let b =  teamData['averages']['highsSAvg'];
+        if (b == 'N/A'){
+            b = 0;
+        }
+        let c =  teamData['averages']['midsSAvg'];
+        if (c == 'N/A'){
+            c = 0;
+        }
+        let d =  teamData['averages']['lowsSAvg'];
+        if (d == 'N/A'){
+            d = 0;
+    }
+    
+        return getAverageAutoScore() + getAverageTeleScore() 
+                 + a * 15 + b * 10 + c * 6 + d * 4;
+    }
+    
+    getTotalOffense(){
+        return teamData['totals']['of'];
+    }
+    getTotalDefense(){
+        return teamData['totals']['def'];
+    }
+    getDefenseRate(){
+        return (this.getTotalDefense / (this.getTotalDefense  + this.getTotalOffense)) + '%';
+    }
+    getOffenseRate(){
+        return (100 - this.getDefenseRate()) + '%';
     }
 
-    getTeleHighRate() {   
-    }
-
-    getTeleLowRate() {   
-
-    }
-    getAutoHighAverage() {
-
-    }
-    getAutoLowAverage() {
-
-    }
-    getTeleHighAverage() {
-
-    }
-    getTeleLowAverage() {
-
-    }
-    //etc
 }
 
 class Probability {
