@@ -139,17 +139,17 @@ class AllianceData {
         this.Opp1 = Opp1;
         this.Opp2 = Opp2;
         this.Opp3 = Opp3;
-        team1 = new TeamMatchData(match, T1);
-        team2 = new TeamMatchData(match, T2);
-        team3 = new TeamMatchData(match, T3);
-        team4 = new TeamMatchData(match, Opp1);
-        team5 = new TeamMatchData(match, Opp2);
-        team6 = new TeamMatchData(match, Opp3);
-        matchPoints = this.getAllianceMatchPoints;
-        oppMatchPoints = this.getOppAllianceMatchPoints;
-        cargoBonus = this.getCargoBonus;
-        hangarBonus = this.getHangarBonus;
-        tieBonus = this.getTieBonus;
+        this.team1 = new TeamMatchData(match, T1);
+        this.team2 = new TeamMatchData(match, T2);
+        this.team3 = new TeamMatchData(match, T3);
+        this.team4 = new TeamMatchData(match, Opp1);
+        this.team5 = new TeamMatchData(match, Opp2);
+        this.team6 = new TeamMatchData(match, Opp3);
+        this.matchPoints = this.getAllianceMatchPoints;
+        this.oppMatchPoints = this.getOppAllianceMatchPoints;
+        this.cargoBonus = this.getCargoBonus;
+        this.hangarBonus = this.getHangarBonus;
+        this.tieBonus = this.getTieBonus;
     }
  
     getAllianceMatchPoints() {

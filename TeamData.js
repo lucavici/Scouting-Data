@@ -15,16 +15,41 @@ class TeamData {
     /* (change when taxi) getTaxiRate(){
         return this.teamData['averages']['taxisAvg'] + '%';
     }*/
+
+    //if you see this function no you didnt adn i dont want to talk abt it
+    getTotalsLength() {
+        return this.teamData['totals'].length;
+    }
+
     getAverageHighAutoBalls(){
         return this.teamData['averages']['aHighsAvg'].toFixed(2);
     }
     getAverageLowAutoBalls(){
         return this.teamData['averages']['aLowsAvg'].toFixed(2);
     }
+    getAverageAutoBalls() {
+        return this.getAverageHighAutoBalls() + this.getAverageLowAutoBalls();
+    }
     getAverageAutoScore(){ //doesnt include taxi??
         return this.teamData['averages']['aLowsAvg'].toFixed(2) * 2 
                 + this.teamData['averages']['aHighsAvg'].toFixed(2) * 4 
                 /*(change when taxi) + Math.round(this.getTaxiRate()) * 2*/; //adds taxi bonus if gets taxi 50% or more of the time
+    }
+    getAutoStandardDeviation () {  
+        //need all of the auto scores in an array
+        const AutoBalls = teamData['totals'];
+        const n = AutoBalls.length;
+        const mean = this.getAverageAutoBalls();
+        if (!AutoBalls || AutoBalls.length === 0) {return 0;}
+        return Math.sqrt(AutoBalls.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n);
+    }
+    getTeleStandardDeviation () {  
+        //need all of the auto scores in an array
+        const AutoBalls = teamData['totals'];
+        const n = AutoBalls.length;
+        const mean = this.getAverageAutoBalls();
+        if (!AutoBalls || AutoBalls.length === 0) {return 0;}
+        return Math.sqrt(AutoBalls.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n);
     }
 
     /*

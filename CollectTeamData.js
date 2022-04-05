@@ -158,7 +158,6 @@ class CollectTeamData {
         return teamAverages;
     }
 
-
     //finds the rates, eg: high hub rate, traversal rate, etc
     #getRates(totals) {
 
