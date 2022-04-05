@@ -16,9 +16,9 @@ class CollectTeamData {
         this.teamMatches = this.data[team];
         this.team_ = this.tba.getTeam(this.teamNum); //get team data from tba+store in var _team
 
-        this.teamData = {};
-        this.defendedTeamData = {};
-        this.notDefendedTeamData = {};
+        this.teamData = {}; //ALL data for a team
+        this.defendedTeamData = {}; //data for when teams have had defense applied to them
+        this.notDefendedTeamData = {}; //data for when  teams dont have defense applied to them
 
         this.#getData();
         this.#getDefendedData();
@@ -31,6 +31,8 @@ class CollectTeamData {
         return team_.rank;
     }
 
+
+    //goes through the macths of a team and calls functions. adds data to team data
     #getData(){
         const totals = this.#cycleData(this.teamMatches);
         const averages = this.#getAvgs(totals, Object.keys(this.teamMatches).length);
@@ -43,7 +45,7 @@ class CollectTeamData {
         return this.teamData;
     }
 
-
+    //same as above but sorts defenended and not defended
     #getDefendedData(){
         const defendedData = {};
         const notDefendedData = {};
@@ -54,6 +56,8 @@ class CollectTeamData {
                 notDefendedData[key] = match;
             }
         }
+
+        //calcs when defended
         let totals = this.#cycleData(defendedData);
         let averages = this.#getAvgs(totals, Object.keys(defendedData).length);
         let rates = this.#getRates(totals);
@@ -62,6 +66,7 @@ class CollectTeamData {
         this.defendedTeamData['averages'] = averages;
         this.defendedTeamData['rates'] = rates;
 
+        //calcs when not defnded
         totals = this.#cycleData(notDefendedData);
         averages = this.#getAvgs(totals, Object.keys(notDefendedData).length);
         rates = this.#getRates(totals);
@@ -72,6 +77,8 @@ class CollectTeamData {
 
     }
 
+
+    //goes through the data and finds the total number of balls, traversals, etc
     #cycleData(teamMatches) {
     
         const teamTotals = {
@@ -142,6 +149,7 @@ class CollectTeamData {
         return teamTotals;
     }
 
+    //divides data in total by the number of matches sample is from
     #getAvgs(totals, numMatches){
         const teamAverages = {};
         for (const [key, value] of Object.entries(totals)){
@@ -150,6 +158,8 @@ class CollectTeamData {
         return teamAverages;
     }
 
+
+    //finds the rates, eg: high hub rate, traversal rate, etc
     #getRates(totals) {
 
         const teamRates = {
@@ -167,16 +177,21 @@ class CollectTeamData {
             lowSucessRate : parseInt(0),
         }
 
+
+        //checks to make sure no divison by zero, then divides the (num of succes) / (num of sucess + num of fail)
+        //(organized totals so that the corresponding fail is right after the sucess)
         let i = 0/*(change when taxi) 1*/;
-        for (i = i; i < 8 /*(change when taxi) 9*/; i++){
+        for (i = i; i < 8 /*(change when taxi) 9*/; i = i + 2){
             if (totals[Object.keys(totals)[i]] + totals[Object.keys(totals)[i+1]] == 0){
                 teamRates[Object.keys(teamRates)[i/2]] = 'N/A';
-                i++;
             } else {
                 teamRates[Object.keys(teamRates)[i/2]] = totals[Object.keys(totals)[i]]/(totals[Object.keys(totals)[i]] + totals[Object.keys(totals)[i + 1]]);
-                i++;
             }
         }
+
+        //checks for division by zero
+        //divides (num of times made of bar) / (num of times attempted bar)
+        //totals organized so attempts right after sucesses
         for (i = i; i < 16 /*(change when taxi) 17*/; i++){
             if (totals[Object.keys(totals)[i+1]] == 0){
                 teamRates[Object.keys(teamRates)[i/2]] = 'N/A';

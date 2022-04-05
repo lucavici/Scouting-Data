@@ -1,4 +1,4 @@
-class TeamDatax {
+class TeamData {
 
     constructor(team){
         const CollectTeamData = require('./CollectTeamData.js');
@@ -183,4 +183,4 @@ class TeamDatax {
     }
 
 }
-module.exports = TeamDatax;
+module.exports = TeamData;
