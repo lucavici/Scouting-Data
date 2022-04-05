@@ -19,14 +19,35 @@
     //alliance, pulled from bluealliance data
 ?>
 
-<script type="text/javascript">
+<form action="recentMatch.php" method="post">
 
-    var match = <?php echo $fmatch ?>;
-    
-    let myMatchData = new MatchData(4);</script>
-    <?php echo '<script type=\"text/javascript\">myMatchData.getR1();</script>'; ?>
-    <script type="text/javascript">
-    let R1MatchData = new TeamMatchData(match, myMatchData.getR1());
+<select name="match">
+
+<?php
+    for ($x = 4; $x >= 1; $x--) { //4->most recent match scouted
+      echo "<option value=\"{$x}\" id=\"{$x}\">Match {$x}</option>";
+    }
+?>
+
+</select>
+
+<input onclick="loadDoc()" type="submit" value="Get Match">
+
+<div id="content"></div>
+
+<script src="functions.js">
+
+var match = <?php echo $fmatch ?>;
+
+    import { TeamMatchData } from 'functions.js';
+
+    function getR1MatchPoints() {
+        //const R1MatchData = new TeamMatchData(3, 254);
+        return Document.write(R1MatchData.getAutoHigh());
+    }
+    <?php echo "<script>getR1MatchPoints();" ?>
+
+    //let R1MatchData = new TeamMatchData(match, myMatchData.getR1());
     let R2MatchData = new TeamMatchData(match, myMatchData.getR2());
     let R3MatchData = new TeamMatchData(match, myMatchData.getR3());
     let B1MatchData = new TeamMatchData(match, myMatchData.getB1());
@@ -52,23 +73,27 @@
     //output a quick overview of
     //each alliance team's data in a match
 
-    echo "<h1>Match {$fmatch} Details </h1>";
+    echo "<h3>Match {$fmatch} Details </h3>";
 
     //overview data
+    
 
-    echo "<p>Red Alliance: </p><script>redAllianceData.getAllianceMatchPoints()</script>";
+    
+    echo "<p>hi</p>";
+
+    echo "<h5>Red Alliance</h5><script>redAllianceData.getAllianceMatchPoints(); </script>";
     echo "<br>";
-    echo "<p>Blue Alliance: </p><script>blueAllianceData.getAllianceMatchPoints()<script>";
+    echo "<h5>Blue Alliance: </h5><script>blueAllianceData.getAllianceMatchPoints()<script>";
     //predicted point values for that round
     echo "<br><br>";
 
-    echo "<h3><script>teams[1].getTeleCargo();<script></h3>";
+    echo "<script>teams[1].getTeleCargo();<script>";
 
     //for each team
     for ($i = 0; $i < 6; $i++) {
 
         echo "<h3><script>teams[<?php $i ?>]<script></h3>"; //display team # (this should be selected to be in blue or red)
-    
+     
         echo "<p>Auto Success: {matchData[i].getAutoPoints()} points scored, {matchData[i].getAutoMatchAccuracy()} percent accuracy";
         //ex x points scored, y% accuracy
 

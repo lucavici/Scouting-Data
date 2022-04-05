@@ -22,7 +22,7 @@ fs.readFile("./data.json", "utf8", (err, jsonString) => {
     }
 });
 
-class TeamMatchData {
+export class TeamMatchData {
 
     constructor (match, team) {
         this.match = match;
@@ -112,13 +112,13 @@ class TeamMatchData {
 
     getHangarPoints() {
         hangarPoints = 0;
-        if (getClimbSuccess() == "Traversal") {
+        if (climbActual == "Traversal") {
             hangarPoints += 15;
-        } else if (getClimbSuccess() == "High") {
+        } else if (climbActual == "High") {
             hangarPoints += 10;
-        } else if (getClimbSuccess() == "Mid") {
+        } else if (climbActual == "Mid") {
             hangarPoints += 6;
-        } else if (getClimbSuccess() == "Low") {
+        } else if (climbActual == "Low") {
             hangarPoints += 4;
         }
         return hangarPoints;
@@ -189,6 +189,13 @@ class AllianceData {
         rankingPoint = 0;
         if (matchPoints == oppMatchPoints) {
             rankingPoint++;
+        }
+        return rankingPoint;
+    }
+    getWinBonus() {
+        rankingPoint = 0;
+        if (matchPoints >= oppMatchPoints) {
+            rankingPoint+=2;
         }
         return rankingPoint;
     }
