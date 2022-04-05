@@ -26,7 +26,7 @@ const authClient = new google.auth.JWT(
         const res = await service.spreadsheets.values.get({
             auth: authClient,
             spreadsheetId: "1yCG-b8Ig0_Ca9uO0eUC-iVXLiimCBdvbzsNZtQ6VXKs",
-            range: "'Form Responses 1'!C:S",
+            range: "'Form Responses 1'!C:T",
         });
 
         // All of the team
@@ -62,7 +62,8 @@ const authClient = new google.auth.JWT(
                             "climbActual",
                             "",
                             "climbTime",
-                            "defenseOffense"];
+                            "defenseOffense",
+                            'defended'];
 
             // For each row
 

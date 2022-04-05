@@ -1,153 +1,11 @@
 class TeamDatax {
-    constructor (team) {
 
-        this.fs = require("fs");
-        this.BlueAlliance = require("bluealliance");
-        this.tba = new this.BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
-
-        try{
-            this.data = require('./data.json');
-        }
-        catch (err) {
-            console.log("Error parsing JSON string:", err);
-        }
-
-        this.teamNum = parseInt(team);
-        this.teamMatches = this.data[team];
-        this.teamData = {};
-        this.team_ = this.tba.getTeam(this.teamNum); //get team data from tba+store in var _team
-        this.getData()
-    }
-
-    getTeamNickname() {
-        return team_.nickname;
-    }
-    getTeamRank() {
-        return team_.rank;
-    }
-
-    getData(data){
-        const totals = this.cycleData();
-        const averages = this.getAvgs(totals);
-        const rates = this.getRates(totals);
-        this.teamData = {};
-        this.teamData['totals'] = totals;
-        this.teamData['averages'] = averages;
-        this.teamData['rates'] = rates;
-        
-        return this.teamData;
-    }
-
-    cycleData() {
-      
-        const teamTotals = {
-
-            /*(change when taxi) taxis : parseInt(0), */
-            aHighs : parseInt(0),
-            aHighsF : parseInt(0),
-            aLows : parseInt(0),
-            aLowsF : parseInt(0),
-
-            tHighs : parseInt(0),
-            tHighsF : parseInt(0),
-            tLows : parseInt(0),
-            tLowsF : parseInt(0),
-
-            travsA : parseInt(0),
-            travsS : parseInt(0),
-            highsA : parseInt(0),
-            highsS : parseInt(0),
-            midsA : parseInt(0),
-            midsS : parseInt(0),
-            lowsA : parseInt(0),
-            lowsS : parseInt(0),
-            time : parseInt(0),
-
-            def : parseInt(0),
-            of : parseInt(0),
-        }
-    
-        for (const [key, match] of Object.entries(this.teamMatches)){
-    
-            /*(change when taxi) if (match['taxi'] == 'Yes'){
-                teamTotals['taxis']++;
-            }*/
-            for (let i = 0/*(change when taxi) 1*/; i < 8/*(change when taxi) 9*/; i++){
-                teamTotals[Object.keys(teamTotals)[i]] += parseInt(match[Object.keys(match)[i]]);
-            }
-    
-            if (match['climbAttempted'] == 'Traversal'){
-                teamTotals['travsA']++;
-            } else if (match['climbAttempted'] == 'High'){
-                teamTotals['highsA']++;
-            } else if (match['climbAttempted'] == 'Mid'){
-                teamTotals['midsA']++;
-            }
-        
-            if (match['climbActual'] == 'Traversal'){
-                teamTotals['travsS']++;
-            } else if (match['climbActual'] == 'High'){
-                teamTotals['highsS']++;
-            } else if (match['climbActual'] == 'Mid'){
-                teamTotals['midsS']++;
-            }
-
-            teamTotals['time'] += parseInt(match['climbTime']);
-        
-            if (match['defenseOffense'] == 'Offensive'){
-                teamTotals['of']++;
-            } else {
-                teamTotals['def']++;
-            }
-        }
-        return teamTotals;
-    }
-
-    getAvgs(totals){
-        const teamAverages = {};
-        for (const [key, value] of Object.entries(totals)){
-            teamAverages[key + "Avg"] = value/Object.keys(this.teamMatches).length;
-        }
-        return teamAverages;
-    }
-
-    getRates(totals) {
-
-        const teamRates = {
-
-            /*(change when taxi) taxiRate : parseInt(0),*/
-            aHighRate : parseInt(0),
-            aLowRate : parseInt(0),
-            
-            tHighRate : parseInt(0),
-            tLowRate : parseInt(0),
-
-            travSucessRate : parseInt(0),
-            highSucessRate : parseInt(0),
-            midSucessRate : parseInt(0),
-            lowSucessRate : parseInt(0),
-        }
-
-        let i = 0/*(change when taxi) 1*/;
-        for (i = i; i < 8 /*(change when taxi) 9*/; i++){
-            if (totals[Object.keys(totals)[i]] + totals[Object.keys(totals)[i+1]] == 0){
-                teamRates[Object.keys(teamRates)[i/2]] = 'N/A';
-                i++;
-            } else {
-                teamRates[Object.keys(teamRates)[i/2]] = totals[Object.keys(totals)[i]]/(totals[Object.keys(totals)[i]] + totals[Object.keys(totals)[i + 1]]);
-                i++;
-            }
-        }
-        for (i = i; i < 16 /*(change when taxi) 17*/; i++){
-            if (totals[Object.keys(totals)[i+1]] == 0){
-                teamRates[Object.keys(teamRates)[i/2]] = 'N/A';
-                i++;
-            } else {
-                teamRates[Object.keys(teamRates)[i/2]] = totals[Object.keys(totals)[i]]/totals[Object.keys(totals)[i + 1]];
-                i++;
-            }
-        }
-        return teamRates;
+    constructor(team){
+        const CollectTeamData = require('./CollectTeamData.js');
+        const collector = new CollectTeamData(team);
+        this.teamData = collector.getTeamData();
+        this.defendedTeamData = collector.getDefendedTeamData();
+        this.notDefendedTeamData = collector.getNotDefendedTeamData();
     }
 
     /* (change when taxi) getTaxiRate(){
@@ -217,7 +75,7 @@ class TeamDatax {
             d = 0;
         }
     
-        return getAverageAutoScore() + getAverageTeleScore() 
+        return this.getAverageAutoScore() + this.getAverageTeleScore() 
                  + a * 15 + b * 10 + c * 6 + d * 4;
     }
     
@@ -234,36 +92,95 @@ class TeamDatax {
         return (100 - this.getDefenseRate()) + '%';
     }
 
-}
-
-
-
-
-
-
-
-
-class Probability {
-    
-    constructor (match){
-
-        this.fs = require("fs");
-        this.BlueAlliance = require("bluealliance");
-        this.tba = new this.BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
-
-        event = this.tba.getEvent('casj', 2017); // SVR 2017
-        matches = this.tba.getMatchesAtEvent(event);
-        teams = this.tba.getTeamsInMatch(matches[match]);
-        R1 = teams.red[0];
-        R2 = teams.red[1];
-        R3 = teams.red[2];
-        B1 = teams.blue[0];
-        B2 = teams.blue[1];
-        B3 = teams.blue[2];
-
-        //const r1Data = 
-        
+    getTimesDefendedOn(){
+        return this.teamData['totals']['defended'];
     }
+    getDefendedOnRate(){
+        return this.teamData['averages']['defendedAvg'];
+    }
+
+
+
+
+
+    getDefendedAverageHighTeleBalls(){
+        return this.defendedTeamData['averages']['tHighsAvg'];
+    }
+    getDefendedAverageLowTeleBalls(){
+        return this.defendedTeamData['averages']['tLowsAvg'];
+    }
+    getDefendedAverageTeleScore(){
+        return this.defendedTeamData['averages']['tLowsAvg'] * 1 + this.defendedTeamData['averages']['tHighsAvg'] * 2;
+    }
+    getDefendedHighTeleRate(){
+        return this.defendedTeamData['rates']['tHighRate'] + '%';
+    }
+    getDefendedLowTeleRate(){
+        return this.defendedTeamData['rates']['tLowRate'] + '%';
+    }
+    getDefendedAverageScore(){
+        
+        let a = this.defendedTeamData['averages']['travsSAvg'];
+        if (a == 'N/A'){
+            a = 0;
+        }
+        let b =  this.defendedTeamData['averages']['highsSAvg'];
+        if (b == 'N/A'){
+            b = 0;
+        }
+        let c =  this.defendedTeamData['averages']['midsSAvg'];
+        if (c == 'N/A'){
+            c = 0;
+        }
+        let d =  this.defendedTeamData['averages']['lowsSAvg'];
+        if (d == 'N/A'){
+            d = 0;
+        }
+    
+        return this.getAverageAutoScore() + this.getDefendedAverageTeleScore() 
+                 + a * 15 + b * 10 + c * 6 + d * 4;
+    }
+
+
+
+    getNotDefendedAverageHighTeleBalls(){
+        return this.notDefendedTeamData['averages']['tHighsAvg'];
+    }
+    getNotDefendedAverageLowTeleBalls(){
+        return this.notDefendedTeamData['averages']['tLowsAvg'];
+    }
+    getNotDefendedAverageTeleScore(){
+        return this.notDefendedTeamData['averages']['tLowsAvg'] * 1 + this.notDefendedTeamData['averages']['tHighsAvg'] * 2;
+    }
+    getNotDefendedHighTeleRate(){
+        return this.notDefendedTeamData['rates']['tHighRate'] + '%';
+    }
+    getNotDefendedLowTeleRate(){
+        return this.notDefendedTeamData['rates']['tLowRate'] + '%';
+    }
+
+    getNotDefendedAverageScore(){
+        
+        let a = this.notDefendedTeamData['averages']['travsSAvg'];
+        if (a == 'N/A'){
+            a = 0;
+        }
+        let b =  this.notDefendedTeamData['averages']['highsSAvg'];
+        if (b == 'N/A'){
+            b = 0;
+        }
+        let c =  this.notDefendedTeamData['averages']['midsSAvg'];
+        if (c == 'N/A'){
+            c = 0;
+        }
+        let d =  this.notDefendedTeamData['averages']['lowsSAvg'];
+        if (d == 'N/A'){
+            d = 0;
+        }
+    
+        return this.getAverageAutoScore() + this.getNotDefendedAverageTeleScore() 
+                 + a * 15 + b * 10 + c * 6 + d * 4;
+    }
+
 }
-const teamData = new TeamDatax(254);
-console.log(teamData.getAverageTeleScore());
+module.exports = TeamDatax;
