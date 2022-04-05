@@ -34,18 +34,11 @@
 <input onclick="loadDoc()" type="submit" value="Get Match">
 
 <div id="content"></div>
+<script>
 
-<script src="functions.js">
+<?php echo " var match = <?php echo $fmatch;,
 
-var match = <?php echo $fmatch ?>;
-
-    import { TeamMatchData } from 'functions.js';
-
-    function getR1MatchPoints() {
-        //const R1MatchData = new TeamMatchData(3, 254);
-        return Document.write(R1MatchData.getAutoHigh());
-    }
-    <?php echo "<script>getR1MatchPoints();" ?>
+    <p>hi</p>;"?>
 
     //let R1MatchData = new TeamMatchData(match, myMatchData.getR1());
     let R2MatchData = new TeamMatchData(match, myMatchData.getR2());
@@ -60,6 +53,7 @@ var match = <?php echo $fmatch ?>;
 
     let blueAllianceData = new AllianceData(match, myMatchData.getB1(), myMatchData.getB2(), myMatchData.getB3(), 
                                             myMatchData.getR1(), myMatchData.getR2(), myMatchData.getR3());
+                                      
     //array of team numbers in the specified match
     const teams = [ myMatchData.getR1(), myMatchData.getR2(), myMatchData.getR3(), 
                     myMatchData.getB1(), myMatchData.getB2(), myMatchData.getB3() ];
@@ -76,10 +70,6 @@ var match = <?php echo $fmatch ?>;
     echo "<h3>Match {$fmatch} Details </h3>";
 
     //overview data
-    
-
-    
-    echo "<p>hi</p>";
 
     echo "<h5>Red Alliance</h5><script>redAllianceData.getAllianceMatchPoints(); </script>";
     echo "<br>";
@@ -92,7 +82,7 @@ var match = <?php echo $fmatch ?>;
     //for each team
     for ($i = 0; $i < 6; $i++) {
 
-        echo "<h3><script>teams[<?php $i ?>]<script></h3>"; //display team # (this should be selected to be in blue or red)
+        echo "<h3><script>teams[<?php {$i} ?>]<script></h3>"; //display team # (this should be selected to be in blue or red)
      
         echo "<p>Auto Success: {matchData[i].getAutoPoints()} points scored, {matchData[i].getAutoMatchAccuracy()} percent accuracy";
         //ex x points scored, y% accuracy
