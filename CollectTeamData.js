@@ -10,7 +10,7 @@ catch (err) {
     console.log("Error parsing JSON string:", err);
 }
 
-const {updateTeamData} = require('./TeamData');
+//const {updateTeamData} = require('./TeamData');
 
 let allData = {}; //ALL data for every team
 let defendedData = {}; //data for when teams have had defense applied to them
@@ -35,12 +35,12 @@ function getData(){
 
         allData[key] = teamData;
     }
-
-    getDefendedData();
+    console.log('Updated all data (CollectTeamData.js)');
+    updateDefendedData();
 }
 
 //same as above but sorts defenended and not defended
-function getDefendedData(){
+function updateDefendedData(){
 
     for (const [key, team] of Object.entries(data)){
         let defendedTeamData = {}
@@ -77,8 +77,8 @@ function getDefendedData(){
         notDefendedData[key] = notDefendedData;
     }
 
-    console.log('Updated compiled data (CollectTeamData.js)');
-    updateTeamData();
+    console.log('Updated (not) defended data (CollectTeamData.js)');
+    //updateTeamData();
 
 }
 

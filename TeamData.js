@@ -6,7 +6,6 @@ const {getData} = require('./CollectTeamData');
 
 function updateTeamData(){
 
-    getData();
     allData = getAllData();
     defendedData = getDefendedData();
     notDefendedData = getNotDefendedData();
