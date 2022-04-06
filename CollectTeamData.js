@@ -1,29 +1,3 @@
-<<<<<<< Updated upstream
-class CollectTeamData {
-    constructor (team) {
-
-        this.fs = require("fs");
-        this.BlueAlliance = require("bluealliance");
-        this.tba = new this.BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
-
-        try{
-            this.data = require('./data.json');
-        }
-        catch (err) {
-            console.log("Error parsing JSON string:", err);
-        }
-
-        this.teamNum = parseInt(team);
-        this.teamMatches = this.data[team];
-        this.team_ = this.tba.getTeam(this.teamNum); //get team data from tba+store in var _team
-
-        this.teamData = {}; //ALL data for a team
-        this.defendedTeamData = {}; //data for when teams have had defense applied to them
-        this.notDefendedTeamData = {}; //data for when  teams dont have defense applied to them
-
-        this.#getData();
-        this.#getDefendedData();
-=======
 const fs = require("fs");
 const BlueAlliance = require("bluealliance");
 const tba = new BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
@@ -36,7 +10,7 @@ catch (err) {
     console.log("Error parsing JSON string:", err);
 }
 
-const {updateData} = require('./TeamData');
+const {updateTeamData} = require('./TeamData');
 
 let allData = {}; //ALL data for every team
 let defendedData = {}; //data for when teams have had defense applied to them
@@ -101,63 +75,11 @@ function getDefendedData(){
 
         defendedData[key] = defendedTeamData;
         notDefendedData[key] = notDefendedData;
->>>>>>> Stashed changes
-    }
-    updateData();
-
-<<<<<<< Updated upstream
-    getTeamNickname() {
-        return team_.nickname;
-    }
-    getTeamRank() {
-        return team_.rank;
     }
 
+    console.log('Updated compiled data (CollectTeamData.js)');
+    updateTeamData();
 
-    //goes through the macths of a team and calls functions. adds data to team data
-    #getData(){
-        const totals = this.#cycleData(this.teamMatches);
-        const averages = this.#getAvgs(totals, Object.keys(this.teamMatches).length);
-        const rates = this.#getRates(totals);
-        this.teamData = {};
-        this.teamData['totals'] = totals;
-        this.teamData['averages'] = averages;
-        this.teamData['rates'] = rates;
-        
-        return this.teamData;
-    }
-
-    //same as above but sorts defenended and not defended
-    #getDefendedData(){
-        const defendedData = {};
-        const notDefendedData = {};
-        for (const [key, match] of Object.entries(this.teamMatches)){
-            if (match['defended'] == 'Yes'){
-                defendedData[key] = match;
-            } else {
-                notDefendedData[key] = match;
-            }
-        }
-
-        //calcs when defended
-        let totals = this.#cycleData(defendedData);
-        let averages = this.#getAvgs(totals, Object.keys(defendedData).length);
-        let rates = this.#getRates(totals);
-        this.defendedTeamData = {};
-        this.defendedTeamData['totals'] = totals;
-        this.defendedTeamData['averages'] = averages;
-        this.defendedTeamData['rates'] = rates;
-
-        //calcs when not defnded
-        totals = this.#cycleData(notDefendedData);
-        averages = this.#getAvgs(totals, Object.keys(notDefendedData).length);
-        rates = this.#getRates(totals);
-        this.notDefendedTeamData = {};
-        this.notDefendedTeamData['totals'] = totals;
-        this.notDefendedTeamData['averages'] = averages;
-        this.notDefendedTeamData['rates'] = rates;
-
-=======
 }
 
 
@@ -191,7 +113,6 @@ function cycleData(teamMatches) {
         of : parseInt(0),
 
         defended : parseInt(0)
->>>>>>> Stashed changes
     }
 
     for (const [key, match] of Object.entries(teamMatches)){
@@ -242,13 +163,8 @@ function getAvgs(totals, numMatches){
     return teamAverages;
 }
 
-<<<<<<< Updated upstream
-    //finds the rates, eg: high hub rate, traversal rate, etc
-    #getRates(totals) {
-=======
 //finds the rates, eg: high hub rate, traversal rate, etc
 function getRates(totals){
->>>>>>> Stashed changes
 
     const teamRates = {
 
@@ -293,17 +209,6 @@ function getRates(totals){
 }
 
 
-<<<<<<< Updated upstream
-    getTeamData(){
-        return this.teamData;
-    }
-    getDefendedTeamData(){
-        return this.defendedTeamData;
-    }
-    getNotDefendedTeamData(){
-        return this.notDefendedTeamData;
-    }
-=======
 function getAllData(){
     return allData;
 }
@@ -312,6 +217,5 @@ function getDefendedData(){
 }
 function getNotDefendedData(){
     return notDefendedData;
->>>>>>> Stashed changes
 }
 module.exports = {getAllData, getDefendedData, getNotDefendedData, getData};

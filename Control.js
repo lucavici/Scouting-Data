@@ -1,30 +1,15 @@
-<<<<<<< Updated upstream
-const TeamData = require('./TeamData.js');
-const teamData = new TeamData(254);
-=======
+const updateSheet = require('./app.js');
 
->>>>>>> Stashed changes
+const {updateTeamData} = require('./TeamData');
 
-const ReadSheet = require('./app.js');
+const {getData} = require('./CollectTeamData.js');
 
-//runs every 60 seconds asyc
-ReadSheet.runUpdateData();
 
-//const Probability = require('./Predictions.js');
-//const prediction = new Probability(3);
-
-<<<<<<< Updated upstream
-console.log(teamData.getHighAutoRate());
-=======
-const {updateData} = require('./TeamData');
-
-const {getHighAutoRate} = require('./TeamData');
-
-updateData();
-
-console.log(getHighAutoRate(254));
->>>>>>> Stashed changes
-/*console.log(teamData.getAverageHighTeleBalls());
-console.log(teamData.getDefendedAverageHighTeleBalls());
-console.log(teamData.getNotDefendedAverageHighTeleBalls());*/
-
+async function update(){
+    updateTeamData();
+    updateSheet();
+    getData();
+    setInterval(updateData, 30 * 1000);
+    setInterval(updateSheet, 30 * 1000);
+    setInterval(getData, 30 * 1000)
+}
