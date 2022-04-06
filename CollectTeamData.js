@@ -1,79 +1,104 @@
 class CollectTeamData {
-    constructor (team) {
 
-        this.fs = require("fs");
-        this.BlueAlliance = require("bluealliance");
-        this.tba = new this.BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
+    static #fs;
+    static #BlueAlliance;
+    static #tba;
+
+    static TeamData;
+
+    static #data;
+
+    static #allData; //ALL data for every team
+    static #defendedData; //data for when teams have had defense applied to them
+    static #notDefendedData; //data for when  teams dont have defense applied to them
+    static teamData;
+
+    static {
+
+        this.#fs = require("fs");
+        this.#BlueAlliance = require("bluealliance");
+        this.#tba = new this.#BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
+
+        this.TeamData = require('./TeamData.js');
+        this.teamData = new TeamData();
+        
 
         try{
-            this.data = require('./data.json');
+            this.#data = require('./data.json');
         }
         catch (err) {
             console.log("Error parsing JSON string:", err);
         }
 
-        this.teamNum = parseInt(team);
-        this.teamMatches = this.data[team];
-        this.team_ = this.tba.getTeam(this.teamNum); //get team data from tba+store in var _team
 
-        this.teamData = {}; //ALL data for a team
-        this.defendedTeamData = {}; //data for when teams have had defense applied to them
-        this.notDefendedTeamData = {}; //data for when  teams dont have defense applied to them
+        this.#allData = {}; //ALL data for every team
+        this.#defendedData = {}; //data for when teams have had defense applied to them
+        this.#notDefendedData = {}; //data for when  teams dont have defense applied to them
+        this.getData();
 
-        this.#getData();
-        this.#getDefendedData();
-    }
-
-    getTeamNickname() {
-        return team_.nickname;
-    }
-    getTeamRank() {
-        return team_.rank;
     }
 
 
     //goes through the macths of a team and calls functions. adds data to team data
-    #getData(){
-        const totals = this.#cycleData(this.teamMatches);
-        const averages = this.#getAvgs(totals, Object.keys(this.teamMatches).length);
-        const rates = this.#getRates(totals);
-        this.teamData = {};
-        this.teamData['totals'] = totals;
-        this.teamData['averages'] = averages;
-        this.teamData['rates'] = rates;
-        
-        return this.teamData;
+    getData(){
+
+        //this.init();
+
+        //console.log(this.#data);
+        for (const [key, team] of Object.entries(this.#data)){
+            let teamData = {};
+            const totals = this.#cycleData(team);
+            const averages = this.#getAvgs(totals, Object.keys(team).length);
+            const rates = this.#getRates(totals);
+            
+            teamData['totals'] = totals;
+            teamData['averages'] = averages;
+            teamData['rates'] = rates;
+
+            this.#allData[key] = teamData;
+        }
+
+        this.#getDefendedData();
+        this.teamData.getTotalsLength();
     }
 
     //same as above but sorts defenended and not defended
     #getDefendedData(){
-        const defendedData = {};
-        const notDefendedData = {};
-        for (const [key, match] of Object.entries(this.teamMatches)){
-            if (match['defended'] == 'Yes'){
-                defendedData[key] = match;
-            } else {
-                notDefendedData[key] = match;
+
+        for (const [key, team] of Object.entries(this.#data)){
+            let defendedTeamData = {}
+            let notDefendedTeamData = {};
+            let defendedData = {};
+            let notDefendedData = {};
+            for (const [key2, match] of Object.entries(team)){
+                if (match['defended'] == 'Yes'){
+                    defendedData[key2] = match;
+                } else {
+                    notDefendedData[key2] = match;
+                }
             }
+
+            //calcs when defended
+            let totals = this.#cycleData(defendedData);
+            let averages = this.#getAvgs(totals, Object.keys(defendedData).length);
+            let rates = this.#getRates(totals);
+            defendedTeamData = {};
+            defendedTeamData['totals'] = totals;
+            defendedTeamData['averages'] = averages;
+            defendedTeamData['rates'] = rates;
+
+            //calcs when not defnded
+            totals = this.#cycleData(notDefendedData);
+            averages = this.#getAvgs(totals, Object.keys(notDefendedData).length);
+            rates = this.#getRates(totals);
+            notDefendedTeamData = {};
+            notDefendedTeamData['totals'] = totals;
+            notDefendedTeamData['averages'] = averages;
+            notDefendedTeamData['rates'] = rates;
+
+            this.#defendedData[key] = defendedTeamData;
+            this.#notDefendedData[key] = notDefendedData;
         }
-
-        //calcs when defended
-        let totals = this.#cycleData(defendedData);
-        let averages = this.#getAvgs(totals, Object.keys(defendedData).length);
-        let rates = this.#getRates(totals);
-        this.defendedTeamData = {};
-        this.defendedTeamData['totals'] = totals;
-        this.defendedTeamData['averages'] = averages;
-        this.defendedTeamData['rates'] = rates;
-
-        //calcs when not defnded
-        totals = this.#cycleData(notDefendedData);
-        averages = this.#getAvgs(totals, Object.keys(notDefendedData).length);
-        rates = this.#getRates(totals);
-        this.notDefendedTeamData = {};
-        this.notDefendedTeamData['totals'] = totals;
-        this.notDefendedTeamData['averages'] = averages;
-        this.notDefendedTeamData['rates'] = rates;
 
     }
 
@@ -159,7 +184,7 @@ class CollectTeamData {
     }
 
     //finds the rates, eg: high hub rate, traversal rate, etc
-    #getRates(totals) {
+    #getRates(totals){
 
         const teamRates = {
 
@@ -204,14 +229,14 @@ class CollectTeamData {
     }
 
 
-    getTeamData(){
-        return this.teamData;
+    getAllData(){
+        return this.#allData;
     }
-    getDefendedTeamData(){
-        return this.defendedTeamData;
+    getDefendedData(){
+        return this.#defendedData;
     }
-    getNotDefendedTeamData(){
-        return this.notDefendedTeamData;
+    getNotDefendedData(){
+        return this.#notDefendedData;
     }
 }
 module.exports = CollectTeamData;

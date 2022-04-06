@@ -1,53 +1,61 @@
-class TeamData {
+module.exports = class TeamData {
 
-    constructor(team){
-        const CollectTeamData = require('./CollectTeamData.js');
-        const collector = new CollectTeamData(team);
-        this.teamData = collector.getTeamData();
-        this.defendedTeamData = collector.getDefendedTeamData();
-        this.notDefendedTeamData = collector.getNotDefendedTeamData();
+    
+    static #CollectTeamData = require('./CollectTeamData.js');
+
+    static #allData = this.#CollectTeamData.getAllData();
+    static #defendedData = (this.#CollectTeamData).getDefendedData();
+    static #notDefendedData = (this.#CollectTeamData).getNotDefendedData();
+
+
+    updateData(){
+
+        this.#CollectTeamData.getData();
+        this.#allData = this.#CollectTeamData.getAllData();
+        this.#defendedData = (this.#CollectTeamData).getDefendedData();
+        this.#notDefendedData = (this.#CollectTeamData).getNotDefendedData();
     }
 
     /*
     * Returns percent of times taxi achieved
     *
     * /
-    /* (change when taxi) getTaxiRate(){
-        return this.teamData['averages']['taxisAvg'] + '%';
+    /* (change when taxi) getTaxiRate(team){
+        return this.#allData[team]['averages']['taxisAvg'] + '%';
     }*/
 
     //if you see this function no you didnt adn i dont want to talk abt it
-    getTotalsLength() {
-        return this.teamData['totals'].length;
+    getTotalsLength(team) {
+        return this.#allData[team]['totals'].length;
     }
 
-    getAverageHighAutoBalls(){
-        return this.teamData['averages']['aHighsAvg'].toFixed(2);
+    getAverageHighAutoBalls(team){
+        return this.#allData[team]['averages']['aHighsAvg'].toFixed(2);
     }
-    getAverageLowAutoBalls(){
-        return this.teamData['averages']['aLowsAvg'].toFixed(2);
+    getAverageLowAutoBalls(team){
+        return this.#allData[team]['averages']['aLowsAvg'].toFixed(2);
     }
-    getAverageAutoBalls() {
-        return this.getAverageHighAutoBalls() + this.getAverageLowAutoBalls();
+    getAverageAutoBalls(team) {
+        return this.getAverageHighAutoBalls(team) + this.getAverageLowAutoBalls(team);
     }
-    getAverageAutoScore(){ //doesnt include taxi??
-        return this.teamData['averages']['aLowsAvg'].toFixed(2) * 2 
-                + this.teamData['averages']['aHighsAvg'].toFixed(2) * 4 
-                /*(change when taxi) + Math.round(this.getTaxiRate()) * 2*/; //adds taxi bonus if gets taxi 50% or more of the time
+    getAverageAutoScore(team){ //doesnt include taxi??
+        return this.#allData[team]['averages']['aLowsAvg'].toFixed(2) * 2 
+                + this.#allData[team]['averages']['aHighsAvg'].toFixed(2) * 4 
+                /*(change when taxi) + Math.round(this.getTaxiRate(team)) * 2*/; //adds taxi bonus if gets taxi 50% or more of the time
     }
-    getAutoStandardDeviation () {  
+    getAutoStandardDeviation (team) {  
         //need all of the auto scores in an array
-        const AutoBalls = teamData['totals'];
+        const AutoBalls = allData[team]['totals'];
         const n = AutoBalls.length;
-        const mean = this.getAverageAutoBalls();
+        const mean = this.getAverageAutoBalls(team);
         if (!AutoBalls || AutoBalls.length === 0) {return 0;}
         return Math.sqrt(AutoBalls.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n);
     }
-    getTeleStandardDeviation () {  
+    getTeleStandardDeviation (team) {  
         //need all of the auto scores in an array
-        const AutoBalls = teamData['totals'];
+        const AutoBalls = allData[team]['totals'];
         const n = AutoBalls.length;
-        const mean = this.getAverageAutoBalls();
+        const mean = this.getAverageAutoBalls(team);
         if (!AutoBalls || AutoBalls.length === 0) {return 0;}
         return Math.sqrt(AutoBalls.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n);
     }
@@ -56,51 +64,52 @@ class TeamData {
     * Returns the percentage of balls succesfuly made in upper hub, auto
     *
     */
-    getHighAutoRate(){
-        return (this.teamData['rates']['aHighRate']*100).toFixed(2) + '%';
+    getHighAutoRate(team){
+        console.log(this.#allData[team]);
+        return (this.#allData[team]['rates']['aHighRate']*100).toFixed(2) + '%';
     }
 
     /*
     * Returns the percentage of balls succesfuly made in lower hub, auto
     *
     */
-    getLowAutoRate(){
-        return (this.teamData['rates']['aLowRate']*100).toFixed(2) + '%';
+    getLowAutoRate(team){
+        return (this.#allData[team]['rates']['aLowRate']*100).toFixed(2) + '%';
     }
     
-    getAverageHighTeleBalls(){
-        return this.teamData['averages']['tHighsAvg'].toFixed(2);
+    getAverageHighTeleBalls(team){
+        return this.#allData[team]['averages']['tHighsAvg'].toFixed(2);
     }
-    getAverageLowTeleBalls(){
-        return this.teamData['averages']['tLowsAvg'].toFixed(2);
+    getAverageLowTeleBalls(team){
+        return this.#allData[team]['averages']['tLowsAvg'].toFixed(2);
     }
 
     /*
     * Returns average amounts of tele lows + average amount of tele highs
     *
     */
-    getAverageTeleScore(){
-        return this.teamData['averages']['tLowsAvg'].toFixed(2) * 1 
-                + this.teamData['averages']['tHighsAvg'].toFixed(2) * 2;
+    getAverageTeleScore(team){
+        return this.#allData[team]['averages']['tLowsAvg'].toFixed(2) * 1 
+                + this.#allData[team]['averages']['tHighsAvg'].toFixed(2) * 2;
     }
-    getHighTeleRate(){
-        return (this.teamData['rates']['tHighRate']*100).toFixed(2) + '%';
+    getHighTeleRate(team){
+        return (this.#allData[team]['rates']['tHighRate']*100).toFixed(2) + '%';
     }
-    getLowTeleRate(){
-        return (this.teamData['rates']['tLowRate']*100).toFixed(2) + '%';
+    getLowTeleRate(team){
+        return (this.#allData[team]['rates']['tLowRate']*100).toFixed(2) + '%';
     }
     
-    getTraversalRate(){
-        return (this.teamData['rates']['travSucessRate']*100).toFixed(2) + '%';
+    getTraversalRate(team){
+        return (this.#allData[team]['rates']['travSucessRate']*100).toFixed(2) + '%';
     }
-    getHighClimbRate(){
-        return (this.teamData['rates']['highSucessRate']*100).toFixed(2) + '%';
+    getHighClimbRate(team){
+        return (this.#allData[team]['rates']['highSucessRate']*100).toFixed(2) + '%';
     }
-    getMidClimbRate(){
-        return (this.teamData['rates']['midSucessRate']*100).toFixed(2) + '%';
+    getMidClimbRate(team){
+        return (this.#allData[team]['rates']['midSucessRate']*100).toFixed(2) + '%';
     }
-    getLowClimbRate(){
-        return (this.teamData['rates']['lowSucessRate']*100).toFixed(2) + '%';
+    getLowClimbRate(team){
+        return (this.#allData[team]['rates']['lowSucessRate']*100).toFixed(2) + '%';
     }
     
 
@@ -108,26 +117,26 @@ class TeamData {
     * Returns (average telescore) + (average auto score) + (percent of games got x bar * bar points)
     *
     */
-    getAverageScore(){
+    getAverageScore(team){
         
-        let a = this.teamData['averages']['travsSAvg'];
+        let a = this.#allData[team]['averages']['travsSAvg'];
         if (a == 'N/A'){
             a = 0;
         }
-        let b =  this.teamData['averages']['highsSAvg'];
+        let b =  this.#allData[team]['averages']['highsSAvg'];
         if (b == 'N/A'){
             b = 0;
         }
-        let c =  this.teamData['averages']['midsSAvg'];
+        let c =  this.#allData[team]['averages']['midsSAvg'];
         if (c == 'N/A'){
             c = 0;
         }
-        let d =  this.teamData['averages']['lowsSAvg'];
+        let d =  this.#allData[team]['averages']['lowsSAvg'];
         if (d == 'N/A'){
             d = 0;
         }
     
-        return this.getAverageAutoScore() + this.getAverageTeleScore() 
+        return this.getAverageAutoScore(team) + this.getAverageTeleScore(team) 
                  + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
     }
     
@@ -136,29 +145,29 @@ class TeamData {
     /*
     * Returns the total times the bots played offense
     */
-    getTotalOffense(){
-        return this.teamData['totals']['of'];
+    getTotalOffense(team){
+        return this.#allData[team]['totals']['of'];
     }
 
     /*
     * Returns the total times the bots played defense
     */
-    getTotalDefense(){
-        return this.teamData['totals']['def'];
+    getTotalDefense(team){
+        return this.#allData[team]['totals']['def'];
     }
 
     /*
     * Returns the percentage of games the bots played defense
     */
-    getDefenseRate(){
+    getDefenseRate(team){
         return (this.getTotalDefense / (this.getTotalDefense  + this.getTotalOffense) *100).toFixed(2) + '%';
     }
 
     /*
     * Returns the percentage of games the bots played defense
     */
-    getOffenseRate(){
-        return (100 - this.getDefenseRate()) + '%';
+    getOffenseRate(team){
+        return (100 - this.getDefenseRate(team)) + '%';
     }
 
 
@@ -166,55 +175,55 @@ class TeamData {
     /*
     * Returns the number of games the bots been defended agaisnt
     */
-    getTimesDefendedOn(){
-        return this.teamData['totals']['defended'];
+    getTimesDefendedOn(team){
+        return this.#allData[team]['totals']['defended'];
     }
     /*
     * Returns the percent of games the bots been defended agaisnt
     */
-    getDefendedOnRate(){
-        return (this.teamData['averages']['defendedAvg']*100).toFixed(2) + '%';
+    getDefendedOnRate(team){
+        return (this.#allData[team]['averages']['defendedAvg']*100).toFixed(2) + '%';
     }
 
 
 //-----------------------Same as above but for only games when the bots been defended agaisnt-----------
     
 
-    getDefendedAverageHighTeleBalls(){
-        return this.defendedTeamData['averages']['tHighsAvg'].toFixed(2);
+    getDefendedAverageHighTeleBalls(team){
+        return this.#defendedData[team]['averages']['tHighsAvg'].toFixed(2);
     }
-    getDefendedAverageLowTeleBalls(){
-        return this.defendedTeamData['averages']['tLowsAvg'].toFixed(2);
+    getDefendedAverageLowTeleBalls(team){
+        return this.#defendedData[team]['averages']['tLowsAvg'].toFixed(2);
     }
-    getDefendedAverageTeleScore(){
-        return this.defendedTeamData['averages']['tLowsAvg'].toFixed(2) * 1 + (this.defendedTeamData['averages']['tHighsAvg'] * 2).toFixed(2);
+    getDefendedAverageTeleScore(team){
+        return this.#defendedData[team]['averages']['tLowsAvg'].toFixed(2) * 1 + (this.#defendedData[team]['averages']['tHighsAvg'] * 2).toFixed(2);
     }
-    getDefendedHighTeleRate(){
-        return (this.defendedTeamData['rates']['tHighRate']*100).toFixed(2) + '%';
+    getDefendedHighTeleRate(team){
+        return (this.#defendedData[team]['rates']['tHighRate']*100).toFixed(2) + '%';
     }
-    getDefendedLowTeleRate(){
-        return (this.defendedTeamData['rates']['tLowRate']*100).toFixed(2) + '%';
+    getDefendedLowTeleRate(team){
+        return (this.#defendedData[team]['rates']['tLowRate']*100).toFixed(2) + '%';
     }
-    getDefendedAverageScore(){
+    getDefendedAverageScore(team){
         
-        let a = this.defendedTeamData['averages']['travsSAvg'];
+        let a = this.#defendedData[team]['averages']['travsSAvg'];
         if (a == 'N/A'){
             a = 0;
         }
-        let b =  this.defendedTeamData['averages']['highsSAvg'];
+        let b =  this.#defendedData[team]['averages']['highsSAvg'];
         if (b == 'N/A'){
             b = 0;
         }
-        let c =  this.defendedTeamData['averages']['midsSAvg'];
+        let c =  this.#defendedData[team]['averages']['midsSAvg'];
         if (c == 'N/A'){
             c = 0;
         }
-        let d =  this.defendedTeamData['averages']['lowsSAvg'];
+        let d =  this.#defendedData[team]['averages']['lowsSAvg'];
         if (d == 'N/A'){
             d = 0;
         }
     
-        return this.getAverageAutoScore() + this.getDefendedAverageTeleScore() 
+        return this.getAverageAutoScore(team) + this.getDefendedAverageTeleScore(team) 
                  + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
     }
 
@@ -222,44 +231,43 @@ class TeamData {
 //-----------------------Same as above but for only games when the bot HASNT been defended agaisnt-----------
 
 
-    getNotDefendedAverageHighTeleBalls(){
-        return this.notDefendedTeamData['averages']['tHighsAvg'].toFixed(2);
+    getNotDefendedAverageHighTeleBalls(team){
+        return this.#notDefendedData[team]['averages']['tHighsAvg'].toFixed(2);
     }
-    getNotDefendedAverageLowTeleBalls(){
-        return this.notDefendedTeamData['averages']['tLowsAvg'].toFixed(2);
+    getNotDefendedAverageLowTeleBalls(team){
+        return this.#notDefendedData[team]['averages']['tLowsAvg'].toFixed(2);
     }
-    getNotDefendedAverageTeleScore(){
-        return (this.notDefendedTeamData['averages']['tLowsAvg'] * 1).toFixed(2) + (this.notDefendedTeamData['averages']['tHighsAvg'] * 2).toFixed(2);
+    getNotDefendedAverageTeleScore(team){
+        return (this.#notDefendedData[team]['averages']['tLowsAvg'] * 1).toFixed(2) + (this.#notDefendedData[team]['averages']['tHighsAvg'] * 2).toFixed(2);
     }
-    getNotDefendedHighTeleRate(){
-        return (this.notDefendedTeamData['rates']['tHighRate']*100).toFixed(2) + '%';
+    getNotDefendedHighTeleRate(team){
+        return (this.#notDefendedData[team]['rates']['tHighRate']*100).toFixed(2) + '%';
     }
-    getNotDefendedLowTeleRate(){
-        return (this.notDefendedTeamData['rates']['tLowRate']*100).toFixed(2) + '%';
+    getNotDefendedLowTeleRate(team){
+        return (this.#notDefendedData[team]['rates']['tLowRate']*100).toFixed(2) + '%';
     }
 
-    getNotDefendedAverageScore(){
+    getNotDefendedAverageScore(team){
         
-        let a = this.notDefendedTeamData['averages']['travsSAvg'];
+        let a = this.#notDefendedData[team]['averages']['travsSAvg'];
         if (a == 'N/A'){
             a = 0;
         }
-        let b =  this.notDefendedTeamData['averages']['highsSAvg'];
+        let b =  this.#notDefendedData[team]['averages']['highsSAvg'];
         if (b == 'N/A'){
             b = 0;
         }
-        let c =  this.notDefendedTeamData['averages']['midsSAvg'];
+        let c =  this.#notDefendedData[team]['averages']['midsSAvg'];
         if (c == 'N/A'){
             c = 0;
         }
-        let d =  this.notDefendedTeamData['averages']['lowsSAvg'];
+        let d =  this.#notDefendedData[team]['averages']['lowsSAvg'];
         if (d == 'N/A'){
             d = 0;
         }
     
-        return this.getAverageAutoScore() + this.getNotDefendedAverageTeleScore() 
+        return this.getAverageAutoScore(team) + this.getNotDefendedAverageTeleScore(team) 
                  + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
     }
 
 }
-module.exports = TeamData;
