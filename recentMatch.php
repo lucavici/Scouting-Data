@@ -53,7 +53,11 @@
 
     ?>
 
+    <script src=“TeamMatchData.js”></script>
+
     <script>
+
+        console.log("hi");
 
         // const TMD = require('./TeamMatchData.js');
 
@@ -81,7 +85,7 @@
 
         const matchData = [ R1MatchData, R2MatchData, R3MatchData, B1MatchData, B2MatchData, B3MatchData ];
         
-        import TeamMatchData from './TeamMatchData.js';
+        //import TeamMatchData from './TeamMatchData.js';
 
         const R1MatchData = new TeamMatchData();
 
