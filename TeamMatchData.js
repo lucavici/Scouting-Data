@@ -1,8 +1,8 @@
 export default class TeamMatchData {
 
-    constructor () { //match, team
-        // this.match = match;
-        // this.team = team;
+    constructor (match, team) { 
+        this.match = match;
+        this.team = team;
     }
     
     getAutoHigh() {
@@ -42,7 +42,7 @@ export default class TeamMatchData {
         return data[team][match].defenseOffense;
     }
     getAutoCargo() {
-        return aLow + aHigh;
+        return this.getAutoLow() + this.getAutoHigh();
     }
     getTeleCargo() {
         return tLow + tHigh;
@@ -53,11 +53,11 @@ export default class TeamMatchData {
 
     //computing team match accuracies
 
-    getAutoMatchAccuracy() { 
-        return (100 * (aLow + aHigh) / (aLow + aHigh + aLowFail + aHighFail)).toFixed(2) + "%";
+    getAutoAccuracy() { 
+        return (100 * (this.getAutoLow() + this.getAutoHigh()) / (this.getAutoLow() + this.getAutoHigh() + this.getAutoLowFail() + this.getAutoHighFail())).toFixed(2) + "%";
     }
-    getTeleopMatchAccuracy() {
-        return (100 * (tLow + tHigh) / (tLow + tHigh + tLowFail + tHighFail)).toFixed(2) + "%"; 
+    getTeleopAccuracy() {
+        return (100 * (this.getTeleopLow() + this.getTeleopHigh()) / (this.getTeleopLow() + this.getTeleopHigh() + this.getTeleopLowFail() + this.getTeleopHighFail())).toFixed(2) + "%"; 
     }
 
     //computing team match points

@@ -16,42 +16,36 @@
     }
     echo "{$fmatch}";
 
-    //jquery selecting based on whether
-    //the team is on red or blue
-    //alliance, pulled from bluealliance data
+    // jquery selecting based on whether
+    // the team is on red or blue
+    // alliance, pulled from bluealliance data
+?>
+
+    <form action="recentMatch.php" method="post">
+
+    <select name="match">
+
+    <?php
+        for ($x = 4; $x >= 1; $x--) { //4->most recent match scouted
+          echo "<option value=\"{$x}\" id=\"{$x}\">Match {$x}</option>";
+        }
+    ?>
+
+    </select>
+
+    <input onclick="loadDoc()" type="submit" value="Get Match">
+
+    <div id="content"></div>
 
 
-// <form action="recentMatch.php" method="post">
-
-// <select name="match">
-
-// <?php
-//     for ($x = 4; $x >= 1; $x--) { //4->most recent match scouted
-//       echo "<option value=\"{$x}\" id=\"{$x}\">Match {$x}</option>";
-//     }
-// 
-
-// </select>
-
-// <input onclick="loadDoc()" type="submit" value="Get Match">
-
-// <div id="content"></div>
-
-
-
+<?php
 
     //output a quick overview of each alliance team's data in a match
 
     echo "<h3>Match {$fmatch} Details </h3>"; //w
 
-    echo "<script>document.write(redAllianceData.getAllianceMatchPoints())</script>";
-
     //overview data
-
-    echo "<script>let rad = redAllianceData.getAllianceMatchPoints();
-    document.write(rad);</script>";
-
-    ?>
+?>
 
     <script src=“TeamMatchData.js”></script>
 
@@ -65,7 +59,7 @@
 
         //TeamMatchData TMD1 = new TeamMatchData();
 
-        //let R1MatchData = new TMD(3, 254);
+        let R1MatchData = new TeamMatchData(3, 254);
         let R2MatchData = new TeamMatchData(match, myMatchData.getR2());
         let R3MatchData = new TeamMatchData(match, myMatchData.getR3());
         let B1MatchData = new TeamMatchData(match, myMatchData.getB1());
@@ -84,13 +78,42 @@
                         myMatchData.getB1(), myMatchData.getB2(), myMatchData.getB3() ];
 
         const matchData = [ R1MatchData, R2MatchData, R3MatchData, B1MatchData, B2MatchData, B3MatchData ];
-        
-        //import TeamMatchData from './TeamMatchData.js';
 
-        const R1MatchData = new TeamMatchData();
+        function displayData() {
+            for (int i=0; i < 6; i++) {
+                var autoCount = teams[i].getAutoCargo();
+                var autoPoints = teams[i].getAutoPoints();
+                var autoAccuracy = teams[i].getAutoAccuracy();
 
-        // const TeamMatchData = require('./TeamMatchData.js');
-        // const RD = new TeamMatchData());
+                var teleCount = teams[i].getTeleCargo();
+                var telePoints = teams[i].getTeleopPoints();
+                var teleAccuracy = teams[i].getTelepAccuracy();
+
+                var climbAttempted = teams[i].getClimbAttempted();
+                var climbActual = teams[i].getClimbActual();
+                var climbTime = teams[i].getClimbTime();
+
+                var autoCountId = "autocount" + i;
+                var autoPointsId = "autopoints" + i;
+                var autoAccuracyId = "autoaccuracy" + i;
+                var teleCountId = "telecount" + i;
+                var telePointsId = "telepoints" + i;
+                var teleAccuracyId = "teleaccuracy" + i;
+                var climbAttemptedId = "climbattempted" + i;
+                var climbActualId = "climbactual" + i;
+                var climbTimeId = "climbtime" + i;
+
+                document.getElementById(autoCountId).innerHTML = autoCount;
+                document.getElementById(AutoPointsId).innerHTML = autoPoints;
+                document.getElementById(AutoAccuracyId).innerHTML = autoAccuracy;
+                document.getElementById(teleCountId).innerHTML = teleCount;
+                document.getElementById(telePointsId).innerHTML = telePoints;
+                document.getElementById(teleAccuracyId).innerHTML = teleAccuracy;
+                document.getElementById(climbAttemptedId).innerHTML = climbAttempted;
+                document.getElementById(climbActualId).innerHTML = climbActual;
+                document.getElementById(climbTimeId).innerHTML = climbTime;
+            }
+        }
 
         function displayTaxiPoints() {
             var number = R1MatchData.getTaxiPoints();
@@ -105,9 +128,14 @@
 
     </body>
 
+    <body onload="displayData()">
+
+    <p>Taxi Points: <span id="myText"></span></p>
+
+    </body>
+
     <?php
 
-    echo "<script>let R1MatchData = new TeamMatchData(3, 254);document.writeln(R1MatchData.getAutoHigh());</script>";
     echo "<h5>Red Alliance</h5>";
     echo "<script>document.writeln(redAllianceData.getAllianceMatchPoints()); </script>";
     echo "<br>";
@@ -115,7 +143,6 @@
     //predicted point values for that round
     echo "<br><br>";
 
-    echo "<script>Document.write(\"hi\");<script>";
 
     //for each team
     for ($i = 0; $i < 6; $i++) {
