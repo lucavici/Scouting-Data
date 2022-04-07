@@ -81,7 +81,6 @@
 
         const matchData = [ R1MatchData, R2MatchData, R3MatchData, B1MatchData, B2MatchData, B3MatchData ];
         
-    <script>
         import TeamMatchData from './TeamMatchData.js';
 
         const R1MatchData = new TeamMatchData();
