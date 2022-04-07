@@ -1,265 +1,200 @@
-class TeamData {
-
-    constructor(team){
-        const CollectTeamData = require('./CollectTeamData.js');
-        const collector = new CollectTeamData(team);
-        this.teamData = collector.getTeamData();
-        this.defendedTeamData = collector.getDefendedTeamData();
-        this.notDefendedTeamData = collector.getNotDefendedTeamData();
-    }
-
-    /*
-    * Returns percent of times taxi achieved
-    *
-    * /
-    /* (change when taxi) getTaxiRate(){
-        return this.teamData['averages']['taxisAvg'] + '%';
-    }*/
-
-    //if you see this function no you didnt adn i dont want to talk abt it
-    getTotalsLength() {
-        return this.teamData['totals'].length;
-    }
-
-    getAverageHighAutoBalls(){
-        return this.teamData['averages']['aHighsAvg'].toFixed(2);
-    }
-    getAverageLowAutoBalls(){
-        return this.teamData['averages']['aLowsAvg'].toFixed(2);
-    }
-    getAverageAutoBalls() {
-        return this.getAverageHighAutoBalls() + this.getAverageLowAutoBalls();
-    }
-    getAverageAutoScore(){ //doesnt include taxi??
-        return this.teamData['averages']['aLowsAvg'].toFixed(2) * 2 
-                + this.teamData['averages']['aHighsAvg'].toFixed(2) * 4 
-                /*(change when taxi) + Math.round(this.getTaxiRate()) * 2*/; //adds taxi bonus if gets taxi 50% or more of the time
-    }
-    getAutoStandardDeviation () {  
-        //need all of the auto scores in an array
-        const AutoBalls = teamData['totals'];
-        const n = AutoBalls.length;
-        const mean = this.getAverageAutoBalls();
-        if (!AutoBalls || AutoBalls.length === 0) {return 0;}
-        return Math.sqrt(AutoBalls.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n);
-    }
-    getTeleStandardDeviation () {  
-        //need all of the auto scores in an array
-        const AutoBalls = teamData['totals'];
-        const n = AutoBalls.length;
-        const mean = this.getAverageAutoBalls();
-        if (!AutoBalls || AutoBalls.length === 0) {return 0;}
-        return Math.sqrt(AutoBalls.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n);
-    }
-
-    /*
-    * Returns the percentage of balls succesfuly made in upper hub, auto
-    *
-    */
-    getHighAutoRate(){
-        return (this.teamData['rates']['aHighRate']*100).toFixed(2) + '%';
-    }
-
-    /*
-    * Returns the percentage of balls succesfuly made in lower hub, auto
-    *
-    */
-    getLowAutoRate(){
-        return (this.teamData['rates']['aLowRate']*100).toFixed(2) + '%';
-    }
-    
-    getAverageHighTeleBalls(){
-        return this.teamData['averages']['tHighsAvg'].toFixed(2);
-    }
-    getAverageLowTeleBalls(){
-        return this.teamData['averages']['tLowsAvg'].toFixed(2);
-    }
-
-    /*
-    * Returns average amounts of tele lows + average amount of tele highs
-    *
-    */
-    getAverageTeleScore(){
-        return this.teamData['averages']['tLowsAvg'].toFixed(2) * 1 
-                + this.teamData['averages']['tHighsAvg'].toFixed(2) * 2;
-    }
-    getHighTeleRate(){
-        return (this.teamData['rates']['tHighRate']*100).toFixed(2) + '%';
-    }
-    getLowTeleRate(){
-        return (this.teamData['rates']['tLowRate']*100).toFixed(2) + '%';
-    }
-    
-    getTraversalRate(){
-        return (this.teamData['rates']['travSucessRate']*100).toFixed(2) + '%';
-    }
-    getHighClimbRate(){
-        return (this.teamData['rates']['highSucessRate']*100).toFixed(2) + '%';
-    }
-    getMidClimbRate(){
-        return (this.teamData['rates']['midSucessRate']*100).toFixed(2) + '%';
-    }
-    getLowClimbRate(){
-        return (this.teamData['rates']['lowSucessRate']*100).toFixed(2) + '%';
-    }
-    
-
-    /*
-    * Returns (average telescore) + (average auto score) + (percent of games got x bar * bar points)
-    *
-    */
-    getAverageScore(){
-        
-        let a = this.teamData['averages']['travsSAvg'];
-        if (a == 'N/A'){
-            a = 0;
-        }
-        let b =  this.teamData['averages']['highsSAvg'];
-        if (b == 'N/A'){
-            b = 0;
-        }
-        let c =  this.teamData['averages']['midsSAvg'];
-        if (c == 'N/A'){
-            c = 0;
-        }
-        let d =  this.teamData['averages']['lowsSAvg'];
-        if (d == 'N/A'){
-            d = 0;
-        }
-    
-        return this.getAverageAutoScore() + this.getAverageTeleScore() 
-                 + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
-    }
-    
+const {getAllData} = require('./CollectTeamData');
+const {getDefendedData} = require('./CollectTeamData');
+const {getNotDefendedData} = require('./CollectTeamData');
+const {getData} = require('./CollectTeamData');
 
 
-    /*
-    * Returns the total times the bots played offense
-    */
-    getTotalOffense(){
-        return this.teamData['totals']['of'];
-    }
+let allData = getAllData();
+let defendedData = getDefendedData();
+let notDefendedData = getNotDefendedData();
 
-    /*
-    * Returns the total times the bots played defense
-    */
-    getTotalDefense(){
-        return this.teamData['totals']['def'];
-    }
+function updateTeamData(){
 
-    /*
-    * Returns the percentage of games the bots played defense
-    */
-    getDefenseRate(){
-        return (this.getTotalDefense / (this.getTotalDefense  + this.getTotalOffense) *100).toFixed(2) + '%';
-    }
+    allData = getAllData();
+    defendedData = getDefendedData();
+    notDefendedData = getNotDefendedData();
 
-    /*
-    * Returns the percentage of games the bots played defense
-    */
-    getOffenseRate(){
-        return (100 - this.getDefenseRate()) + '%';
-    }
+    updateAverageAutoBalls();
+    updateAverageAutoScore();
 
+    updateAverageTeleBalls();
+    updateAverageTeleScore();
 
+    updateAverageScore();
 
-    /*
-    * Returns the number of games the bots been defended agaisnt
-    */
-    getTimesDefendedOn(){
-        return this.teamData['totals']['defended'];
-    }
-    /*
-    * Returns the percent of games the bots been defended agaisnt
-    */
-    getDefendedOnRate(){
-        return (this.teamData['averages']['defendedAvg']*100).toFixed(2) + '%';
-    }
+    updateDefenseRate();
 
-
-//-----------------------Same as above but for only games when the bots been defended agaisnt-----------
-    
-
-    getDefendedAverageHighTeleBalls(){
-        return this.defendedTeamData['averages']['tHighsAvg'].toFixed(2);
-    }
-    getDefendedAverageLowTeleBalls(){
-        return this.defendedTeamData['averages']['tLowsAvg'].toFixed(2);
-    }
-    getDefendedAverageTeleScore(){
-        return this.defendedTeamData['averages']['tLowsAvg'].toFixed(2) * 1 + (this.defendedTeamData['averages']['tHighsAvg'] * 2).toFixed(2);
-    }
-    getDefendedHighTeleRate(){
-        return (this.defendedTeamData['rates']['tHighRate']*100).toFixed(2) + '%';
-    }
-    getDefendedLowTeleRate(){
-        return (this.defendedTeamData['rates']['tLowRate']*100).toFixed(2) + '%';
-    }
-    getDefendedAverageScore(){
-        
-        let a = this.defendedTeamData['averages']['travsSAvg'];
-        if (a == 'N/A'){
-            a = 0;
-        }
-        let b =  this.defendedTeamData['averages']['highsSAvg'];
-        if (b == 'N/A'){
-            b = 0;
-        }
-        let c =  this.defendedTeamData['averages']['midsSAvg'];
-        if (c == 'N/A'){
-            c = 0;
-        }
-        let d =  this.defendedTeamData['averages']['lowsSAvg'];
-        if (d == 'N/A'){
-            d = 0;
-        }
-    
-        return this.getAverageAutoScore() + this.getDefendedAverageTeleScore() 
-                 + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
-    }
-
-
-//-----------------------Same as above but for only games when the bot HASNT been defended agaisnt-----------
-
-
-    getNotDefendedAverageHighTeleBalls(){
-        return this.notDefendedTeamData['averages']['tHighsAvg'].toFixed(2);
-    }
-    getNotDefendedAverageLowTeleBalls(){
-        return this.notDefendedTeamData['averages']['tLowsAvg'].toFixed(2);
-    }
-    getNotDefendedAverageTeleScore(){
-        return (this.notDefendedTeamData['averages']['tLowsAvg'] * 1).toFixed(2) + (this.notDefendedTeamData['averages']['tHighsAvg'] * 2).toFixed(2);
-    }
-    getNotDefendedHighTeleRate(){
-        return (this.notDefendedTeamData['rates']['tHighRate']*100).toFixed(2) + '%';
-    }
-    getNotDefendedLowTeleRate(){
-        return (this.notDefendedTeamData['rates']['tLowRate']*100).toFixed(2) + '%';
-    }
-
-    getNotDefendedAverageScore(){
-        
-        let a = this.notDefendedTeamData['averages']['travsSAvg'];
-        if (a == 'N/A'){
-            a = 0;
-        }
-        let b =  this.notDefendedTeamData['averages']['highsSAvg'];
-        if (b == 'N/A'){
-            b = 0;
-        }
-        let c =  this.notDefendedTeamData['averages']['midsSAvg'];
-        if (c == 'N/A'){
-            c = 0;
-        }
-        let d =  this.notDefendedTeamData['averages']['lowsSAvg'];
-        if (d == 'N/A'){
-            d = 0;
-        }
-    
-        return this.getAverageAutoScore() + this.getNotDefendedAverageTeleScore() 
-                 + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
-    }
-
+    console.log('Updated getter data (TeamData.js)');
 }
-module.exports = TeamData;
+
+//updaters for data not compiled in CollectTeamData.js
+function updateAverageAutoBalls(){
+    for (const [key, team] of Object.entries(allData)){
+        team['averages']['autoBalls'] = (team['averages']['autoHighs'] 
+                                                + team['averages']['autoLows']).toFixed();
+    }
+    for (const [key, team] of Object.entries(defendedData)){
+        team['averages']['autoBalls'] = (team['averages']['autoHighs'] 
+                                                + team['averages']['autoLows']).toFixed();
+    }
+    for (const [key, team] of Object.entries(defendedData)){
+        team['averages']['autoBalls'] = (team['averages']['autoHighs'] 
+                                                + team['averages']['autoLows']).toFixed();
+    }
+}
+
+function updateAverageTeleBalls(){
+    for (const [key, team] of Object.entries(allData)){
+        team['averages']['teleBalls'] = (team['averages']['teleHighs'] 
+                                                + team['averages']['teleLows']).toFixed();
+    }
+    for (const [key, team] of Object.entries(defendedData)){
+        team['averages']['teleBalls'] = (team['averages']['teleHighs'] 
+                                                + team['averages']['teleLows']).toFixed();
+    }
+    for (const [key, team] of Object.entries(defendedData)){
+        team['averages']['teleBalls'] = (team['averages']['teleHighs'] 
+                                                + team['averages']['teleLows']).toFixed();
+    }
+}
+
+function updateAverageAutoScore(){
+    for (const [key, team] of Object.entries(allData)){
+        team['averages']['autoScore'] = (team['averages']['autoHighs'] * 4
+                                                + team['averages']['autoLows'] * 2).toFixed();
+    }
+    for (const [key, team] of Object.entries(defendedData)){
+        team['averages']['autoScore'] = (team['averages']['autoHighs'] * 4
+                                                + team['averages']['autoLows'] * 2).toFixed();
+    }
+    for (const [key, team] of Object.entries(notDefendedData)){
+        team['averages']['autoScore'] = (team['averages']['averageAutoHighs'] * 4
+                                                + team['averages']['autoLows'] * 2).toFixed();
+    }
+}
+
+function updateAverageTeleScore(){
+    for (const [key, team] of Object.entries(allData)){
+        team['averages']['teleScore'] = (team['averages']['teleHighs'] * 2
+                                                + team['averages']['teleLows'] * 1).toFixed();
+    }
+    for (const [key, team] of Object.entries(defendedData)){
+        team['averages']['teleScore'] = (team['averages']['teleHighs'] * 2
+                                                + team['averages']['teleLows'] * 1).toFixed();
+    }
+    for (const [key, team] of Object.entries(notDefendedData)){
+        team['averages']['AteleScore'] = (team['averages']['teleHighs'] * 2
+                                                + team['averages']['teleLows'] * 1).toFixed();
+    }
+}
+
+function updateAverageScore(){
+    for (const [key, team] of Object.entries(allData)){
+        let a = team['averages']['traversalsSucceeded'];
+        if (a == 'N/A'){
+            a = 0;
+        }
+        let b =  team['averages']['highbarsSucceeded'];
+        if (b == 'N/A'){
+            b = 0;
+        }
+        let c =  team['averages']['midbarsSucceeded'];
+        if (c == 'N/A'){
+            c = 0;
+        }
+        let d =  team['averages']['lowbarsSucceeded'];
+        if (d == 'N/A'){
+            d = 0;
+        }
+
+        
+        team['averages']['score'] = team['averages']['autoScore'] + team['averages']['teleScore'] 
+                                            + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
+                    
+        defendedData[key]['averages']['defendedScore'] = defendedData[key]['averages']['autoScore'] + defendedData[key]['averages']['teleScore'] 
+                                                                    + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
+        notDefendedData[key]['averages']['defendedScore'] = notDefendedData[key]['averages']['autoScore'] + notDefendedData[key]['averages']['teleScore'] 
+                                                                    + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
+    }
+}
+
+function updateDefenseRate(){
+    for (const [key, team] of Object.entries(allData)) {
+        team['rates']['deffense'] = team['totals']['def'] / (team['totals']['def']  + team['totals']['of']);
+        team['rates']['offense'] = 1.0 - team['rates']['deffense'];
+    }
+}
+
+
+
+//getters
+function getTotals(type, team){
+    return allData[team]['totals'][type];
+}
+function getAverages(type, team){
+    return allData[team]['averages'][type];
+}
+function getRates(type, team){
+    return allData[team]['rates'][type];
+}
+
+function getDefendedTotals(type, team){
+    return defendedData[team]['totals'][type];
+}
+function getDefendedAverages(type, team){
+    return defendedData[team]['averages'][type];
+}
+function getDefendedRates(type, team){
+    return defendedData[team]['rates'][type];
+}
+
+function getNotDefendedTotals(type, team){
+    return notDefendedData[team]['totals'][type];
+}
+function getNotDefendedAverages(type, team){
+    return notDefendedData[team]['averages'][type];
+}
+function getNotDefendedRates(type, team){
+    return notDefendedData[team]['rates'][type];
+}
+
+
+//if you see this function no you didnt adn i dont want to talk abt it
+function getTotalsLength(team) {
+    return allData[team]['totals'].length;
+}
+
+
+
+function getAutoStandardDeviation (team) {  
+    //need all of the auto scores in an array
+    const AutoBalls = allData[team]['totals'];
+    const n = AutoBalls.length;
+    const mean = getAverageAutoBalls(team);
+    if (!AutoBalls || AutoBalls.length === 0) {return 0;}
+    return Math.sqrt(AutoBalls.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n);
+}
+function getTeleStandardDeviation (team) {  
+    //need all of the auto scores in an array
+    const AutoBalls = allData[team]['totals'];
+    const n = AutoBalls.length;
+    const mean = getAverageAutoBalls(team);
+    if (!AutoBalls || AutoBalls.length === 0) {return 0;}
+    return Math.sqrt(AutoBalls.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n);
+}
+
+module.exports =    {updateTeamData,
+
+                    getTotalsLength,
+
+                    getTotals,
+                    getAverages,
+                    getRates,
+                
+                    getDefendedTotals,
+                    getDefendedAverages,
+                    getDefendedRates,
+                
+                    getNotDefendedTotals,
+                    getNotDefendedAverages,
+                    getNotDefendedRates}

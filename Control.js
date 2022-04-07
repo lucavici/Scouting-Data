@@ -1,16 +1,18 @@
-const TeamData = require('./TeamData.js');
-const teamData = new TeamData(254);
+const {updateSheet} = require('./app.js');
 
-const ReadSheet = require('./app.js');
+const {updateTeamData} = require('./TeamData');
 
-//runs every 60 seconds asyc
-ReadSheet.runUpdateData();
+const {getData} = require('./CollectTeamData.js');
 
-//const Probability = require('./Predictions.js');
-//const prediction = new Probability(3);
+update();
+async function update(){
 
-console.log(teamData.getHighAutoRate());
-/*console.log(teamData.getAverageHighTeleBalls());
-console.log(teamData.getDefendedAverageHighTeleBalls());
-console.log(teamData.getNotDefendedAverageHighTeleBalls());*/
 
+    updateSheet();
+    getData();
+    updateTeamData();
+
+    setInterval(updateSheet, 30 * 1000);
+    setInterval(getData, 31 * 1000)
+    setInterval(updateTeamData, 32 * 1000);
+}

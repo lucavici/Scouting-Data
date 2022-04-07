@@ -6,7 +6,22 @@ class MatchPredictions {
         this.match = match;
         this.BlueAlliance = require("bluealliance");
         this.tba = new this.BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
-        const TeamData = require('./TeamData.js'); //imports TeamData
+        
+        const  {updateTeamData,
+
+                getTotalsLength,
+
+                getTotals,
+                getAverages,
+                getRates,
+            
+                getDefendedTotals,
+                getDefendedAverages,
+                getDefendedRates,
+            
+                getNotDefendedTotals,
+                getNotDefendedAverages,
+                getNotDefendedRates} = require('./TeamData'); //all fucntions
 
         this.event = this.tba.getEvent('casj', 2017); // SVR 2017
         this.matches = this.tba.getMatchesAtEvent(this.event); //this does not appear to be working
@@ -27,37 +42,40 @@ class MatchPredictions {
         this.B2data = new TeamData(this.B2);
         this.B3data = new TeamData(this.B3);
 
-        avgAutoBallsR1 = R1Data.getAverageAutoBalls();
-        avgAutoBallsR2 = R2Data.getAverageAutoBalls();
-        avgAutoBallsR3 = R3Data.getAverageAutoBalls();
+        avgAutoBallsR1 = getAverages('autoBalls', this.R1);
+        avgAutoBallsR2 = getAverages('autoBalls', this.R2);
+        avgAutoBallsR3 = getAverages('autoBalls', this.R2);
 
-        avgTeleBallsR1 = R1Data.getAverageTeleBalls();
-        avgTeleBallsR2 = R2Data.getAverageTeleBalls();
-        avgTeleBallsR3 = R3Data.getAverageTeleBalls();
+        avgTeleBallsR1 = getAverages('teleBalls', this.R1);
+        avgTeleBallsR2 = getAverages('teleBalls', this.R2);
+        avgTeleBallsR3 = getAverages('teleBalls', this.R3);
 
-        avgAutoBallsB1 = B1Data.getAverageAutoBalls();
-        avgAutoBallsB2 = B2Data.getAverageAutoBalls();
-        avgAutoBallsB3 = B3Data.getAverageAutoBalls();
+        avgAutoBallsB1 = getAverageAutoBalls(this.B1);
+        avgAutoBallsB2 = getAverageAutoBalls(this.B2);
+        avgAutoBallsB3 = getAverageAutoBalls(this.B3);
 
-        avgTeleBallsB1 = B1Data.getAverageTeleBalls();
-        avgTeleBallsB2 = B2Data.getAverageTeleBalls();
-        avgTeleBallsB3 = B3Data.getAverageTeleBalls();
+        avgTeleBallsB1 = getAverageTeleBalls(this.B1);
+        avgTeleBallsB2 = getAverageTeleBalls(this.B2);
+        avgTeleBallsB3 = getAverageTeleBalls(this.B3);
 
         //get auto and tele stdev
-        stDevAutoR1 = this.R1data.getAutoStandardDevation(); 
-        stDevTeleR1 = this.R1data.getTeleStandardDevation();
+        stDevAutoR1 = getAutoStandardDevation(this.R1); 
+        stDevTeleR1 = getTeleStandardDevation(this.R1);
 
-        stDevAutoR2 = this.R2data.getAutoStandardDevation(); 
-        stDevTeleR2 = this.R2data.getTeleStandardDevation();
+        stDevAutoR2 = getAutoStandardDevation(this.R2); 
+        stDevTeleR2 = getTeleStandardDevation(this.R2);
 
-        stDevAutoR3 = this.R3data.getAutoStandardDevation(); 
-        stDevTeleR3 = this.R3data.getTeleStandardDevation();
+        stDevAutoR3 = getAutoStandardDevation(this.R3); 
+        stDevTeleR3 = this.getTeleStandardDevation(this.R3);
 
-        stDevAutoB1 = this.B1data.getAutoStandardDevation(); 
-        stDevTeleB1 = this.B1data.getTeleStandardDevation();
+        stDevAutoB1 = getAutoStandardDevation(this.B1); 
+        stDevTeleB1 = getTeleStandardDevation(this.B1);
 
-        stDevAutoB2 = this.B2data.getAutoStandardDevation(); 
-        stDevTeleB2 = this.B2data.getTeleStandardDevation();
+        stDevAutoB2 = this.getAutoStandardDevation(this.B2); 
+        stDevTeleB2 = this.getTeleStandardDevation(this.B2);
+
+        stDevAutoB3 = getAutoStandardDevation(this.B3); 
+        stDevTeleB3 = getTeleStandardDevation(this.B3);
 
         stDevAutoB3 = this.B3data.getAutoStandardDevation(); 
         stDevTeleB3 = this.B3data.getTeleStandardDevation();
