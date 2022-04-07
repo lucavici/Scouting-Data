@@ -20,9 +20,6 @@ getData();
 //goes through the macths of a team and calls functions. adds data to team data
 function getData(){
 
-    //init();
-
-    //console.log(data);
     for (const [key, team] of Object.entries(data)){
         let teamData = {};
         const totals = cycleData(team);
@@ -89,24 +86,25 @@ function cycleData(teamMatches) {
     const teamTotals = {
 
         /*(change when taxi) taxis : parseInt(0), */
-        aHighs : parseInt(0),
-        aHighsF : parseInt(0),
-        aLows : parseInt(0),
-        aLowsF : parseInt(0),
+        autoHighs : parseInt(0),
+        autoHighFails : parseInt(0),
+        autoLows : parseInt(0),
+        autoLowFails : parseInt(0),
 
-        tHighs : parseInt(0),
-        tHighsF : parseInt(0),
-        tLows : parseInt(0),
-        tLowsF : parseInt(0),
+        teleHighs : parseInt(0),
+        teleHighFails : parseInt(0),
+        teleLows : parseInt(0),
+        teleLowFails : parseInt(0),
 
-        travsA : parseInt(0),
-        travsS : parseInt(0),
-        highsA : parseInt(0),
-        highsS : parseInt(0),
-        midsA : parseInt(0),
-        midsS : parseInt(0),
-        lowsA : parseInt(0),
-        lowsS : parseInt(0),
+        
+        traversalsSucceeded : parseInt(0),
+        traversalsAttempted : parseInt(0),
+        highbarsSucceeded : parseInt(0),
+        highbarsAttempted : parseInt(0),
+        midbarsSucceeded : parseInt(0),
+        midbarsAttempted : parseInt(0),
+        lowbarsSucceeded : parseInt(0),
+        lowbarsAttempted : parseInt(0),
         time : parseInt(0),
 
         def : parseInt(0),
@@ -125,19 +123,23 @@ function cycleData(teamMatches) {
         }
 
         if (match['climbAttempted'] == 'Traversal'){
-            teamTotals['travsA']++;
+            teamTotals['traversalsAttempted']++;
         } else if (match['climbAttempted'] == 'High'){
-            teamTotals['highsA']++;
+            teamTotals['highbarsAttempted']++;
         } else if (match['climbAttempted'] == 'Mid'){
-            teamTotals['midsA']++;
+            teamTotals['midbarsAttempted']++;
+        } else if (match['climbAttempted'] == 'Low'){
+            teamTotals['lowbarsAttempted']++;
         }
     
         if (match['climbActual'] == 'Traversal'){
-            teamTotals['travsS']++;
+            teamTotals['traversalsSucceeded']++;
         } else if (match['climbActual'] == 'High'){
-            teamTotals['highsS']++;
+            teamTotals['highbarsSucceeded']++;
         } else if (match['climbActual'] == 'Mid'){
-            teamTotals['midsS']++;
+            teamTotals['midbarsSucceeded']++;
+        } else if (match['climbActual'] == 'Low'){
+            teamTotals['lowbarsSucceeded']++;
         }
 
         teamTotals['time'] += parseInt(match['climbTime']);
@@ -156,9 +158,12 @@ function cycleData(teamMatches) {
 
 //divides data in total by the number of matches sample is from
 function getAvgs(totals, numMatches){
+
     const teamAverages = {};
+    
+
     for (const [key, value] of Object.entries(totals)){
-        teamAverages[key + "Avg"] = value/numMatches;
+        teamAverages[key] = value/numMatches;
     }
     return teamAverages;
 }
@@ -169,16 +174,16 @@ function getRates(totals){
     const teamRates = {
 
         /*(change when taxi) taxiRate : parseInt(0),*/
-        aHighRate : parseInt(0),
-        aLowRate : parseInt(0),
+        autoHigh : parseInt(0),
+        autoLow : parseInt(0),
         
-        tHighRate : parseInt(0),
-        tLowRate : parseInt(0),
+        teleHigh : parseInt(0),
+        teleLow : parseInt(0),
 
-        travSucessRate : parseInt(0),
-        highSucessRate : parseInt(0),
-        midSucessRate : parseInt(0),
-        lowSucessRate : parseInt(0),
+        traversalSuccess : parseInt(0),
+        highbarSuccess : parseInt(0),
+        midbarSuccess : parseInt(0),
+        lowbarSuccess : parseInt(0),
     }
 
 

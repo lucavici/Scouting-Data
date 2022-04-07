@@ -6,44 +6,21 @@ class MatchPredictions {
         this.BlueAlliance = require("bluealliance");
         this.tba = new this.BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
         
-        module.exports =    {updateData,
-                            getTotalsLength,
-                            getAverageHighAutoBalls,
-                            getAverageLowAutoBalls,
-                            getAverageAutoBalls,
-                            getAverageAutoScore,
-                            getAutoStandardDeviation ,
-                            getTeleStandardDeviation ,
-                            getHighAutoRate,
-                            getLowAutoRate,
-                            getAverageHighTeleBalls,
-                            getAverageLowTeleBalls,
-                            getAverageTeleScore,
-                            getHighTeleRate,
-                            getLowTeleRate,
-                            getTraversalRate,
-                            getHighClimbRate,
-                            getMidClimbRate,
-                            getLowClimbRate,
-                            getAverageScore,
-                            getTotalOffense,
-                            getTotalDefense,
-                            getDefenseRate,
-                            getOffenseRate,
-                            getTimesDefendedOn,
-                            getDefendedOnRate,
-                            getDefendedAverageHighTeleBalls,
-                            getDefendedAverageLowTeleBalls,
-                            getDefendedAverageTeleScore,
-                            getDefendedHighTeleRate,
-                            getDefendedLowTeleRate,
-                            getDefendedAverageScore,
-                            getNotDefendedAverageHighTeleBalls,
-                            getNotDefendedAverageLowTeleBalls,
-                            getNotDefendedAverageTeleScore,
-                            getNotDefendedHighTeleRate,
-                            getNotDefendedLowTeleRate,
-                            getNotDefendedAverageScore,} //all fucntions
+        const  {updateTeamData,
+
+                getTotalsLength,
+
+                getTotals,
+                getAverages,
+                getRates,
+            
+                getDefendedTotals,
+                getDefendedAverages,
+                getDefendedRates,
+            
+                getNotDefendedTotals,
+                getNotDefendedAverages,
+                getNotDefendedRates} = require('./TeamData'); //all fucntions
 
         this.event = this.tba.getEvent('casj', 2017); // SVR 2017
         this.matches = this.tba.getMatchesAtEvent(this.event); //this does not appear to be working
@@ -64,13 +41,13 @@ class MatchPredictions {
         this.B2data = new TeamData(this.B2);
         this.B3data = new TeamData(this.B3);
 
-        avgAutoBallsR1 = getAverageAutoBalls(this.R1);
-        avgAutoBallsR2 = getAverageAutoBalls(this.R2);
-        avgAutoBallsR3 = getAverageAutoBalls(this.R3);
+        avgAutoBallsR1 = getAverages('autoBalls', this.R1);
+        avgAutoBallsR2 = getAverages('autoBalls', this.R2);
+        avgAutoBallsR3 = getAverages('autoBalls', this.R2);
 
-        avgTeleBallsR1 = getAverageTeleBalls(this.R1);
-        avgTeleBallsR2 = getAverageTeleBalls(this.R2);
-        avgTeleBallsR3 = getAverageTeleBalls(this.R3);
+        avgTeleBallsR1 = getAverages('teleBalls', this.R1);
+        avgTeleBallsR2 = getAverages('teleBalls', this.R2);
+        avgTeleBallsR3 = getAverages('teleBalls', this.R3);
 
         avgAutoBallsB1 = getAverageAutoBalls(this.B1);
         avgAutoBallsB2 = getAverageAutoBalls(this.B2);
