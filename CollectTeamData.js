@@ -13,8 +13,8 @@ catch (err) {
 //const {updateTeamData} = require('./TeamData');
 
 let allData = {}; //ALL data for every team
-let defendedData = {}; //data for when teams have had defense applied to them
-let notDefendedData = {}; //data for when  teams dont have defense applied to them
+let allDefendedData = {}; //data for when teams have had defense applied to them
+let allNotDefendedData = {}; //data for when  teams dont have defense applied to them
 getData();
 
 //goes through the macths of a team and calls functions. adds data to team data
@@ -39,22 +39,27 @@ function getData(){
 //same as above but sorts defenended and not defended
 function updateDefendedData(){
 
+    allDefendedData = {};
+    allNotDefendedData = {};
+
     for (const [key, team] of Object.entries(data)){
+
         let defendedTeamData = {}
         let notDefendedTeamData = {};
-        let defendedData = {};
-        let notDefendedData = {};
+
+        let defendedMatches = {};
+        let notDefendedMatches = {};
         for (const [key2, match] of Object.entries(team)){
             if (match['defended'] == 'Yes'){
-                defendedData[key2] = match;
+                defendedMatches[key2] = match;
             } else {
-                notDefendedData[key2] = match;
+                notDefendedMatches[key2] = match;
             }
         }
 
         //calcs when defended
-        let totals = cycleData(defendedData);
-        let averages = getAvgs(totals, Object.keys(defendedData).length);
+        let totals = cycleData(defendedMatches);
+        let averages = getAvgs(totals, Object.keys(defendedMatches).length);
         let rates = getRates(totals);
         defendedTeamData = {};
         defendedTeamData['totals'] = totals;
@@ -62,16 +67,16 @@ function updateDefendedData(){
         defendedTeamData['rates'] = rates;
 
         //calcs when not defnded
-        totals = cycleData(notDefendedData);
-        averages = getAvgs(totals, Object.keys(notDefendedData).length);
+        totals = cycleData(notDefendedMatches);
+        averages = getAvgs(totals, Object.keys(notDefendedMatches).length);
         rates = getRates(totals);
         notDefendedTeamData = {};
         notDefendedTeamData['totals'] = totals;
         notDefendedTeamData['averages'] = averages;
         notDefendedTeamData['rates'] = rates;
 
-        defendedData[key] = defendedTeamData;
-        notDefendedData[key] = notDefendedData;
+        allDefendedData[key] = defendedTeamData;
+        allNotDefendedData[key] = notDefendedTeamData;
     }
 
     console.log('Updated (not) defended data (CollectTeamData.js)');
@@ -218,9 +223,9 @@ function getAllData(){
     return allData;
 }
 function getDefendedData(){
-    return defendedData;
+    return allDefendedData;
 }
 function getNotDefendedData(){
-    return notDefendedData;
+    return allNotDefendedData;
 }
 module.exports = {getAllData, getDefendedData, getNotDefendedData, getData};

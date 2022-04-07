@@ -3,6 +3,11 @@ const {getDefendedData} = require('./CollectTeamData');
 const {getNotDefendedData} = require('./CollectTeamData');
 const {getData} = require('./CollectTeamData');
 
+
+let allData = getAllData();
+let defendedData = getDefendedData();
+let notDefendedData = getNotDefendedData();
+
 function updateTeamData(){
 
     allData = getAllData();
@@ -84,7 +89,7 @@ function updateAverageTeleScore(){
 }
 
 function updateAverageScore(){
-    for (const [key, team] of Object.entries(data)){
+    for (const [key, team] of Object.entries(allData)){
         let a = team['averages']['traversalsSucceeded'];
         if (a == 'N/A'){
             a = 0;
@@ -102,6 +107,7 @@ function updateAverageScore(){
             d = 0;
         }
 
+        
         team['averages']['score'] = team['averages']['autoScore'] + team['averages']['teleScore'] 
                                             + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
                     
