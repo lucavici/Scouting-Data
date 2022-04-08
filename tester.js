@@ -1,9 +1,11 @@
+const fs = require("fs");
+
 let data;
 try{
     data = require('./data.json');
 }
 catch (err) {
-    console.log("Error parsing JSON string:", err);
+    console.log("Error parsing JSON string:\n", err);
 }
 
 
@@ -18,8 +20,10 @@ const {updateTeamData,
         getNotDefendedTotals,
         getNotDefendedAverages,
         getNotDefendedRates} = require('./TeamData');
+updateTeamData();
 
-const allTotalCommands = ['autoHighs',
+const allTotalCommands = ['taxis',
+                        'autoHighs',
                         'autoHighFails',
                         'autoLows',
                         'autoLowFails',
@@ -40,7 +44,8 @@ const allTotalCommands = ['autoHighs',
                         'of',
                         'defended',];
 
-const allAverageCommands = ['autoHighs',
+const allAverageCommands = ['taxis',
+                            'autoHighs',
                             'autoHighFails',
                             'autoLows',
                             'autoLowFails',
@@ -65,7 +70,8 @@ const allAverageCommands = ['autoHighs',
                             'autoScore',
                             'teleScore',
                             'score'];
-const allRateCommands = ['autoHigh',
+const allRateCommands = ['taxi',
+                        'autoHigh',
                         'autoLow',
                         'teleHigh',
                         'teleLow',
@@ -76,78 +82,178 @@ const allRateCommands = ['autoHigh',
                         'defenseRate'];
 
 let allData = {}
+
 for (const [key, value] of Object.entries(data)){
-    if (allData[key] == null){
+    console.log();
+    console.log();
+    
 
-        allData[key] = {};
+    fs.writeFile('./CompiledData.txt', key+':\n', { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
 
-        /*allData[key] = ['all', 'defended', 'notDefended'];
-        for (i in allData[key]){
-            //allData[key][allData[key][i]] = ['totals', 'averages', 'rates'];
-            for (i2 in allTotalCommands){
-                allData[key][allData[key][i]][allData[key][i]['totals']] = allTotalCommands[i2];
-            }
-            for (i2 in allAverageCommands){
-                allData[key][allData[key][i]][allData[key][i]['averages']] = allTotalCommands[i2];
-            }
-            for (i2 in allRateCommands){
-                allData[key][allData[key][i]][allData[key][i]['rates']] = allTotalCommands[i2];
-            }
-        }*/
-    }
+    console.log();
+
+    fs.writeFile('./CompiledData.txt', ('\all:\n'), { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
+    fs.writeFile('./CompiledData.txt', ('\t\ttotals:\n'), { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
     for (i in allTotalCommands){
-        if (allData[key]['all']['totals'][allTotalCommands[i]] == undefined){
-            if (allData[key]['all']['totals'] == undefined){
-                if (allData[key]['all'] == undefined){
-                    allData[key]['all'] = {};
-                }
-                allData[key]['all']['totals'] = {};
-                allData[key]['all']['averages'] = {};
-                allData[key]['all']['rates'] = {};
+        fs.writeFile('./CompiledData.txt', ('\t\t\t' + allTotalCommands[i] + ": " + getTotals(allTotalCommands[i], key) + '\n'), { flag: 'a' }, err => {
+            if (err) {
+              console.error(err)
+              return
             }
-            allData[key]['all']['totals'][allTotalCommands[i]] = {};
-            allData[key]['all']['averages'][allTotalCommands[i]] = {};
-            allData[key]['all']['rates'][allTotalCommands[i]] = {};
-        }
-        allData[key]['all']['totals'][allTotalCommands[i]] = getTotals(allTotalCommands[i], key);
-        allData[key]['defended']['totals'][allTotalCommands[i]] = getDefendedTotals(allTotalCommands[i], key);
-        allData[key]['notDefended']['totals'][allTotalCommands[i]] = getNotDefendedTotals(allTotalCommands[i], key);
+        })
     }
+    fs.writeFile('./CompiledData.txt', '\t\taverages:\n', { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
     for (i in allAverageCommands){
-        if (allData[key]['all']['totals'][allAverageCommands[i]] == undefined){
-            if (allData[key]['all']['totals'] == undefined){
-                if (allData[key]['all'] == undefined){
-                    allData[key]['all'] = {};
-                }
-                allData[key]['all']['totals'] = {};
-                allData[key]['all']['averages'] = {};
-                allData[key]['all']['rates'] = {};
+        fs.writeFile('./CompiledData.txt', ('\t\t\t' + allAverageCommands[i] + ": " + getAverages(allAverageCommands[i], key) + '\n'), { flag: 'a' }, err => {
+            if (err) {
+              console.error(err)
+              return
             }
-            allData[key]['all']['totals'][allAverageCommands[i]] = {};
-            allData[key]['all']['averages'][allAverageCommands[i]] = {};
-            allData[key]['all']['rates'][allAverageCommands[i]] = {};
-        }
-        allData[key]['all']['averages'][allTotalCommands[i]] = getAverages(allTotalCommands[i], key);
-        allData[key]['defended']['averages'][allTotalCommands[i]] = getDefendedAverages(allTotalCommands[i], key);
-        allData[key]['notDefended']['averages'][allTotalCommands[i]] = getNotDefendedAverages(allTotalCommands[i], key);
+        })
     }
-    for (i in allRateCommands){
-        if (allData[key]['all']['totals'][allRateCommands[i]] == undefined){
-            if (allData[key]['all']['totals'] == undefined){
-                if (allData[key]['all'] == undefined){
-                    allData[key]['all'] = {};
-                }
-                allData[key]['all']['totals'] = {};
-                allData[key]['all']['averages'] = {};
-                allData[key]['all']['rates'] = {};
-            }
-            allData[key]['all']['totals'][allRateCommands[i]] = {};
-            allData[key]['all']['averages'][allRateCommands[i]] = {};
-            allData[key]['all']['rates'][allRateCommands[i]] = {};
-        }
-        allData[key]['all']['rates'][allTotalCommands[i]] = getRates(allTotalCommands[i], key);
-        allData[key]['defended']['rates'][allTotalCommands[i]] = getDefendedRates(allTotalCommands[i], key);
-        allData[key]['notDefended']['rates'][allTotalCommands[i]] = getNotDefendedRates(allTotalCommands[i], key);
-    }
-}
 
+    fs.writeFile('./CompiledData.txt', '\t\trates:\n', { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
+    for (i in allRateCommands){
+        fs.writeFile('./CompiledData.txt', ('\t\t\t' + allRateCommands[i] + ": " + getRates(allRateCommands[i], key) + '\n'), { flag: 'a' }, err => {
+            if (err) {
+              console.error(err)
+              return
+            }
+        })
+    }
+
+
+
+
+    fs.writeFile('./CompiledData.txt', ('\tdefended::\n'), { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
+    fs.writeFile('./CompiledData.txt', ('\t\ttotals:\n'), { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
+    for (i in allTotalCommands){
+        fs.writeFile('./CompiledData.txt', ('\t\t\t' + allTotalCommands[i] + ": " + getDefendedTotals(allTotalCommands[i], key) + '\n'), { flag: 'a' }, err => {
+            if (err) {
+              console.error(err)
+              return
+            }
+        })
+    }
+    fs.writeFile('./CompiledData.txt', '\t\taverages:\n', { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
+    for (i in allAverageCommands){
+        fs.writeFile('./CompiledData.txt', ('\t\t\t' + allAverageCommands[i] + ": " + getDefendedAverages(allAverageCommands[i], key) + '\n'), { flag: 'a' }, err => {
+            if (err) {
+              console.error(err)
+              return
+            }
+        })
+    }
+
+    fs.writeFile('./CompiledData.txt', '\t\trates:\n', { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
+    for (i in allRateCommands){
+        fs.writeFile('./CompiledData.txt', ('\t\t\t' + allRateCommands[i] + ": " + getDefendedRates(allRateCommands[i], key) + '\n'), { flag: 'a' }, err => {
+            if (err) {
+              console.error(err)
+              return
+            }
+        })
+    }
+
+
+
+    fs.writeFile('./CompiledData.txt', '\tnot\n', { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+        //file written successfully
+      })
+
+    fs.writeFile('./CompiledData.txt', '\t\ttotals:\n', { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
+    for (i in allTotalCommands){
+        fs.writeFile('./CompiledData.txt', ('\t\t\t' + allTotalCommands[i] + ": " + getNotDefendedTotals(allTotalCommands[i], key) + '\n'), { flag: 'a' }, err => {
+            if (err) {
+              console.error(err)
+              return
+            }
+        })
+    }
+
+    fs.writeFile('./CompiledData.txt', ("\t\taverages:\n"), { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
+    for (i in allAverageCommands){
+        fs.writeFile('./CompiledData.txt', ('\t\t\t' + allAverageCommands[i] + ": " + getNotDefendedAverages(allAverageCommands[i], key) + '\n'), { flag: 'a' }, err => {
+            if (err) {
+              console.error(err)
+              return
+            }
+        })
+    }
+    
+
+    fs.writeFile('./CompiledData.txt', '\t\trates:\n', { flag: 'a' }, err => {
+        if (err) {
+          console.error(err)
+          return
+        }
+    })
+    for (i in allRateCommands){
+        fs.writeFile('./CompiledData.txt', ('\t\t\t' + allRateCommands[i] + ": " + getNotDefendedRates(allRateCommands[i], key) + '\n'), { flag: 'a' }, err => {
+            if (err) {
+              console.error(err)
+              return
+            }
+        })
+    }
+    
+}
