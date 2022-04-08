@@ -69,6 +69,7 @@ const allAverageCommands = ['taxis',
                             'teleBalls',
                             'autoScore',
                             'teleScore',
+                            'climbScore',
                             'score'];
 const allRateCommands = ['taxi',
                         'autoHigh',

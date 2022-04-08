@@ -16,3 +16,5 @@ async function update(){
     setInterval(getData, 31 * 1000)
     setInterval(updateTeamData, 32 * 1000);
 }
+
+module.exports = {update};

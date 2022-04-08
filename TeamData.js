@@ -22,6 +22,8 @@ function updateTeamData(){
     updateAverageTeleBalls();
     updateAverageTeleScore();
 
+    updateAverageClimbScore();
+
     updateAverageScore();
 
     updateDefenseRate();
@@ -34,90 +36,118 @@ function updateTeamData(){
 function updateAverageAutoBalls(){
     for (const [key, team] of Object.entries(allData)){
         team['averages']['autoBalls'] = (team['averages']['autoHighs'] 
-                                                + team['averages']['autoLows']).toFixed();
+                                                + team['averages']['autoLows']).toFixed(2);
     }
     for (const [key, team] of Object.entries(defendedData)){
         defendedData[key]['averages']['autoBalls'] = (team['averages']['autoHighs'] 
-                                                + team['averages']['autoLows']).toFixed();
+                                                + team['averages']['autoLows']).toFixed(2);
     }
     for (const [key, team] of Object.entries(notDefendedData)){
         notDefendedData[key]['averages']['autoBalls'] = (team['averages']['autoHighs'] 
-                                                + team['averages']['autoLows']).toFixed();
+                                                + team['averages']['autoLows']).toFixed(2);
     }
 }
 
 function updateAverageTeleBalls(){
     for (const [key, team] of Object.entries(allData)){
         team['averages']['teleBalls'] = (team['averages']['teleHighs'] 
-                                                + team['averages']['teleLows']).toFixed();
+                                                + team['averages']['teleLows']).toFixed(2);
     }
     for (const [key, team] of Object.entries(defendedData)){
         defendedData[key]['averages']['teleBalls'] = (defendedData[key]['averages']['teleHighs'] 
-                                                + defendedData[key]['averages']['teleLows']).toFixed();
+                                                + defendedData[key]['averages']['teleLows']).toFixed(2);
     }
     for (const [key, team] of Object.entries(notDefendedData)){
         notDefendedData[key]['averages']['teleBalls'] = (notDefendedData[key]['averages']['teleHighs'] 
-                                                + notDefendedData[key]['averages']['teleLows']).toFixed();
+                                                + notDefendedData[key]['averages']['teleLows']).toFixed(2);
     }
 }
 
 function updateAverageAutoScore(){
     for (const [key, team] of Object.entries(allData)){
         team['averages']['autoScore'] = (team['averages']['autoHighs'] * 4
-                                                + team['averages']['autoLows'] * 2).toFixed();
+                                                + team['averages']['autoLows'] * 2).toFixed(2);
     }
     for (const [key, team] of Object.entries(allData)){
         defendedData[key]['averages']['autoScore'] = (team['averages']['autoHighs'] * 4
-                                                + team['averages']['autoLows'] * 2).toFixed();
+                                                + team['averages']['autoLows'] * 2).toFixed(2);
     }
     for (const [key, team] of Object.entries(allData)){
         notDefendedData[key]['averages']['autoScore'] = (team['averages']['averageAutoHighs'] * 4
-                                                + team['averages']['autoLows'] * 2).toFixed();
+                                                + team['averages']['autoLows'] * 2).toFixed(2);
     }
 }
 
 function updateAverageTeleScore(){
     for (const [key, team] of Object.entries(allData)){
         team['averages']['teleScore'] = (team['averages']['teleHighs'] * 2
-                                                + team['averages']['teleLows'] * 1).toFixed();
+                                                + team['averages']['teleLows'] * 1).toFixed(2);
     }
     for (const [key, team] of Object.entries(defendedData)){
         defendedData[key]['averages']['teleScore'] = (defendedData[key]['averages']['teleHighs'] * 2
-                                                + defendedData[key]['averages']['teleLows'] * 1).toFixed();
+                                                + defendedData[key]['averages']['teleLows'] * 1).toFixed(2);
     }
     for (const [key, team] of Object.entries(notDefendedData)){
         notDefendedData[key]['averages']['AteleScore'] = (notDefendedData[key]['averages']['teleHighs'] * 2
-                                                + notDefendedData[key]['averages']['teleLows'] * 1).toFixed();
+                                                + notDefendedData[key]['averages']['teleLows'] * 1).toFixed(2);
     }
 }
 
 function updateAverageScore(){
     for (const [key, team] of Object.entries(allData)){
-        let a = team['averages']['traversalsSucceeded'];
+        let a = parseFloat(team['averages']['traversalsSucceeded']);
+        console.log(key + ": " + a);
         if (a == 'N/A'){
             a = 0;
         }
-        let b =  team['averages']['highbarsSucceeded'];
+        let b =  parseFloat(team['averages']['highbarsSucceeded']);
         if (b == 'N/A'){
             b = 0;
         }
-        let c =  team['averages']['midbarsSucceeded'];
+        let c =  parseFloat(team['averages']['midbarsSucceeded']);
         if (c == 'N/A'){
             c = 0;
         }
-        let d =  team['averages']['lowbarsSucceeded'];
+        let d =  parseFloat(team['averages']['lowbarsSucceeded']);
         if (d == 'N/A'){
             d = 0;
         }
 
 
-        team['averages']['score'] = team['averages']['autoScore'] + team['averages']['teleScore'] 
-                                            + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
+        team['averages']['score'] = parseFloat(team['averages']['autoScore']) + parseFloat(team['averages']['teleScore']) 
+                                            + parseFloat((a * 15).toFixed(2) + parseFloat((b * 10).toFixed(2)) + parseFloat((c * 6).toFixed(2)) + parseFloat((d * 4).toFixed(2)));
                     
-        defendedData[key]['averages']['defendedScore'] = defendedData[key]['averages']['autoScore'] + defendedData[key]['averages']['teleScore'] 
-                                                                    + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
-        notDefendedData[key]['averages']['defendedScore'] = notDefendedData[key]['averages']['autoScore'] + notDefendedData[key]['averages']['teleScore'] 
-                                                                    + (a * 15).toFixed(2) + (b * 10).toFixed(2) + (c * 6).toFixed(2) + (d * 4).toFixed(2);
+        defendedData[key]['averages']['score'] = team['averages']['autoScore'] + defendedData[key]['averages']['teleScore'] 
+                                                    + parseFloat((a * 15).toFixed(2) + parseFloat((b * 10).toFixed(2)) + parseFloat((c * 6).toFixed(2)) + parseFloat((d * 4).toFixed(2)));
+        notDefendedData[key]['averages']['score'] = team['averages']['autoScore'] + notDefendedData[key]['averages']['teleScore'] 
+                                                        + parseFloat((a * 15).toFixed(2) + parseFloat((b * 10).toFixed(2)) + parseFloat((c * 6).toFixed(2)) + parseFloat((d * 4).toFixed(2)));
+        
+        console.log(team['averages']['score']);
+    }
+}
+
+function updateAverageClimbScore(){
+    for (const [key, team] of Object.entries(allData)){
+        let a = parseFloat(team['averages']['traversalsSucceeded']);
+        console.log(key + ": " + a);
+        if (a == 'N/A'){
+            a = 0;
+        }
+        let b =  parseFloat(team['averages']['highbarsSucceeded']);
+        if (b == 'N/A'){
+            b = 0;
+        }
+        let c =  parseFloat(team['averages']['midbarsSucceeded']);
+        if (c == 'N/A'){
+            c = 0;
+        }
+        let d =  parseFloat(team['averages']['lowbarsSucceeded']);
+        if (d == 'N/A'){
+            d = 0;
+        }
+        team['averages']['climbScore'] = parseFloat((a * 15).toFixed(2) + parseFloat((b * 10).toFixed(2)) + parseFloat((c * 6).toFixed(2)) + parseFloat((d * 4).toFixed(2)));
+        defendedData[key]['averages']['climbScore'] = parseFloat((a * 15).toFixed(2)) + parseFloat((b * 10).toFixed(2)) + parseFloat((c * 6).toFixed(2)) + parseFloat((d * 4).toFixed(2));
+        notDefendedData[key]['averages']['climbScore'] = parseFloat((a * 15).toFixed(2) + parseFloat((b * 10).toFixed(2)) + parseFloat((c * 6).toFixed(2)) + parseFloat((d * 4).toFixed(2)));
     }
 }
 
