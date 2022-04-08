@@ -3,7 +3,7 @@
 
 <head>
 <title>Recent Match</title>
-
+<script src="TeamMatchData.js"></script>
 <!--<script src="./functions.js">//import {TeamMatchData} from "./functions.js";</script>-->
 </head>
 
@@ -47,7 +47,6 @@
     //overview data
 ?>
 
-    <script src=“TeamMatchData.js”></script>
 
     <script>
 
@@ -80,7 +79,7 @@
         const matchData = [ R1MatchData, R2MatchData, R3MatchData, B1MatchData, B2MatchData, B3MatchData ];
 
         function displayData() {
-            for (int i=0; i < 6; i++) {
+            for (var i=0; i < 6; i++) {
                 var autoCount = teams[i].getAutoCargo();
                 var autoPoints = teams[i].getAutoPoints();
                 var autoAccuracy = teams[i].getAutoAccuracy();
@@ -116,6 +115,7 @@
         }
 
         function displayTaxiPoints() {
+            console.log("RUNNING")
             var number = R1MatchData.getTaxiPoints();
             document.getElementById("myText").innerHTML = number;
         }

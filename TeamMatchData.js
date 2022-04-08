@@ -1,4 +1,4 @@
-export default class TeamMatchData {
+class TeamMatchData {
 
     constructor (match, team) { 
         this.match = match;
