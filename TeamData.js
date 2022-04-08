@@ -8,6 +8,8 @@ let allData = getAllData();
 let defendedData = getDefendedData();
 let notDefendedData = getNotDefendedData();
 
+
+
 function updateTeamData(){
 
     allData = getAllData();
@@ -171,8 +173,6 @@ function updateTaxiRate(){
         notDefendedData[key]['rates']['taxi'] = team['averages']['taxis'];
     }
 }
-
-
 
 //getters
 function getTotals(type, team){

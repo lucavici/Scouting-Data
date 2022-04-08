@@ -10,7 +10,8 @@
 
 <p>blah why is it not working</p>
 
-<a href="getRecentMatch.php">Recent Matches</a>
+<a href="GetRecentMatch.php">Recent Matches</a>
+<a href="GetTeamData.php">Teams</a>
 
 </body>
 </html>
