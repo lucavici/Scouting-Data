@@ -90,7 +90,7 @@ function cycleData(teamMatches) {
 
     const teamTotals = {
 
-        /*(change when taxi) taxis : parseInt(0), */
+        taxis : parseInt(0),
         autoHighs : parseInt(0),
         autoHighFails : parseInt(0),
         autoLows : parseInt(0),
@@ -120,10 +120,10 @@ function cycleData(teamMatches) {
 
     for (const [key, match] of Object.entries(teamMatches)){
 
-        /*(change when taxi) if (match['taxi'] == 'Yes'){
+        if (match['taxi'] == 'Yes'){
             teamTotals['taxis']++;
-        }*/
-        for (let i = 0/*(change when taxi) 1*/; i < 8/*(change when taxi) 9*/; i++){
+        }
+        for (let i = 1; i < 9; i++){
             teamTotals[Object.keys(teamTotals)[i]] += parseInt(match[Object.keys(match)[i]]);
         }
 
@@ -178,7 +178,7 @@ function getRates(totals){
 
     const teamRates = {
 
-        /*(change when taxi) taxiRate : parseInt(0),*/
+        taxiRate : parseInt(0),
         autoHigh : parseInt(0),
         autoLow : parseInt(0),
         
@@ -194,8 +194,8 @@ function getRates(totals){
 
     //checks to make sure no divison by zero, then divides the (num of succes) / (num of sucess + num of fail)
     //(organized totals so that the corresponding fail is right after the sucess)
-    let i = 0/*(change when taxi) 1*/;
-    for (i = i; i < 8 /*(change when taxi) 9*/; i = i + 2){
+    let i = 1;
+    for (i = i; i < 9; i = i + 2){
         if (totals[Object.keys(totals)[i]] + totals[Object.keys(totals)[i+1]] == 0){
             teamRates[Object.keys(teamRates)[i/2]] = 'N/A';
         } else {
@@ -206,7 +206,7 @@ function getRates(totals){
     //checks for division by zero
     //divides (num of times made of bar) / (num of times attempted bar)
     //totals organized so attempts right after sucesses
-    for (i = i; i < 16 /*(change when taxi) 17*/; i++){
+    for (i = i; i < 17; i++){
         if (totals[Object.keys(totals)[i+1]] == 0){
             teamRates[Object.keys(teamRates)[i/2]] = 'N/A';
             i++;
