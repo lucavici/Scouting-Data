@@ -8,6 +8,8 @@ let allData = getAllData();
 let defendedData = getDefendedData();
 let notDefendedData = getNotDefendedData();
 
+
+
 function updateTeamData(){
 
     allData = getAllData();
@@ -124,8 +126,6 @@ function updateDefenseRate(){
         team['rates']['offense'] = 1.0 - team['rates']['deffense'];
     }
 }
-
-
 
 //getters
 function getTotals(type, team){
