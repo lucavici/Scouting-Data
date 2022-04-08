@@ -22,7 +22,8 @@ const {updateTeamData,
         getNotDefendedRates} = require('./TeamData');
 updateTeamData();
 
-const allTotalCommands = ['autoHighs',
+const allTotalCommands = ['taxis',
+                        'autoHighs',
                         'autoHighFails',
                         'autoLows',
                         'autoLowFails',
@@ -43,7 +44,8 @@ const allTotalCommands = ['autoHighs',
                         'of',
                         'defended',];
 
-const allAverageCommands = ['autoHighs',
+const allAverageCommands = ['taxis',
+                            'autoHighs',
                             'autoHighFails',
                             'autoLows',
                             'autoLowFails',
@@ -68,7 +70,8 @@ const allAverageCommands = ['autoHighs',
                             'autoScore',
                             'teleScore',
                             'score'];
-const allRateCommands = ['autoHigh',
+const allRateCommands = ['taxi',
+                        'autoHigh',
                         'autoLow',
                         'teleHigh',
                         'teleLow',

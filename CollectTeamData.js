@@ -178,7 +178,7 @@ function getRates(totals){
 
     const teamRates = {
 
-        taxiRate : parseInt(0),
+        taxi : parseInt(0),
         autoHigh : parseInt(0),
         autoLow : parseInt(0),
         
@@ -197,9 +197,9 @@ function getRates(totals){
     let i = 1;
     for (i = i; i < 9; i = i + 2){
         if (totals[Object.keys(totals)[i]] + totals[Object.keys(totals)[i+1]] == 0){
-            teamRates[Object.keys(teamRates)[i/2]] = 'N/A';
+            teamRates[Object.keys(teamRates)[i/2 + 1]] = 'N/A';
         } else {
-            teamRates[Object.keys(teamRates)[i/2]] = totals[Object.keys(totals)[i]]/(totals[Object.keys(totals)[i]] + totals[Object.keys(totals)[i + 1]]);
+            teamRates[Object.keys(teamRates)[i/2 + 1]] = totals[Object.keys(totals)[i]]/(totals[Object.keys(totals)[i]] + totals[Object.keys(totals)[i + 1]]);
         }
     }
 

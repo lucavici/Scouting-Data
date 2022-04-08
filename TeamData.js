@@ -23,6 +23,7 @@ function updateTeamData(){
     updateAverageScore();
 
     updateDefenseRate();
+    updateTaxiRate();
 
     console.log('Updated getter data (TeamData.js)');
 }
@@ -130,6 +131,14 @@ function updateDefenseRate(){
     for (const [key, team] of Object.entries(notDefendedData)) {
         team['rates']['deffense'] = team['totals']['def'] / (team['totals']['def']  + team['totals']['of']);
         team['rates']['offense'] = 1.0 - team['rates']['deffense'];
+    }
+}
+
+function updateTaxiRate(){
+    for (const [key, team] of Object.entries(allData)){
+        team['rates']['taxi'] = team['averages']['taxis'];
+        defendedData[key]['rates']['taxi'] = team['averages']['taxis'];
+        notDefendedData[key]['rates']['taxi'] = team['averages']['taxis'];
     }
 }
 
