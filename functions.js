@@ -22,112 +22,6 @@ fs.readFile("./data.json", "utf8", (err, jsonString) => {
     }
 });
 
-export class TeamMatchData {
-
-    constructor (match, team) {
-        this.match = match;
-        this.team = team;
-        // retrieving the data from the json file
-        aHigh = data[team][match].aHigh;
-        aHighFail = data[team][match].aHighFail;
-        aLow = data[team][match].aLow;
-        aLowFail = data[team][match].aLowFail;
-        tHigh = data[team][match].aHigh;
-        tHighFail = data[team][match].tHighFail;
-        tLow = data[team][match].tLow;
-        tLowFail = data[team][match].tLowFail;
-        climbAttempted = data[team][match].climbAttempted;
-        climbActual = data[team][match].climbActual;
-        climbTime = data[team][match].climbTime;
-        defenseOffense = data[team][match].defenseOffense;
-    }
-    
-    getAutoHigh() {
-        return aHigh;
-    }
-    getAutoHighFail() {
-        return aHighFail;
-    }
-    getAutoLow() {
-        return aLow;
-    }
-    getAutoLowFail() {
-        return aLowFail;
-    }
-    getTeleopHigh() {
-        return tHigh;
-    }
-    getTeleopHighFail() {
-        return tHighFail;
-    }
-    getTeleopLow() {
-        return tLow;
-    }
-    getTeleopLowFail() {
-        return tLowFail;
-    }
-    getClimbAttempted() {
-        return climbAttempted;
-    }
-    getClimbActual() {
-        return climbActual;
-    }
-    getClimbTime() {
-        return climbTime;
-    }
-    getMatchDefenseStatus() {
-        return defenseOffense;
-    }
-    getAutoCargo() {
-        return aLow + aHigh;
-    }
-    getTeleCargo() {
-        return tLow + tHigh;
-    }
-    getTotalCargo() {
-        return aLow + aHigh + tLow + tHigh;
-    }
-
-    //computing team match accuracies
-    
-    getAutoMatchAccuracy() { 
-        return (100 * (aLow + aHigh) / (aLow + aHigh + aLowFail + aHighFail)).toFixed(2) + "%";
-    }
-    getTeleopMatchAccuracy() {
-        return (100 * (tLow + tHigh) / (tLow + tHigh + tLowFail + tHighFail)).toFixed(2) + "%"; 
-    }
-    
-    //computing team match points
-
-    getAutoPoints() {
-        return (4 * aHigh) + (2 * aLow);
-    }
-    getTeleopPoints() {
-        return (2 * tHigh) + tLow;
-    }
-    getTaxiPoints() {
-        //john needs to write a google form question for this--worth 2 pts
-        return 0;
-    }
-
-    getHangarPoints() {
-        hangarPoints = 0;
-        if (climbActual == "Traversal") {
-            hangarPoints += 15;
-        } else if (climbActual == "High") {
-            hangarPoints += 10;
-        } else if (climbActual == "Mid") {
-            hangarPoints += 6;
-        } else if (climbActual == "Low") {
-            hangarPoints += 4;
-        }
-        return hangarPoints;
-    }
-    getTeamMatchPoints() {
-        return getTaxiPoints() + getAutoPoints() + getTeleopPoints() + getHangarPoints();
-    }
-}
-
 class AllianceData {
 
     constructor (match, T1, T2, T3, Opp1, Opp2, Opp3) {
@@ -246,3 +140,6 @@ class MatchData {
 
     //get probability calculations from another class
 }
+
+//module.exports = TeamMatchData;
+

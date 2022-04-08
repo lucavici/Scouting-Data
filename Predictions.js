@@ -3,6 +3,7 @@ class MatchPredictions {
     constructor (match){
 
         this.fs = require("fs");
+        this.match = match;
         this.BlueAlliance = require("bluealliance");
         this.tba = new this.BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
         
@@ -75,6 +76,47 @@ class MatchPredictions {
 
         stDevAutoB3 = getAutoStandardDevation(this.B3); 
         stDevTeleB3 = getTeleStandardDevation(this.B3);
+
+        stDevAutoB3 = this.B3data.getAutoStandardDevation(); 
+        stDevTeleB3 = this.B3data.getTeleStandardDevation();
+
+        //defense bot data
+
+        this.defenseBotRed = this.setDefenseBotRed();
+        this.defenseBotBlue = this.setDefenseBotBlue();
+
+        this.defenseBotRed = this.teams.red[defenseBotRed];
+        this.defenseBotBlue = this.teams.blue[defenseBotBlue];
+
+        this.DRdata = new TeamData(this.defenseBotRed);
+        this.DBdata = new TeamData(this.defenseBotBlue);
+
+        avgTeleBallsDR = DRData.getAverageTeleBalls();
+        avgTeleBallsDB = DBData.getAverageTeleBalls();
+    }
+
+    setDefenseBotRed(team) {
+        if (this.teams.red[0] == team) {
+            defenseBot = 0;
+        }
+        else if (this.teams.red[1] == team) {
+            defenseBot = 1;
+        }
+        else if (this.teams.red[2] == team) {
+            defenseBot = 2;
+        }
+    }
+
+    setDefenseBotBlue(team) {
+        if (this.teams.blue[0] == team) {
+            defenseBot = 0;
+        }
+        else if (this.teams.red[1] == team) {
+            defenseBot = 1;
+        }
+        else if (this.teams.red[2] == team) {
+            defenseBot = 2;
+        }
     }
 
     getStDevAutoRedAlliance() {
@@ -102,6 +144,8 @@ class MatchPredictions {
     getTeleMeanBlueAlliance() {
         return (avgTeleBallsB1 + avgTeleBallsB2 + avgTeleBallsB3) /3;
     }
+
+
     getNumRedStDevDataPts() {
 
     }
@@ -113,6 +157,17 @@ class MatchPredictions {
     }
     getNumBlueMeanDataPts() {
 
+    }
+
+    //checkbox to select which bot is the defense bot.
+    //add only the avg points scored by the non defense bots.
+
+    getPredictedRedAllianceScore() {
+        return avgAutoBallsR1 + avgAutoBallsR2 + avgAutoBallsR3 - avgTeleBallsDR;
+    }
+
+    getPredictedBlueAllianceScore() {
+        return avgAutoBallsB1 + avgAutoBallsB2 + avgAutoBallsB3 - avgTeleBallsDB;
     }
 
     //welch's t-test
@@ -133,7 +188,23 @@ class MatchPredictions {
         t = (mean1 + mean2) / sqrt((sd1^2 / sampleSize1) + (sd2^2 / sampleSize2));
         
         return t !== np.nan ? t : mean1 > mean2;
+        //if the mean difference given the st dev isnt significant, then the population
+        //w the higher mean is more accurate
     }
+
+    //help D:
+    autoCumulativeDistribution() {
+        x = this.welchsTestAuto();
+        mean = this.getAutoMeanBlueAlliance();
+        standardDeviation = this.getStDevAutoBlueAlliance();
+        return (1 - mathjs.erf((mean - x) / (Math.sqrt(2) * standardDeviation))) / 2
+    }
+
+    // welch-sattherwaite eq
+    getAutoDegsOfFreedom() {
+
+    }
+
 
     welchsTestTele() {
         var t;
@@ -150,9 +221,14 @@ class MatchPredictions {
         return t !== NaN ? t : mean1 > mean2;
     }
 
+    // welch-sattherwaite eq
+    getAutoDegsOfFreedom() {
+        
+    }
+
     //predict ranking points
     predictedRPs() {
-        return "ur mom";
+        return  2 * wC(A) + bC(A) + rC(A);
     }
 }
 
