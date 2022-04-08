@@ -13,6 +13,8 @@ const authClient = new google.auth.JWT(
     ["https://www.googleapis.com/auth/spreadsheets"]
 );
 
+updateSheet();
+
 async function updateSheet() {
     try {
 
