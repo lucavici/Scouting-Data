@@ -1,6 +1,6 @@
 class TeamMatchData {
 
-    constructor (match, team) { 
+    constructor (match, team) {  //match,team
         this.match = match;
         this.team = team;
     }
