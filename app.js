@@ -28,7 +28,7 @@ async function updateSheet() {
         const res = await service.spreadsheets.values.get({
             auth: authClient,
             spreadsheetId: "1vV8Iwmf6zZzTP9FtKFsydJUiqniijIbhIpYnjOWNnQw",
-            range: "'Form Responses 1'!C:V",
+            range: "'FormResponses'!C:V",
         });
 
         // All of the team
