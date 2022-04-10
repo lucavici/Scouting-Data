@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>5419 Scouting</title>
+    <script src="Control.js">update();</script>
 </head>
 <body>
     <!--home page-->

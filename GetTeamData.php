@@ -12,9 +12,8 @@
 <select name="team">
 
 <?php
-    for ($x = 0; $x <= $fteamz.length; $x++) {
-      echo "<option value=\"{$x}\" id=\"{$x}\">Match {$x}</option>";
-      //echo "<option value=\"{$fteamz[$x]}\" id=\"{$fteamz[$x]}\">Team {$fteamz[$x]}</option>";
+    for ($i = 0; $i < getTeams().length; $i++) { 
+      echo "<option value=\"{$getTeams[$i]}\" id=\"{$getTeams[$i]}\">Team {$getTeams[$i]}</option>";
     }
 ?>
 

@@ -32,9 +32,9 @@
     <select name="team">
 
     <?php
-        // for ($i = 0; $i < getTeams().length; $i++) { 
-        //   echo "<option value=\"{$getTeams[$i]}\" id=\"{$x}\">Team {$x}</option>";
-        // }
+        for ($i = 0; $i < getTeams().length; $i++) { 
+          echo "<option value=\"{$getTeams[$i]}\" id=\"{$getTeams[$i]}\">Team {$getTeams[$i]}</option>";
+        }
     ?>
     
 
@@ -58,51 +58,65 @@
         console.log("hi");
                                         
         //array of team numbers in the specified match
-    
-        function displayData() {
-            var averageAutoScore = getAverages(type, team);
-            var averageTeleScore = getAverages(type, team);
-            var averageClimbScore = getAverages(type, team);
-            var averageScore = getAverages(type, team);
+        
+        var team = <?php echo json_encode($fteam); ?>;
 
-            var averageAutoScoreId = "autocount" + i;
-            var autoPointsId = "autopoints" + i;
-            var autoAccuracyId = "autoaccuracy" + i;
-            var teleCountId = "telecount" + i;
-            var telePointsId = "telepoints" + i;
-            var teleAccuracyId = "teleaccuracy" + i;
-            var climbAttemptedId = "climbattempted" + i;
-            var climbActualId = "climbactual" + i;
-            var climbTimeId = "climbtime" + i;
-
-            document.getElementById(autoCountId).innerHTML = autoCount;
-            document.getElementById(AutoPointsId).innerHTML = autoPoints;
-            document.getElementById(AutoAccuracyId).innerHTML = autoAccuracy;
-            document.getElementById(teleCountId).innerHTML = teleCount;
-            document.getElementById(telePointsId).innerHTML = telePoints;
-            document.getElementById(teleAccuracyId).innerHTML = teleAccuracy;
-            document.getElementById(climbAttemptedId).innerHTML = climbAttempted;
-            document.getElementById(climbActualId).innerHTML = climbActual;
-            document.getElementById(climbTimeId).innerHTML = climbTime;
+        function displayAutoScore() {
+            console.log("ARUNNING");
+            var averageAutoScore = getAverages('autoScore', team);
+            document.getElementById("averageAutoScore").innerHTML = averageAutoScore;
         }
-    }
-
-    function displayTaxiPoints() {
-        var number = R1MatchData.getTaxiPoints();
-        document.getElementById("myText").innerHTML = number;
+        function displayTeleScore() {
+            console.log("TRUNNING");
+            var averageTeleScore = getAverages('teleScore', team);
+            document.getElementById("averageTeleScore").innerHTML = averageTeleScore;
+        }
+        function displayClimbScore() {
+            console.log("CRUNNING");
+            var averageClimbScore = getAverages('climbScore', team);
+            document.getElementById("averageClimbScore").innerHTML = averageClimbScore;
+        }
+        function displayAverageScore() {
+            console.log("AARUNNING");
+            var averageScore = getAverages('score', team);
+            document.getElementById("averageScore").innerHTML = averageScore;
+        }
+        function displayTeleHighRate() {
+            console.log("AARUNNING");
+            var teleHighRate = getAverages('teleHigh', team);
+            document.getElementById("teleHighRate").innerHTML = averageAutoScore;
+        }
     }
 
     </script>
 
-    <body onload="displayTaxiPoints()">
+    <body onload="displayAutoScore()">
 
-    <p>Taxi Points: <span id="myText"></span></p>
+        <p>Average Auto Score: <span id="averageAutoScore"></span></p>
 
     </body>
 
-    <body onload="displayData()">
+    <body onload="displayTeleScore()">
 
-    <p>Taxi Points: <span id="myText"></span></p>
+        <p>Average Tele Score: <span id="averageTeleScore"></span></p>
+
+    </body>
+
+    <body onload="displayClimbScore()">
+
+        <p>Average Climb Score: <span id="averageClimbScore"></span></p>
+
+    </body>
+
+    <body onload="displayAverageScore()">
+
+        <p>Average Score: <span id="averageScore"></span></p>
+
+    </body>
+
+    <body onload="displayTeleHighRate()">
+
+        <p>Tele High Rate: <span id="teleHighRate"></span></p>
 
     </body>
 
