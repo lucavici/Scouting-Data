@@ -92,7 +92,7 @@
 
     <body onload="displayAutoScore()">
 
-        <p>Average Auto Score: <span id="averageAutoScore"></span></p>
+        <p>Average Auto Score: <span onload="displayAutoScore()" id="averageAutoScore"></span></p>
 
     </body>
 

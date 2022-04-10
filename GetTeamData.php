@@ -3,17 +3,20 @@
 
 <head>
 <title>Select Team</title>
+<script src="TeamData.js"></script>
 </head>
 
 <body>
 
+<h2>Team Data</h2>
+
 <form action="TeamData.php" method="post">
 
 <select name="team">
-
+<script>//console.log(getTeams());</script>
 <?php
     for ($i = 0; $i < getTeams().length; $i++) { 
-      echo "<option value=\"{$getTeams[$i]}\" id=\"{$getTeams[$i]}\">Team {$getTeams[$i]}</option>";
+      echo "<option value=\"{$getTeams[$i]}\" id=\"{$getTeams[$i]}\">Team {{$getTeams[$i]}}</option>";
     }
 ?>
 

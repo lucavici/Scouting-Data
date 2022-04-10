@@ -1,12 +1,15 @@
-const {getAllData} = require('./CollectTeamData');
-const {getDefendedData} = require('./CollectTeamData');
-const {getNotDefendedData} = require('./CollectTeamData');
-const {getData} = require('./CollectTeamData');
+// const {getAllData} = require('./CollectTeamData');
+// const {getDefendedData} = require('./CollectTeamData');
+// const {getNotDefendedData} = require('./CollectTeamData');
+// const {getData} = require('./CollectTeamData');
 
+//import CollectTeamData from "./CollectTeamData.js";
 
-let allData = getAllData();
-let defendedData = getDefendedData();
-let notDefendedData = getNotDefendedData();
+const TeamData = new CollectTeamData();
+
+let allData =  TeamData.getAllData();
+let defendedData = TeamData.getDefendedData();
+let notDefendedData = TeamData.getNotDefendedData();
 
 function updateTeamData(){
 

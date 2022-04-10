@@ -4,7 +4,7 @@
 <head>
 <title>Recent Match</title>
 <script src="TeamMatchData.js"></script>
-<!--<script src="./functions.js">//import {TeamMatchData} from "./functions.js";</script>-->
+<script src="./functions.js">//import {TeamMatchData} from "./functions.js";</script>
 </head>
 
 <?php
