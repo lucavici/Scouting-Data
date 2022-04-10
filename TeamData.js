@@ -8,8 +8,6 @@ let allData = getAllData();
 let defendedData = getDefendedData();
 let notDefendedData = getNotDefendedData();
 
-
-
 function updateTeamData(){
 
     allData = getAllData();
@@ -175,6 +173,16 @@ function updateTaxiRate(){
 }
 
 //getters
+function getTeams() {
+    const teams = [];
+    var i=0;
+    for (const [key, team] of Object.entries(allData)){
+        cars[i] = team;
+        i++;
+    }
+    return teams;
+}
+
 function getTotals(type, team){
     return allData[team]['totals'][type];
 }

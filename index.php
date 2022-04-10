@@ -11,7 +11,7 @@
 <p>blah why is it not working</p>
 
 <a href="GetRecentMatch.php">Recent Matches</a>
-<a href="GetTeamData.php">Teams</a>
+<a href="TeamData.php">Teams</a>
 
 </body>
 </html>

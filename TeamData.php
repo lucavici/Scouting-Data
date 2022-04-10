@@ -3,7 +3,7 @@
 
 <head>
 <title>Team Data</title>
-
+<script src="TeamData.js"></script>
 <!--<script src="./functions.js">//import {TeamMatchData} from "./functions.js";</script>-->
 </head>
 
@@ -11,53 +11,20 @@
 
     //include 'recentMatch.js';
 
-    if(isset($_POST["team"])) {
-        $fteam = htmlspecialchars($_POST["team"]);
-    }
-    echo "{$fteam}";
+    //if(isset($_POST["team"])) {
+        //$fteam = htmlspecialchars($_POST["team"]);
+    //}
+    //echo "{$fteam}";
 
     // jquery selecting based on whether
     // the team is on red or blue
     // alliance, pulled from bluealliance data
 ?>
-
-<script src="data.json">
-    
-    const fs = require("fs");
-
-    //to get blue alliance data
-    // var BlueAlliance = require("bluealliance");
-    // var tba = new BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
-
-    fs.readFile("./data.json", "utf8", (err, jsonString) => {
-
-        if (err) {
-            console.log("Error reading file from disk:", err);
-            return;
-        }
-
-        try {
-            const data = JSON.parse(jsonString);
-            //console.log(data[254][3].AHigh); //test
-        } 
-        
-        catch (err) {
-            console.log("Error parsing JSON string:", err);
-        }
-    });
-
-</script>
     
     <script>
-        function getTeams() {
-            teams = ["254", "333", "3343"];
-            // for (i=0; i < data[team]; i++) {
-            //     teams[i] = data[team];
-            // }
-            return teams;
-        }
-        teamz[] = getTeams();
-        console.log(teamz);
+        console.log(getTeams());
+        // teamz[] = getTeams();
+        // console.log(teamz);
     </script>
 
     <form action="TeamData.php" method="post">
@@ -65,9 +32,9 @@
     <select name="team">
 
     <?php
-        for ($i = 0; $i < getTeams().length; $i++) { 
-          echo "<option value=\"{$getTeams[$i]}\" id=\"{$x}\">Team {$x}</option>";
-        }
+        // for ($i = 0; $i < getTeams().length; $i++) { 
+        //   echo "<option value=\"{$getTeams[$i]}\" id=\"{$x}\">Team {$x}</option>";
+        // }
     ?>
     
 
@@ -86,13 +53,7 @@
 
     //overview data
 ?>
-
-    <script src=“TeamMatchData.js”></script>
-
     <script>
-
-        const {getTeamData} = require('./TeamData');
-        
 
         console.log("hi");
                                         
@@ -132,7 +93,7 @@
     }
 
     </script>
-<!--
+
     <body onload="displayTaxiPoints()">
 
     <p>Taxi Points: <span id="myText"></span></p>
@@ -144,7 +105,6 @@
     <p>Taxi Points: <span id="myText"></span></p>
 
     </body>
--->
 
     <?php
     /*
