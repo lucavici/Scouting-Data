@@ -177,7 +177,7 @@ function getTeams() {
     const teams = [];
     var i=0;
     for (const [key, team] of Object.entries(allData)){
-        cars[i] = team;
+        teams[i] = team;
         i++;
     }
     return teams;
