@@ -3,6 +3,7 @@
 
 <head>
 <title>Team Details</title>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <?php

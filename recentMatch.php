@@ -4,6 +4,7 @@
 <head>
 <title>Recent Match</title>
 <script src="TeamMatchData.js"></script>
+<link rel="stylesheet" href="style.css">
 <script src="./functions.js">//import {TeamMatchData} from "./functions.js";</script>
 </head>
 
@@ -120,6 +121,12 @@
             document.getElementById("myText").innerHTML = number;
         }
 
+        function displayAutoPoints() {
+            console.log("RUNNING2")
+            var number = R1MatchData.getAutoHigh();
+            document.getElementById("myText2").innerHTML = number;
+        }
+
     </script>
 
     <body onload="displayTaxiPoints()">
@@ -128,9 +135,9 @@
 
     </body>
 
-    <body onload="displayData()">
+    <body onload="displayAutoPoints()">
 
-    <p>Taxi Points: <span id="myText"></span></p>
+    <p>Taxi Points: <span id="myText2"></span></p>
 
     </body>
 

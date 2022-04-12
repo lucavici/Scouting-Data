@@ -4,11 +4,18 @@
 <head>
 <title>Select Team</title>
 <script src="TeamData.js"></script>
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<div id="title">
+
 <h2>Team Data</h2>
+
+</div>
+
+<div id="dropdown">
 
 <form action="TeamData.php" method="post">
 
@@ -35,10 +42,12 @@
         this.responseText;
       }
     };
-    xhttp.open("GET", "recentMatch.php", true);
+    xhttp.open("GET", "TeamData.php", true);
     xhttp.send();
   }
 </script>
+
+</div>
 
 </body>
 </html>

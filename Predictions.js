@@ -162,6 +162,16 @@ class MatchPredictions {
     //checkbox to select which bot is the defense bot.
     //add only the avg points scored by the non defense bots.
 
+    getPredictedWin() {
+        var win = "n/a";
+        if (this.getPredictedRedAllianceScore() > this.getPredictedBlueAllianceScore()) {
+            win = "red";
+        }
+        else if (this.getPredictedRedAllianceScore() > this.getPredictedBlueAllianceScore()) {
+            win = "blue";
+        }
+        return win;
+    }
     getPredictedRedAllianceScore() {
         return avgAutoBallsR1 + avgAutoBallsR2 + avgAutoBallsR3 - avgTeleBallsDR;
     }

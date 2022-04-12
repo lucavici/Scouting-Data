@@ -2,25 +2,25 @@
 <html lang="en">
 
 <head>
-<title>Select Recent Match</title>
+<title>Match Predictions</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<form action="recentMatch.php" method="post">
+<form action="MatchPredictions.php" method="post">
 
 <select name="match">
 
 <?php
-    for ($x = 4; $x >= 1; $x--) { //4->most recent match scouted
+    for ($x = 4; $x >= 1; $x--) { //all matches at event
       echo "<option value=\"{$x}\" id=\"{$x}\">Match {$x}</option>";
     }
 ?>
 
 </select>
 
-<input onclick="loadDoc()" type="submit" value="Get Match">
+<input onclick="loadDoc()" type="submit" value="Get Match Predictions">
 
 <div id="content"></div>
 
@@ -33,7 +33,7 @@
         this.responseText;
       }
     };
-    xhttp.open("GET", "recentMatch.php", true);
+    xhttp.open("GET", "MatchPredictions.php", true);
     xhttp.send();
   }
 </script>

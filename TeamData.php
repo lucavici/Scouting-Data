@@ -4,6 +4,7 @@
 <head>
 <title>Team Data</title>
 <script src="TeamData.js"></script>
+<link rel="stylesheet" href="style.css">
 <!--<script src="./functions.js">//import {TeamMatchData} from "./functions.js";</script>-->
 </head>
 
@@ -20,7 +21,8 @@
     // the team is on red or blue
     // alliance, pulled from bluealliance data
 ?>
-    
+    <div id="dropdown">
+
     <script>
         console.log(getTeams());
         // teamz[] = getTeams();
@@ -36,6 +38,8 @@
           echo "<option value=\"{$getTeams[$i]}\" id=\"{$getTeams[$i]}\">Team {$getTeams[$i]}</option>";
         }
     ?>
+
+    </div>
     
 
     </select>
@@ -49,10 +53,13 @@
 
     //output a quick overview of each alliance team's data in a match
 
-    echo "<h3>Team {$fteam} Data </h3>"; //w
+    echo "<div id=\"title\"><h3>Team {$fteam} Data </h3></div>"; //w
 
     //overview data
 ?>
+
+<div id="data">
+
     <script>
 
         console.log("hi");
@@ -63,7 +70,7 @@
 
         function displayAutoScore() {
             console.log("ARUNNING");
-            var averageAutoScore = getAverages('autoScore', team);
+            var averageAutoScore = 5; //getAverages('autoScore', team);
             document.getElementById("averageAutoScore").innerHTML = averageAutoScore;
         }
         function displayTeleScore() {
@@ -84,7 +91,7 @@
         function displayTeleHighRate() {
             console.log("AARUNNING");
             var teleHighRate = getAverages('teleHigh', team);
-            document.getElementById("teleHighRate").innerHTML = averageAutoScore;
+            document.getElementById("teleHighRate").innerHTML = teleHighRate;
         }
     }
 
@@ -119,6 +126,8 @@
         <p>Tele High Rate: <span id="teleHighRate"></span></p>
 
     </body>
+
+</div>
 
     <?php
     /*
