@@ -8,6 +8,9 @@
     <!--<script src="Control.js">update();</script>-->
     <link rel="stylesheet" href="style.css">
     <script src="CollectTeamData.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 </head>
 
 <body>
@@ -25,73 +28,151 @@
 
     <div class="main">
 
-        <input id="search" type="text" placeholder="Search Team">
-
-        <input id="searchbutton" onclick="loadDoc()" type="submit" value="Enter">
+        <div class="wrapper">
+            <div class="search-input">
+              <a href="" target="_blank" hidden></a>
+              <input id="input" type="text" placeholder="Search Team">
+              <div class="autocom-box" onclick="search()">
+                <!-- list inserted from javascript -->
+              </div>
+              <div class="icon"><i class="fas fa-search"></i></div>
+            </div>
+        </div>
 
         <div id="content"></div>
 
-        <script>
-        function loadDoc() {
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("content").innerHTML =
-                this.responseText;
+    </div>
+
+</body>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+<script type="text/javascript">
+    
+    var TeamData = {
+        "Teams": [{
+            "number": "5419",
+            "match": [{
+                "number": "2",
+                "aHigh": "4"
+            }, {
+                "number": "2",
+                "aHigh": "4"
+            }, {
+                "number": "2",
+                "aHigh": "4"
+            }, {
+                "number": "2",
+                "aHigh": "4"
+            }]
+        }, {
+            "number": "254",
+            "match": [{
+                "number": "3",
+                "aHigh": "6"
+            }, {
+                "number": "3",
+                "aHigh": "6"
+            }, {
+                "number": "3",
+                "aHigh": "6"
+            }, {
+                "number": "3",
+                "aHigh": "6"
+            }]
+        }]
+    };
+
+    let suggestions = [];
+
+    $(document).ready(function () {
+        var listItems = '<option selected="selected" value="0">- Select -</option>';
+
+    for (var i = 0; i < TeamData.Teams.length; i++) {
+        listItems += "<option value='" + TeamData.Teams[i].number + "'>" + TeamData.Teams[i].number + "</option>";
+        suggestions.push(TeamData.Teams[i].number);
+    }
+
+        $("#teamselect").html(listItems);
+    });
+
+    ///////////
+
+    // getting all required elements
+    const searchWrapper = document.querySelector(".search-input");
+    const inputBox = searchWrapper.querySelector("input");
+    const suggBox = searchWrapper.querySelector(".autocom-box");
+    const icon = searchWrapper.querySelector(".icon");
+    
+    // Get the input field
+    var input = document.getElementById("input");
+
+    // if user press any key and release
+    inputBox.onkeyup = (e)=>{
+        let userData = e.target.value; // what the user entered
+        let emptyArray = []; 
+
+        if(userData){
+            // Execute a function when the user presses a key on the keyboard
+            input.addEventListener("keypress", function(event) {
+            // If the user presses the "Enter" key on the keyboard
+            if (event.key === "Enter") {
+                search();
             }
-            };
-            xhttp.open("GET", "index2.html", true);
-            xhttp.send();
-        }
-        </script>
+            });
 
-        <p>
-            <input type="button" 
-                onclick="populateSelect()" 
-                    value="click to populate" />
-        </p>
-
-        <!--The SELECT element.-->
-        <select id="sel" onchange="show(this)">
-            <option value="">-- Select --</option>
-        </select>
-
-        <p id="msg"></p>
-        </body>
-
-        <script>
-
-        const fs = require("fs");
-        let data;
-
-        try{
-            data = require('./data.json');
-        }
-        catch (err) {
-            console.log("Error parsing JSON string:", err);
-        }
-
-
-        function populateSelect() {
-            // THE JSON ARRAY.
-
-            var ele = document.getElementById('sel');
-            for (var i = 0; i < data.length; i++) {
-                // POPULATE SELECT ELEMENT WITH JSON.
-                ele.innerHTML = ele.innerHTML +
-                    '<option value="' + data[i] + '</option>';
+            icon.onclick = ()=> {
+                search();
             }
+
+            emptyArray = suggestions.filter((data)=>{
+                //filtering array value and user characters to lowercase and return only those words which are start with user enetered chars
+                return data.toLocaleLowerCase().startsWith(userData.toLocaleLowerCase());
+            });
+
+            emptyArray = emptyArray.map((data)=>{
+                // passing return data inside li tag
+                return data = `<li>${data}</li>`;
+            });
+            
+            searchWrapper.classList.add("active"); //show autocomplete box
+            showSuggestions(emptyArray);
+            let allList = suggBox.querySelectorAll("li");
+            
+            for (let i = 0; i < allList.length; i++) {
+                //adding onclick attribute in all li tag
+                allList[i].setAttribute("onclick", "select(this)");
+            }
+        } else {
+            searchWrapper.classList.remove("active"); //hide autocomplete box
         }
+    }
 
-        function show(ele) {
-            // GET THE SELECTED VALUE FROM <select> ELEMENT AND SHOW IT.
-            var msg = document.getElementById('msg');
-            msg.innerHTML = 'Selected Bird: <b>' + ele.options[ele.selectedIndex].text + '</b> </br>' +
-                'ID: <b>' + ele.value + '</b>';
+    function showSuggestions(list){
+        let listData;
+        if (!list.length){
+            userValue = inputBox.value;
+            listData = `<li>${userValue}</li>`;
+        } else {
+        listData = list.join('');
         }
+        suggBox.innerHTML = listData;
+    }
 
-        </script>
+    function search() {
+        //document.querySelector(".search-input") = userData;
+        searchWrapper.classList.remove("active");
+        suggBox.innerHTML = "";
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("content").innerHTML =
+            this.responseText;
+        }
+        };
+        xhttp.open("GET", "index2.html", true);
+        xhttp.send();
+    }
 
-</div>
+</script>
 
 </html>

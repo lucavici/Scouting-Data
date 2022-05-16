@@ -1,7 +1,10 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
 * {
     background-color: rgb(29, 25, 58);
     color: white;
+    font-family: 'Poppins', sans-serif;
 }
 
 .sidenav {
@@ -17,78 +20,149 @@
     padding-top: 30px;
   }
   
-  .sidenav a {
-    background-color: #111;
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 23px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-  }
-  
-  .sidenav a:hover {
-    color: #f1f1f1;
-    font-size: 24px;
-  }
+.sidenav a {
+  background-color: #111;
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 19px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
 
-  #logo {
-    background-color: #111;
-    padding: 7px 8px 25px 50px;
-    width: 75px;
-    transition: 0.5s;
-  }
+.sidenav a:hover {
+  color: #f1f1f1;
+  font-size: 20px;
+}
 
-  #logo:hover {
-    width: 78px;
-  }
-  
-  @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-  }
+#logo {
+  background-color: #111;
+  padding: 7px 8px 25px 50px;
+  width: 75px;
+  transition: 0.5s;
+}
 
-  .main {
-    padding-left: 300px;
-    padding-top: 30px;
-    white-space: nowrap;
-  }
+#logo:hover {
+  width: 78px;
+}
 
-  #search {
-    padding: 6px;
-    margin-top: 8px;
-    font-size: 17px;
-    border-style: solid;
-  }
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
 
-  #searchbutton {
-    padding: 6px;
-    margin-top: 8px;
-    margin-right: 16px;
-    height: 35px;
-    background: rgb(56, 52, 52);
-    color: white;
-    font-size: 17px;
-    border: none;
-    cursor: pointer;
-  }
+.main {
+  padding-left: 300px;
+  padding-top: 30px;
+  white-space: nowrap;
+}
 
-  #searchbutton:hover {
-    background: rgb(25, 24, 24);
-    color: darkgrey;
-    font-size: 17px;
-    border: slateblue;
-    cursor: pointer;
-  }
+#search {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border-style: solid;
+}
 
-  #quickdata {
-    width: 150px;
-    height: 150px;
-    text-align: left;
-    padding-left: 300px;
-    padding-top: 30px;
-    white-space: nowrap;
-    background-color: rgb(26, 15, 66);
-    border-radius: 10px;
-    box-shadow: #1f249b;
-  }
+#searchbutton {
+  padding: 6px;
+  margin-top: 8px;
+  margin-right: 16px;
+  height: 35px;
+  background: rgb(56, 52, 52);
+  color: white;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+#searchbutton:hover {
+  background: rgb(25, 24, 24);
+  color: darkgrey;
+  font-size: 17px;
+  border: slateblue;
+  cursor: pointer;
+}
+
+#quickdata {
+  width: 150px;
+  height: 150px;
+  text-align: left;
+  padding-left: 300px;
+  padding-top: 30px;
+  white-space: nowrap;
+  background-color: rgb(26, 15, 66);
+  border-radius: 10px;
+  box-shadow: #1f249b;
+}
+
+
+body{
+  background: #644bff;
+  padding: 0px;
+}
+::selection{
+  color: #fff;
+  background: #664AFF;
+}
+.wrapper{
+  max-width: 450px;
+}
+.wrapper .search-input{
+  background: #fff;
+  width: 100%;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12);
+}
+.search-input input{
+  height: 55px;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 0 60px 0 20px;
+  font-size: 18px;
+  box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
+}
+.search-input.active input{
+  border-radius: 5px 5px 0 0;
+}
+.search-input .autocom-box{
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  max-height: 280px;
+  overflow-y: auto;
+}
+.search-input.active .autocom-box{
+  padding: 10px 8px;
+  opacity: 1;
+  pointer-events: auto;
+}
+.autocom-box li{
+  list-style: none;
+  padding: 8px 12px;
+  display: none;
+  width: 100%;
+  cursor: default;
+  border-radius: 3px;
+}
+.search-input.active .autocom-box li{
+  display: block;
+}
+.autocom-box li:hover{
+  background: #250d30;
+}
+.search-input .icon{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  height: 55px;
+  width: 55px;
+  text-align: center;
+  line-height: 55px;
+  font-size: 20px;
+  color: #644bff;
+  cursor: pointer;
+}
