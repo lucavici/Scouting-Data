@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>5419 Scouting</title>
+    <link rel="shortcut icon" type="image/jpg" href="logo.png"/>
+    <!--<script src="Control.js">update();</script>-->
+    <link rel="stylesheet" href="style.css">
+    <script src="TeamData.js"></script>
+</head>
+
+<body>
+
+    <!--home page-->
+
+    <div id="sidenav" class="sidenav">
+
+        <a href="index.html"><img id="logo" src="logo.png" alt="logo"></a>
+        <a href="GetRecentMatch.html">Recent Matches</a>
+        <a href="GetTeamData.php">Teams</a>
+        <a href="MatchPredictions.php">Match Predictions</a>
+
+    </div>
+
+    <br>
+
+    <p id ="quickdata">Quick Data</p>
+
+    <script>
+        teams = getTeams();
+        const t = document.getElementById('search'). value;
+
+        for (team in teams) {
+            if (t.equals(team)) {
+                console.log("lol");
+            }
+        }
+    </script>
+
+</body>
+
+</html>

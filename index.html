@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>5419 Scouting</title>
+    <link rel="shortcut icon" type="image/jpg" href="logo.png"/>
+    <!--<script src="Control.js">update();</script>-->
+    <link rel="stylesheet" href="style.css">
+    <script src="CollectTeamData.js"></script>
+</head>
+
+<body>
+
+    <!--home page-->
+
+    <div id="sidenav" class="sidenav">
+
+        <a href="index.html"><img id="logo" src="logo.png" alt="logo"></a>
+        <a href="GetRecentMatch.html">Recent Matches</a>
+        <a href="GetTeamData.php">Teams</a>
+        <a href="MatchPredictions.php">Match Predictions</a>
+
+    </div>
+
+    <div class="main">
+
+        <input id="search" type="text" placeholder="Search Team">
+
+        <input id="searchbutton" onclick="loadDoc()" type="submit" value="Enter">
+
+        <div id="content"></div>
+
+        <script>
+        function loadDoc() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("content").innerHTML =
+                this.responseText;
+            }
+            };
+            xhttp.open("GET", "index2.html", true);
+            xhttp.send();
+        }
+        </script>
+
+        <p>
+            <input type="button" 
+                onclick="populateSelect()" 
+                    value="click to populate" />
+        </p>
+
+        <!--The SELECT element.-->
+        <select id="sel" onchange="show(this)">
+            <option value="">-- Select --</option>
+        </select>
+
+        <p id="msg"></p>
+        </body>
+
+        <script>
+
+        const fs = require("fs");
+        let data;
+
+        try{
+            data = require('./data.json');
+        }
+        catch (err) {
+            console.log("Error parsing JSON string:", err);
+        }
+
+
+        function populateSelect() {
+            // THE JSON ARRAY.
+
+            var ele = document.getElementById('sel');
+            for (var i = 0; i < data.length; i++) {
+                // POPULATE SELECT ELEMENT WITH JSON.
+                ele.innerHTML = ele.innerHTML +
+                    '<option value="' + data[i] + '</option>';
+            }
+        }
+
+        function show(ele) {
+            // GET THE SELECTED VALUE FROM <select> ELEMENT AND SHOW IT.
+            var msg = document.getElementById('msg');
+            msg.innerHTML = 'Selected Bird: <b>' + ele.options[ele.selectedIndex].text + '</b> </br>' +
+                'ID: <b>' + ele.value + '</b>';
+        }
+
+        </script>
+
+</div>
+
+</html>

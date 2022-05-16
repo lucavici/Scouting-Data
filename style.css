@@ -1,16 +1,94 @@
 
 * {
-    background-color: blue;
+    background-color: rgb(29, 25, 58);
+    color: white;
 }
 
-.title {
-    background-color: blue;
-}
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 30px;
+  }
+  
+  .sidenav a {
+    background-color: #111;
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 23px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  .sidenav a:hover {
+    color: #f1f1f1;
+    font-size: 24px;
+  }
 
-.dropdown {
-    background-color
-}
+  #logo {
+    background-color: #111;
+    padding: 7px 8px 25px 50px;
+    width: 75px;
+    transition: 0.5s;
+  }
 
-.data {
-    background-color
-}
+  #logo:hover {
+    width: 78px;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+
+  .main {
+    padding-left: 300px;
+    padding-top: 30px;
+    white-space: nowrap;
+  }
+
+  #search {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border-style: solid;
+  }
+
+  #searchbutton {
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    height: 35px;
+    background: rgb(56, 52, 52);
+    color: white;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+  }
+
+  #searchbutton:hover {
+    background: rgb(25, 24, 24);
+    color: darkgrey;
+    font-size: 17px;
+    border: slateblue;
+    cursor: pointer;
+  }
+
+  #quickdata {
+    width: 150px;
+    height: 150px;
+    text-align: left;
+    padding-left: 300px;
+    padding-top: 30px;
+    white-space: nowrap;
+    background-color: rgb(26, 15, 66);
+    border-radius: 10px;
+    box-shadow: #1f249b;
+  }

@@ -175,7 +175,7 @@
 
 <body>
 
-<a href="recentmatches.html">Recent Matches</a>
+<a href="Recentmatches.html">Recent Matches</a>
 
 </body>
 </html>
