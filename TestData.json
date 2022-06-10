@@ -1,0 +1,46 @@
+[{
+    "number": "5419",
+    "match": [{
+        "number": "2",
+        "aHigh": "4"
+    }, {
+        "number": "2",
+        "aHigh": "4"
+    }, {
+        "number": "2",
+        "aHigh": "4"
+    }, {
+        "number": "2",
+        "aHigh": "4"
+    }]
+}, {
+    "number": "5499",
+    "match": [{
+        "number": "2",
+        "aHigh": "4"
+    }, {
+        "number": "2",
+        "aHigh": "4"
+    }, {
+        "number": "2",
+        "aHigh": "4"
+    }, {
+        "number": "2",
+        "aHigh": "4"
+    }]
+}, {
+    "number": "254",
+    "match": [{
+        "number": "3",
+        "aHigh": "6"
+    }, {
+        "number": "3",
+        "aHigh": "6"
+    }, {
+        "number": "3",
+        "aHigh": "6"
+    }, {
+        "number": "3",
+        "aHigh": "6"
+    }]
+}]

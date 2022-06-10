@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
 </head>
 
 <body>
@@ -38,58 +39,100 @@
             </div>
         </div>
 
-        <div id="content"></div>
+        <div id="showhide">
+
+            <p id ="quickdata">Quick Data</p>
+    
+            <canvas id="chart" width="400px" height="400px"></canvas>
+    
+        </div>
 
     </div>
 
 </body>
 
+
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 <script type="text/javascript">
+
+    let TeamData;
+    let length;
+
+    const init = async () => {
+        try {
+            TeamData = await (await fetch("TestData.json")).json();
+            //length = Object.keys(TeamData).length;
+        } catch(e) {
+            console.log(`Could not read file: ${e}`);
+        }
+    }
     
-    var TeamData = {
-        "Teams": [{
-            "number": "5419",
-            "match": [{
-                "number": "2",
-                "aHigh": "4"
-            }, {
-                "number": "2",
-                "aHigh": "4"
-            }, {
-                "number": "2",
-                "aHigh": "4"
-            }, {
-                "number": "2",
-                "aHigh": "4"
-            }]
-        }, {
-            "number": "254",
-            "match": [{
-                "number": "3",
-                "aHigh": "6"
-            }, {
-                "number": "3",
-                "aHigh": "6"
-            }, {
-                "number": "3",
-                "aHigh": "6"
-            }, {
-                "number": "3",
-                "aHigh": "6"
-            }]
-        }]
-    };
+    // var TeamData = {
+    //     "Teams": [{
+    //         "number": "5419",
+    //         "match": [{
+    //             "number": "2",
+    //             "aHigh": "4"
+    //         }, {
+    //             "number": "2",
+    //             "aHigh": "4"
+    //         }, {
+    //             "number": "2",
+    //             "aHigh": "4"
+    //         }, {
+    //             "number": "2",
+    //             "aHigh": "4"
+    //         }]
+    //     }, {
+    //         "number": "5499",
+    //         "match": [{
+    //             "number": "2",
+    //             "aHigh": "4"
+    //         }, {
+    //             "number": "2",
+    //             "aHigh": "4"
+    //         }, {
+    //             "number": "2",
+    //             "aHigh": "4"
+    //         }, {
+    //             "number": "2",
+    //             "aHigh": "4"
+    //         }]
+    //     }, {
+    //         "number": "254",
+    //         "match": [{
+    //             "number": "3",
+    //             "aHigh": "6"
+    //         }, {
+    //             "number": "3",
+    //             "aHigh": "6"
+    //         }, {
+    //             "number": "3",
+    //             "aHigh": "6"
+    //         }, {
+    //             "number": "3",
+    //             "aHigh": "6"
+    //         }]
+    //     }]
+    // };
 
     let suggestions = [];
 
     $(document).ready(function () {
+
         var listItems = '<option selected="selected" value="0">- Select -</option>';
 
-    for (var i = 0; i < TeamData.Teams.length; i++) {
-        listItems += "<option value='" + TeamData.Teams[i].number + "'>" + TeamData.Teams[i].number + "</option>";
-        suggestions.push(TeamData.Teams[i].number);
-    }
+        for (var i = 0; i < length; i++) {
+            team = TeamData.getJSONObject(i);
+
+            listItems += "<option value='" + team.number + "'>" + team.number + "</option>";
+            suggestions.push(team.number);
+        }
+
+        // for (var i = 0; i < TeamData.length; i++) {
+        //     listItems += "<option value='" + TeamData[i].number + "'>" + TeamData[i].number + "</option>";
+        //     suggestions.push(TeamData[i].number);
+        // }
 
         $("#teamselect").html(listItems);
     });
@@ -110,13 +153,13 @@
         let userData = e.target.value; // what the user entered
         let emptyArray = []; 
 
-        if(userData){
+        if (userData){
             // Execute a function when the user presses a key on the keyboard
             input.addEventListener("keypress", function(event) {
-            // If the user presses the "Enter" key on the keyboard
-            if (event.key === "Enter") {
-                search();
-            }
+                // If the user presses the "Enter" key on the keyboard
+                if (event.key === "Enter") {
+                    search();
+                }
             });
 
             icon.onclick = ()=> {
@@ -158,19 +201,75 @@
     }
 
     function search() {
-        //document.querySelector(".search-input") = userData;
-        searchWrapper.classList.remove("active");
-        suggBox.innerHTML = "";
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("content").innerHTML =
-            this.responseText;
-        }
-        };
-        xhttp.open("GET", "index2.html", true);
-        xhttp.send();
+        document.getElementById("showhide").style.visibility = "visible";
+        suggestions = [];
+        // //document.querySelector(".search-input") = userData;
+        // searchWrapper.classList.remove("active");
+        // suggBox.innerHTML = "";
+        // var xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = function() {
+        // if (this.readyState == 4 && this.status == 200) {
+        //     document.getElementById("content").innerHTML =
+        //     this.responseText;
+        // }
+        // };
+        // xhttp.open("GET", "index2.html", true);
+        // xhttp.send();
     }
+
+
+    // teams = getTeams();
+    // const t = document.getElementById('search'). value;
+
+    // for (team in teams) {
+    //     if (t.equals(team)) {
+    //         console.log("lol");
+    //     }
+    // }
+
+    ///////////
+
+    const ctx = document.getElementById('chart').getContext('2d');
+
+    // let matches = [];
+    // for (var i = 0; i < 3; i++) { //data.length
+    //     matches.push(TeamData.Teams[i].number)
+    // }
+
+    const myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            matches: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                label: '# of Votes',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 
 </script>
 
