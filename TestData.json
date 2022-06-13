@@ -1,21 +1,21 @@
 [{
     "number": "5419",
-    "match": [{
-        "number": "2",
+    "matches": [{
+        "number": "1",
         "aHigh": "4"
     }, {
         "number": "2",
         "aHigh": "4"
     }, {
-        "number": "2",
+        "number": "3",
         "aHigh": "4"
     }, {
-        "number": "2",
+        "number": "4",
         "aHigh": "4"
     }]
 }, {
     "number": "5499",
-    "match": [{
+    "matches": [{
         "number": "2",
         "aHigh": "4"
     }, {
@@ -30,7 +30,7 @@
     }]
 }, {
     "number": "254",
-    "match": [{
+    "matches": [{
         "number": "3",
         "aHigh": "6"
     }, {

@@ -44,6 +44,8 @@
             <p id ="quickdata">Quick Data</p>
     
             <canvas id="chart" width="400px" height="400px"></canvas>
+
+            <br><br>
     
         </div>
 
@@ -170,40 +172,34 @@
                 suggBox.innerHTML = listData;
             }
 
-
-            // teams = getTeams();
-            // const t = document.getElementById('search'). value;
-
-            // for (team in teams) {
-            //     if (t.equals(team)) {
-            //         console.log("lol");
-            //     }
-            // }
-
-            ///////////
-
-            const ctx = document.getElementById('chart').getContext('2d');
-
-            //let selectedTeam = 
-
             var matchNums = [];
-            console.log(TeamData[0].match[0].aHigh);
+            console.log(TeamData[0].matches[0].number);
+            console.log("hi");
+            console.log(TeamData[0].matches[0].aHigh);
             
-            for (var i = 0; i < TeamData.length; i++) { //data.length
-                for (var j = 0; j < TeamData[0].match[0].length; j++) {
-                    console.log(TeamData[i].match[j].aHigh);
-                    matches.push(TeamData[i].match[j].aHigh);
+            console.log(document.getElementById("input").value);
+            
+            var selectedTeam = "5419";
+
+            let obj = {};
+
+            for (var i = 0; i < TeamData.length; i++) {
+                if (TeamData[i].number == selectedTeam) {
+                    for (var j = 0; j < TeamData[i].matches.length; j++) {
+                        obj[TeamData[i].matches[j].number] = TeamData[i].matches[j].aHigh;
+                    }
                 }
             }
-            //console.log(matches);
+            console.log(obj);
 
+            const ctx = document.getElementById('chart').getContext('2d');
             const myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    matches: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                    labels: Object.keys(obj),
                     datasets: [{
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
+                        label: 'Auto Points',
+                        data: Object.values(obj),
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.2)',
                             'rgba(54, 162, 235, 0.2)',
@@ -231,10 +227,11 @@
                     }
                 }
             });
-                }
+            
+        }
 
                 
-            });
+    });
 
     ///////////
 
