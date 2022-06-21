@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>5419 Scouting</title>
+    <link rel="shortcut icon" type="image/jpg" href="logo.png"/>
+    <!--<script src="Control.js">update();</script>-->
+    <script src="CollectTeamData.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+    <script src="functions.js"></script>
+</head>
+
+<body>
+
+    <!--home page-->
+
+    <div id="sidenav" class="sidenav">
+
+        <a href="index.html"><img id="logo" src="logo.png" alt="logo"></a>
+        <a href="GetRecentMatch.html">Recent Matches</a>
+        <a href="TeamList.html">Team List</a>
+        <a href="MatchPredictions.php">Match Predictions</a>
+
+    </div>
+
+    <div class="main">
+
+        <div class = "scrollbox"></div>
+
+        <div class="wrapper">
+
+            <!-- list inserted from javascript -->
+
+            <table class="styled-table" style="width:200%">
+                <thead>
+                    <tr>
+                        <th>Team Number</th>
+                        <th>Tele Upper</th>
+                        <th>Auto Upper</th>
+                        <th>Tele Lower</th>
+                        <th>Auto Lower</th>
+                        <th>Tele Points</th>
+                        <th>Auto Points</th>
+                        <th>Climb Points</th>
+                        <th>Max Climb</th>
+                        <th>Climb Percent</th>
+                        <th>Broken Matches</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dom</td>
+                        <td>6000</td>
+                    </tr>
+                    <tr class="active-row">
+                        <td>Melissa</td>
+                        <td>5150</td>
+                    </tr>
+                    <!-- and so on... -->
+                </tbody>
+            </table>
+              
+        </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+<script type="text/javascript">
+
+    var TeamData = null;
+
+    const init = async () => {
+        try {
+            TeamData = await (await fetch("TestData.json")).json();
+            //length = Object.keys(TeamData).length;
+        } catch(e) {
+            console.log(`Could not read file: ${e}`);
+        }
+    }
+
+    init().then(() => {
+
+        if (TeamData != null) {
+            let teamList = [];
+
+            var listItems = '<th></th>';
+
+            for (var i = 0; i < TeamData.length; i++) {
+                for (var j = 0; j < TeamData[i].matches.length; j++) {
+                    obj[TeamData[i].matches[j].number] = TeamData[i].matches[j].aHigh;
+                }
+            }
+
+            for (let i = 0; i < TeamData.length; i++) {
+                listItems += "<th value='" + TeamData[i].number + "'>" + TeamData[i].number + "</th>";
+                teamList.push(TeamData[i].number);
+            }
+
+            $("#teamlist").html(listItems);
+        }
+    });
+
+
+    //option to sort by xyz
+
+</script>
+
+
+</html>

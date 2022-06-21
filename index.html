@@ -9,8 +9,10 @@
     <script src="CollectTeamData.js"></script>
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+    <script src="functions.js"></script>
 </head>
 
 <body>
@@ -21,7 +23,7 @@
 
         <a href="index.html"><img id="logo" src="logo.png" alt="logo"></a>
         <a href="GetRecentMatch.html">Recent Matches</a>
-        <a href="GetTeamData.php">Teams</a>
+        <a href="TeamList.html">Team List</a>
         <a href="MatchPredictions.php">Match Predictions</a>
 
     </div>
@@ -35,7 +37,7 @@
               <div class="autocom-box" onclick="search()">
                 <!-- list inserted from javascript -->
               </div>
-              <div class="icon"><i class="fas fa-search"></i></div>
+              <div class="icon" onclick="search()"><i class="fas fa-search"></i></div>
             </div>
         </div>
 
@@ -54,7 +56,6 @@
 </body>
 
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
 <script type="text/javascript">
 
     var TeamData = null;
@@ -67,34 +68,21 @@
             console.log(`Could not read file: ${e}`);
         }
     }
-    
-    let suggestions = [];
 
     function search() {
         document.getElementById("showhide").style.visibility = "visible";
-        suggestions = [];
-        console.log(input);
-        // //document.querySelector(".search-input") = userData;
-        // searchWrapper.classList.remove("active");
-        // suggBox.innerHTML = "";
-        // var xhttp = new XMLHttpRequest();
-        // xhttp.onreadystatechange = function() {
-        // if (this.readyState == 4 && this.status == 200) {
-        //     document.getElementById("content").innerHTML =
-        //     this.responseText;
-        // }
-        // };
-        // xhttp.open("GET", "index2.html", true);
-        // xhttp.send();
+        suggestions.emptyArray();
+        console.log(input.value);
     }
-
-    
 
     init().then(() => {
 
         if (TeamData != null) {
+
             console.log(TeamData);
-            //console.log(length);
+
+            let suggestions = [];
+
             var listItems = '<option selected="selected" value="0">- Select -</option>';
 
             for (let i = 0; i < TeamData.length; i++) {
@@ -102,14 +90,7 @@
                 suggestions.push(TeamData[i].number);
             }
 
-            // for (var i = 0; i < TeamData.length; i++) {
-            //     listItems += "<option value='" + TeamData[i].number + "'>" + TeamData[i].number + "</option>";
-            //     suggestions.push(TeamData[i].number);
-            // }
-
             $("#teamselect").html(listItems);
-
-            /////////////
 
             // getting all required elements
             const searchWrapper = document.querySelector(".search-input");
@@ -117,29 +98,33 @@
             const suggBox = searchWrapper.querySelector(".autocom-box");
             const icon = searchWrapper.querySelector(".icon");
             
-            // Get the input field
+            // getting the input field
             var input = document.getElementById("input");
 
-            // if user press any key and release
+            var selectedTeam = input;
+
+            // if user presses any key and releases
             inputBox.onkeyup = (e)=>{
                 let userData = e.target.value; // what the user entered
                 let emptyArray = []; 
 
                 if (userData){
-                    // Execute a function when the user presses a key on the keyboard
+                    // execute a function when the user presses a key on the keyboard
                     input.addEventListener("keypress", function(event) {
-                        // If the user presses the "Enter" key on the keyboard
+                        // if the user presses the enter key
                         if (event.key === "Enter") {
+                            suggestions.emptyArray();
                             search();
                         }
                     });
 
                     icon.onclick = ()=> {
+                        suggestions.emptyArray();
                         search();
                     }
 
                     emptyArray = suggestions.filter((data)=>{
-                        //filtering array value and user characters to lowercase and return only those words which are start with user enetered chars
+                        //filtering array value and user characters to lowercase and return only those words which are start with user enetered nums
                         return data.toLocaleLowerCase().startsWith(userData.toLocaleLowerCase());
                     });
 
@@ -153,7 +138,7 @@
                     let allList = suggBox.querySelectorAll("li");
                     
                     for (let i = 0; i < allList.length; i++) {
-                        //adding onclick attribute in all li tag
+                        //adding onclick attribute in all li tags
                         allList[i].setAttribute("onclick", "select(this)");
                     }
                 } else {
@@ -167,18 +152,11 @@
                     userValue = inputBox.value;
                     listData = `<li>${userValue}</li>`;
                 } else {
-                listData = list.join('');
+                    listData = list.join('');
                 }
                 suggBox.innerHTML = listData;
             }
 
-            var matchNums = [];
-            console.log(TeamData[0].matches[0].number);
-            console.log("hi");
-            console.log(TeamData[0].matches[0].aHigh);
-            
-            console.log(document.getElementById("input").value);
-            
             var selectedTeam = "5419";
 
             let obj = {};
@@ -188,8 +166,9 @@
                     for (var j = 0; j < TeamData[i].matches.length; j++) {
                         obj[TeamData[i].matches[j].number] = TeamData[i].matches[j].aHigh;
                     }
-                }
+                } 
             }
+
             console.log(obj);
 
             const ctx = document.getElementById('chart').getContext('2d');
@@ -232,8 +211,6 @@
 
                 
     });
-
-    ///////////
 
 </script>
 

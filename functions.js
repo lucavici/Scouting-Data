@@ -1,26 +1,33 @@
 
-const fs = require("fs");
+//const fs = require("fs");
 
 //to get blue alliance data
 var BlueAlliance = require("bluealliance");
 var tba = new BlueAlliance("wYuAaOjtoanexLjWHUWc1ayVQqKM3MjJ3ZTR7D9HGfRcKjljb075oEwpa7YecosQ");
 
-fs.readFile("./data.json", "utf8", (err, jsonString) => {
+try {
+    TeamData = await (await fetch("data.json")).json();
+    //length = Object.keys(TeamData).length;
+} catch(e) {
+    console.log(`Could not read file: ${e}`);
+}
 
-    if (err) {
-        console.log("Error reading file from disk:", err);
-        return;
-    }
+// fs.readFile("./data.json", "utf8", (err, jsonString) => {
 
-    try {
-        const data = JSON.parse(jsonString);
-        //console.log(data[254][3].AHigh); //test
-    } 
+//     if (err) {
+//         console.log("Error reading file from disk:", err);
+//         return;
+//     }
+
+//     try {
+//         const data = JSON.parse(jsonString);
+//         //console.log(data[254][3].AHigh); //test
+//     } 
     
-    catch (err) {
-        console.log("Error parsing JSON string:", err);
-    }
-});
+//     catch (err) {
+//         console.log("Error parsing JSON string:", err);
+//     }
+// });
 
 class AllianceData {
 
@@ -104,10 +111,10 @@ class AllianceData {
 class MatchData {
 
     constructor (match) {
-        this.match = match;
-        event = await tba.getEvent('casj', 2017); // SVR 2017
-        matches = await tba.getMatchesAtEvent(event);
-        teams = tba.getTeamsInMatch(matches[match]); // 12th match
+        // this.match = match;
+        // event = await tba.getEvent('casj', 2017); // SVR 2017
+        // matches = await tba.getMatchesAtEvent(event);
+        // teams = tba.getTeamsInMatch(matches[match]); // 12th match
         R1 = teams.red[0];
         R2 = teams.red[1];
         R3 = teams.red[2];
