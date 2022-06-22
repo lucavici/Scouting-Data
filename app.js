@@ -13,6 +13,11 @@ const authClient = new google.auth.JWT(
     ["https://www.googleapis.com/auth/spreadsheets"]
 );
 
+
+
+const {getData} = require('./CollectTeamData.js');
+
+
 updateSheet();
 
 async function updateSheet() {
@@ -112,6 +117,7 @@ async function updateSheet() {
 
     }
 
+    getData();
 }
 module.exports = {updateSheet};
 

@@ -1,3 +1,5 @@
+const {updateTeamData} = require('./TeamData');
+
 class CollectTeamData {
     contructor() {
         const fs = require("fs");
@@ -38,6 +40,7 @@ class CollectTeamData {
         }
         console.log('Updated all data (CollectTeamData.js)');
         updateDefendedData();
+        updateTeamData();
     }
 
     //same as above but sorts defenended and not defended
