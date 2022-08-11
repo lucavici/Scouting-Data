@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Scatterplot</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+</head>
+<body>
+
+    <div id="sidenav" class="sidenav">
+
+        <a href="index.html"><img id="logo" src="logo.png" alt="logo"></a>
+        <a href="index.html">Team Info</a>
+        <a href="">Recent Matches</a>
+        <a href="GeneralScatter.html">General Scatter</a>
+        <a href="TeamList.html">Team List</a>
+        <a href="">Match Predictions</a>
+
+
+    </div>
+
+    <div class="main">
+
+        <h1><span class="blue" style="left:280px;"></span>General Scatter</h1><br><br>
+
+        <div style="position:fixed;bottom:30px;right:30px;top:150px;left:280px;overflow-y:hidden;overflow-x:scroll;">
+
+        <canvas id="generalScatterplot"></canvas>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        var TeamData = null;
+
+        const init = async () => {
+            try {
+                TeamData = await (await fetch("TestData.json")).json();
+                //length = Object.keys(TeamData).length;
+            } catch(e) {
+                console.log(`Could not read file: ${e}`);
+            }
+        }
+
+        init().then(() => {
+
+            if (TeamData != null) {
+
+                console.log(TeamData);
+
+            }
+
+            function getRandomColor() {
+                var letters = '0123456789ABCDEF'.split('');
+                var color = '#';
+                for (var i = 0; i < 6; i++ ) {
+                    color += letters[Math.floor(Math.random() * 16)];
+                }
+                return color;
+            }
+
+            ballPointAverages = [];
+            ballPointStandardDeviations = [];
+            storage  = [];
+            labels = [];
+            randomColors = [];
+
+            for (let i = 0; i < TeamData.length; i++) {
+                ballPointAverages.push(TeamData[i].summary.ballPointsAverage);
+                ballPointStandardDeviations.push(TeamData[i].summary.ballPointStandardDeviation);
+                labels.push(TeamData[i].number);
+                randomColors.push(getRandomColor());
+            }
+
+            for (let i = 0; i < TeamData.length; i++) {
+                x = ballPointAverages[i];
+                y = ballPointStandardDeviations[i];
+                var json = {x: x, y: y};
+                storage.push(json); 
+            }
+
+            console.log(storage);
+
+            const data = {
+                datasets: [{
+                    label: 'Data Set', 
+                    labels: labels,
+                    data: storage,
+                    backgroundColor: randomColors,
+                    pointRadius: 5,
+                    borderWidth: 1,
+                }],
+                   
+            };
+
+            const ctx = document.getElementById('generalScatterplot').getContext('2d');
+            const generalScatter = new Chart(ctx, {
+                type: 'scatter',
+                data: data,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(ctx) {
+                                    // console.log(ctx);
+                                    let label = ctx.dataset.labels[ctx.dataIndex];
+                                    label += " (" + ctx.parsed.x + ", " + ctx.parsed.y + ")";
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'Average ball points'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Ball point standard deviation'
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+
+myChart.update();
+
+        
+    </script>
+    
+</body>
+</html>
