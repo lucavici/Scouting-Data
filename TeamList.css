@@ -7,17 +7,6 @@
     font-family: 'Poppins', sans-serif;
 }
 
-.banana {
-  min-height: 100vh;
-  background-color: rgb(29, 25, 58);
-  margin: 0 auto;
-  position:absolute;
-  top:0px;
-  right:0px;
-  bottom:0px;
-  left:0px;
-}
-
 .main {
   padding-left: 300px; 
   padding-top: 30px;
@@ -88,7 +77,7 @@
 }
 
 #searchbutton:hover {
-  background-color: rgb(20, 7, 36);
+  background: rgb(25, 24, 24);
   color: darkgrey;
   font-size: 17px;
   border: slateblue;
@@ -100,17 +89,16 @@
   background: #664AFF;
 }
 .wrapper{
-  max-width: 250px;
+  max-width: 450px;
 }
 .wrapper .search-input{
-  background-color: rgb(29, 25, 58);
+  background: #fff;
   width: 100%;
   border-radius: 5px;
   position: relative;
   box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12);
 }
 .search-input input{
-  background-color: rgb(29, 25, 58);
   height: 55px;
   width: 100%;
   outline: none;
@@ -124,7 +112,6 @@
   border-radius: 5px 5px 0 0;
 }
 .search-input .autocom-box{
-  background-color: rgb(29, 25, 58);
   padding: 0;
   opacity: 0;
   pointer-events: none;
@@ -132,13 +119,11 @@
   overflow-y: auto;
 }
 .search-input.active .autocom-box{
-  background-color: rgb(29, 25, 58);
   padding: 10px 8px;
   opacity: 1;
   pointer-events: auto;
 }
-.autocom-box li {
-  background-color: rgb(29, 25, 58);
+.autocom-box li{
   list-style: none;
   padding: 8px 12px;
   display: none;
@@ -146,15 +131,13 @@
   cursor: default;
   border-radius: 3px;
 }
-.search-input.active .autocom-box li {
-  background-color: rgb(29, 25, 58);
+.search-input.active .autocom-box li{
   display: block;
 }
-.autocom-box li:hover {
-  background-color: rgb(20, 7, 36);
+.autocom-box li:hover{
+  background: #250d30;
 }
 .search-input .icon{
-  background-color: rgb(29, 25, 58);
   position: absolute;
   right: 0px;
   top: 0px;
@@ -172,9 +155,24 @@
   margin: 25px 0;
   font-size: 0.9em;
   font-family: sans-serif;
-  max-width: 100px;
+  min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   column-width: 3000px;
+}
+
+.quickdata {
+  width:1000px; /* or whatever width you want. */
+  max-width:1000px; /* or whatever width you want. */
+  height:500px; /* or whatever width you want. */
+  max-height:500px; /* or whatever width you want. */
+  display: inline-block;
+  position:fixed;
+  bottom:100px;
+  right:60px;
+  top:200px;
+  left:300px;
+  overflow-y: hidden;
+  overflow-x:scroll;
 }
 
 .title {
@@ -194,68 +192,8 @@
   visibility: hidden;
 }
 
-.grid-container-element { 
-  display: grid; 
-  grid-template-columns: 1fr 1fr; 
-  grid-gap: 20px; 
-  width: 100%; 
-  height:100%;
-} 
-.grid-child-element { 
-  margin: 10px; 
-  border: 1px solid red; 
-}
-
-#searchbox-value {
-  visibility: hidden;
-}
-
-.jakob {
-  background-color: rgb(20, 7, 36);
-  border-radius: 10px;
-}
-
-
-.quickData {
-  background-color: rgb(20, 7, 36);
-  overflow-x:scroll;
-  overflow-y:none;
-  margin-top: 50px;
-  height: 50vh;
-  border-radius: 10px;
-}
-
-#dataText {
-  background-color: rgb(20, 7, 36);
-  margin: 20px;
-  text-align: center;
-}
-
-#dataTextTable {
-  background-color: rgb(20, 7, 36);
-  overflow-y:hidden;
-  overflow-x:scroll;
-}
-
-.scoutingSpecific {
-  background-color: rgb(20, 7, 36);
-  border-radius: 10px;
-}
-
-.robotImage {
-  background-color: rgb(20, 7, 36);
-  margin-top: 50px;
-  height: 40vh;
-  border-radius: 10px;
-}
-
-.pitScouting {
-  background-color: rgb(20, 7, 36);
-  border-radius: 10px;
-}
-
 .slideshow-container {
-  background-color: rgb(20, 7, 36);
+  width:1000px; /* or whatever width you want. */
   max-width:500px; /* or whatever width you want. */
   height:450px; /* or whatever width you want. */
   max-height:500px; /* or whatever width you want. */
@@ -264,7 +202,6 @@
 
 /* Slideshow */
 .slideshow {
-  background-color: rgb(20, 7, 36);
   position: relative;
 }
 
@@ -360,14 +297,13 @@ h2 a {
 .container th h1 {
   width: 150px;
   height: 1px;
-  font-weight: bold;
-  font-size: 10pt;
+    font-weight: bold;
+    font-size: 10pt;
   text-align: left;
   color: #185875;
 }
 
 .container td {
-  background-color: rgb(20, 7, 36);
     font-weight: normal;
     font-size: 1em;
   -webkit-box-shadow: 0 2px 2px -2px #0E1119;
@@ -376,17 +312,15 @@ h2 a {
 }
 
 .container {
-  background-color: rgb(20, 7, 36);
-  text-align: left;
-  overflow: hidden;
-  width: 80%;
-  margin: 0 auto;
+    text-align: left;
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
   display: table;
   padding: 0 0 8em 0;
 }
 
 .container td, .container th {
-  background-color: rgb(20, 7, 36);
     padding-bottom: 2%;
     padding-top: 2%;
   padding-left:2%;  
@@ -404,7 +338,6 @@ h2 a {
 @media (max-width: 800px) {
 .container td:nth-child(4),
 .container th:nth-child(4) { display: none; }
-
 }
 
 /* Sortable tables */
@@ -415,29 +348,18 @@ table.sortable thead {
   cursor: default;
 }
 
-#scatterplotwrapper {
-  border: 1px solid red; 
-  border-radius: 10px;
-  top:150px;
-  left:280px;
-  right:50px;
-  bottom:50px;
+/* scatterplot page stuff */
+#generalScatterplot {
+  width:1000px; /* or whatever width you want. */
+  max-width:1000px; /* or whatever width you want. */
+  height:500px; /* or whatever width you want. */
+  max-height:500px; /* or whatever width you want. */
+  display: inline-block;
   position:fixed;
-  background-color: rgb(20, 7, 36);
-  overflow-y:hidden;
+  bottom:100px;
+  right:60px;
+  top:200px;
+  left:300px;
+  overflow-y: hidden;
   overflow-x:scroll;
 }
-
-#generalScatterplot {
-  top:50px;
-  left:50px;
-  right:50px;
-  bottom:50px;
-  margin: 40px;
-}
-
-#slay {
-  background-color: rgb(20, 7, 36);
-}
-
-

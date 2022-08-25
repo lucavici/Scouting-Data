@@ -1,0 +1,97 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+    background-color: rgb(29, 25, 58);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.banana {
+  min-height: 100vh;
+  background-color: rgb(29, 25, 58);
+  margin: 0 auto;
+  position:absolute;
+  top:0px;
+  right:0px;
+  bottom:0px;
+  left:0px;
+}
+
+.main {
+  padding-left: 300px; 
+  padding-top: 30px;
+  white-space: nowrap;
+}
+
+.sidenav {
+    height: 100%;
+    width: 245px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 30px;
+  }
+  
+.sidenav a {
+  background-color: #111;
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 19px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+  font-size: 20px;
+}
+
+#logo {
+  background-color: #111;
+  padding: 7px 8px 25px 50px;
+  width: 75px;
+  transition: 0.5s;
+}
+
+#logo:hover {
+  width: 78px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+#scatterplotwrapper {
+    border: 1px solid red; 
+    border-radius: 10px;
+    top:150px;
+    left:280px;
+    right:50px;
+    bottom:50px;
+    position:fixed;
+    background-color: rgb(20, 7, 36);
+    overflow-y:hidden;
+    overflow-x:scroll;
+}
+
+#generalScatterplot {
+    background-color: rgb(20, 7, 36);
+    top:50px;
+    left:50px;
+    right:50px;
+    bottom:50px;
+    margin: 40px;
+}
+
+#slay {
+  background-color: rgb(20, 7, 36);
+}
+
+

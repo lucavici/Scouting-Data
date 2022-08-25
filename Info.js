@@ -1,5 +1,4 @@
 
-
 // START MOVING GRAPH SLIDES STUFF
 
 var slideIndex = 1;
@@ -31,15 +30,71 @@ function showSlides(n) {
 
 // END MOVING GRAPH SLIDES STUFF
 
-init().then(() => {
-
+function graph() {
     if (TeamData != null) {
 
         console.log(TeamData);
 
         // START GRAPH DISPLAY STUFF
 
-        var selectedTeam = "5419";
+        var selectedTeam = 5419;
+ 
+        // let input = parseInt(document.getElementById("searchbox-value").value);
+
+        // console.log(input);
+
+        // console.log("hi");
+
+        // for (let i = 0; i < TeamData.length; i++) {
+        //     if (TeamData[i].number == input) {
+        //         selectedTeam = TeamData[i].number;
+        //     }
+        // }
+
+        //START QUICK DATA
+
+        var table = document.getElementById("table-content");
+
+        for (var i = 0; i < TeamData.length; i++) {
+            if (TeamData[i].number == selectedTeam) {
+                var row0 = table.insertRow();
+                var row1 = table.insertRow();
+                var row2 = table.insertRow();
+
+                var cells = [[row0.insertCell(), row1.insertCell(), row2.insertCell()], 
+                            [row0.insertCell(), row1.insertCell(), row2.insertCell()],
+                            [row0.insertCell(), row1.insertCell(), row2.insertCell()]];
+
+
+                cells[0][0].innerHTML = "Upper: " + TeamData[i].summary.autoUpperAverage;
+                cells[0][1].innerHTML = "Lower: " + TeamData[i].summary.autoLowerAverage;
+                cells[0][2].innerHTML = "Missed: "+ TeamData[i].summary.autoMissedAverage;
+
+                cells[1][0].innerHTML = "Upper: " + TeamData[i].summary.teleUpperAverage;
+                cells[1][1].innerHTML = "Lower: " + TeamData[i].summary.teleLowerAverage;
+                cells[1][2].innerHTML = "Missed: "+ TeamData[i].summary.teleMissedAverage;
+
+                cells[2][0].innerHTML = "Ball Points Averages: " + TeamData[i].summary.ballPointsAverage;
+                cells[2][1].innerHTML = "Climb Points Averages: " + TeamData[i].summary.climbPointsAverages;
+              
+                cells[2][0].innerHTML = "Ball Sum: " + TeamData[i].summary.ballPointsAverage;
+                cells[2][1].innerHTML = "Climb Points Averages: " + TeamData[i].summary.climbPointsAverages;
+            }
+        }
+        
+        
+        var newTableObject = document.getElementById(table);
+        console.log(newTableObject);
+        
+        onLoad = function(){
+            var newTableObject = document.getElementById(table);
+            //sortable.makeSortable(newTableObject);
+        }
+        
+        // using jQ
+        $(document).ready( onLoad())
+        
+        // END QUICK DATA
 
         let autoHighSuccess = {};
         let autoLowSuccess = {};
@@ -66,6 +121,8 @@ init().then(() => {
                 }
             } 
         }
+
+
 
         console.log(autoHighSuccess);
 
@@ -236,8 +293,10 @@ init().then(() => {
         });
         
     }
+}
+
+    
 
     //END GRAPH DISPLAY STUFF
 
             
-});

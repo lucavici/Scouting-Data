@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" href="logo.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>General Scatterplot</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="GeneralScatter.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
 </head>
 <body>
@@ -22,15 +23,19 @@
 
     </div>
 
+    <div class="banana">
     <div class="main">
 
         <h1><span class="blue" style="left:280px;"></span>General Scatter</h1><br><br>
 
-        <div style="position:fixed;bottom:30px;right:30px;top:150px;left:280px;overflow-y:hidden;overflow-x:scroll;">
+        <div id="scatterplotwrapper">
 
         <canvas id="generalScatterplot"></canvas>
 
         </div>
+
+    </div>
+
 
     </div>
 
@@ -103,6 +108,8 @@
                 type: 'scatter',
                 data: data,
                 options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: {
                             display: false
@@ -139,9 +146,9 @@
                 }
             });
 
-        });
+            generalScatter.update();
 
-myChart.update();
+        });
 
         
     </script>

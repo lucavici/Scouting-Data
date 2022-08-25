@@ -18,16 +18,19 @@ const suggBox = searchWrapper.querySelector(".autocom-box");
 const icon = searchWrapper.querySelector(".icon");
 let linkTag = searchWrapper.querySelector("a");
 
-function select(element){
+function select(element) {
     let selectData = element.textContent;
     inputBox.value = selectData;
     document.getElementById("showhide").style.visibility = "visible";
+    document.getElementById("searchbox-value").value = inputBox.value;
+    document.getElementById("searchbox-value").remove();
     icon.onclick = ()=>{
         document.getElementById("showhide").style.visibility = "visible";
+        document.getElementById("searchbox-value").value = inputBox.value;
     }
     searchWrapper.classList.remove("active");
 }
-function showSuggestions(list){
+function showSuggestions(list) {
     let listData;
     if(!list.length){
         userValue = inputBox.value;
@@ -42,6 +45,8 @@ init().then(() => {
 
     if (TeamData != null) {
 
+        graph();
+
         console.log(TeamData);
 
         let suggestions = [];
@@ -50,14 +55,15 @@ init().then(() => {
             suggestions.push(TeamData[i].number);
         }
 
-        console.log(suggestions);
+        //console.log(suggestions);
 
 
         // if user press any key and release
         inputBox.onkeyup = (e)=>{
+            console.log(inputBox.value);
             let userData = e.target.value; //user enetered data
             let emptyArray = [];
-            if(userData){
+            if (userData){
                 // icon.onclick = ()=>{
                 //     webLink = `https://www.google.com/search?q=${userData}`;
                 //     linkTag.setAttribute("href", webLink);
@@ -78,7 +84,7 @@ init().then(() => {
                     //adding onclick attribute in all li tag
                     allList[i].setAttribute("onclick", "select(this)");
                 }
-            }else{
+            } else {
                 searchWrapper.classList.remove("active"); //hide autocomplete box
             }
         }

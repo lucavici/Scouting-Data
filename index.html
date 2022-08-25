@@ -27,64 +27,117 @@
 
     </div>
 
-    <div class="main">
+    <div class="banana">
 
-        <div class="wrapper">
-            <div class="search-input">
-              <a href="" target="_blank" hidden></a>
-              <input type="text" placeholder="Select team...">
-              <div class="autocom-box">
-                <!-- list inserted from javascript -->
-              </div>
-              <div class="icon"><i class="fas fa-search"></i></div>
+        <div class="main">
+
+            <div class="wrapper">
+                <div class="search-input">
+                <a href="" target="_blank" hidden></a>
+                <input type="text" placeholder="Select team...">
+                <div class="autocom-box">
+                    <!-- list inserted from javascript -->
+                </div>
+                <div class="icon"><i class="fas fa-search"></i></div>
+                </div>
             </div>
-        </div>
 
+            <div id="showhide" class="grid-container-element">
+
+                <div id="searchbox-value">placeholder</div>
+
+                <div class="grid-child-element quickData">
+
+                    <div id = "dataText">
+                        <p id = "slay" >Quick Data</p>
+
+                        <div id="dataTextTable">
         
+                        <table class="sortable container" id="table">
+                            <thead>
+                                <tr>
+                                <th><h1>Auto</h1></th>
+                                <th><h1>Teleop</h1></th>
+                                <th><h1>Points</h1></th>
+                                <th><h1>Misc</h1></th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-content">
 
-        <div id="showhide">
+                            </tbody>
+                            </table>
 
-            <div class="quickData">
+                        </div>
 
-                
+            
+                    </div>
+
+                </div>
+
+                <div class="grid-child-element robotImage">
+
+                    <div id = "dataText">
+                        <p id = "slay">Robot Image</p>
+                    </div>
+
+                </div>
+
+                <div class="grid-child-element jakob">
+
+                    <div id = "dataText">
+
+                        
+
+                    <div class="slideshow-container">
+
+                        <p id = "slay">Game Chart</p>
+
+                        <div class="slideshow" id = "slay" >
+                    
+                            <div class="mySlides">
+                                <h2 class="title">Teleoperated</h2><br>
+                                <canvas id="teleopGraph" height="200px"></canvas>
+                            </div>
+                            
+                            <div class="mySlides">
+                                <h2 class="title">Autonomous</h2><br>
+                                <canvas id="autoGraph" height="200px"></canvas>
+                            </div>
+                            
+                            <div class="mySlides">
+                                <h2 class="title">Traversal</h2><br>
+                                <canvas id="traversalGraph" height="200px"></canvas>
+                            </div>
+                            
+                            <a class="prev" onclick="plusSlides(-1)">❮</a>
+                            <a class="next" onclick="plusSlides(1)">❯</a>
+                        
+                        </div>
+                        
+                        <div class="dot-container">
+                            <span class="dot" onclick="currentSlide(1)"></span> 
+                            <span class="dot" onclick="currentSlide(2)"></span> 
+                            <span class="dot" onclick="currentSlide(3)"></span> 
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
 
-            <div class="slideshow-container">
+                <div class="grid-child-element scoutingSpecific">
 
-                <div class="slideshow">
-            
-                    <div class="mySlides">
-                        <h2 class="title">Teleoperated</h2><br>
-                        <canvas id="teleopGraph" height="200px"></canvas>
+                    <div id = "dataText">
+                        <p id = "slay">Scouting Specific</p>
                     </div>
-                    
-                    <div class="mySlides">
-                        <h2 class="title">Autonomous</h2><br>
-                        <canvas id="autoGraph" height="200px"></canvas>
-                    </div>
-                    
-                    <div class="mySlides">
-                        <h2 class="title">Traversal</h2><br>
-                        <canvas id="traversalGraph" height="200px"></canvas>
-                    </div>
-                    
-                    <a class="prev" onclick="plusSlides(-1)">❮</a>
-                    <a class="next" onclick="plusSlides(1)">❯</a>
-                
+
                 </div>
                 
-                <div class="dot-container">
-                    <span class="dot" onclick="currentSlide(1)"></span> 
-                    <span class="dot" onclick="currentSlide(2)"></span> 
-                    <span class="dot" onclick="currentSlide(3)"></span> 
-                </div>
-
-            </div>
-            
-
             <br><br>
-    
+        
+            </div>
+
         </div>
 
     </div>
@@ -92,7 +145,7 @@
 </body>
 
 <script src="/Searchbar.js"></script>
-<script src="/GraphSlideshow.js"></script> 
+<script src="/Info.js"></script> 
 
 
 </html>
