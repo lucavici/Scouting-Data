@@ -148,22 +148,22 @@ function graph() {
             {
                 label: 'Teleop High',
                 data: Object.values(teleHighSuccess),
-                backgroundColor: backgroundColors,
-                borderColor: borderColors,
+                backgroundColor: 'green',
+                borderColor: 'green',
                 borderWidth: 1,
             },
             {
                 label: 'Teleop Low',
                 data: Object.values(teleLowSuccess),
-                backgroundColor: backgroundColors,
-                borderColor: borderColors,
+                backgroundColor: 'yellow',
+                borderColor: 'yellow',
                 borderWidth: 1,
             },
             {
                 label: 'Teleop Fail',
                 data: Object.values(teleFail),
-                backgroundColor: backgroundColors,
-                borderColor: borderColors,
+                backgroundColor: 'red',
+                borderColor: 'red',
                 borderWidth: 1,
             }
                 
@@ -191,7 +191,7 @@ function graph() {
                 label: 'Auto Fail',
                 data: Object.values(autoFail),
                 backgroundColor: backgroundColors,
-                borderColor: borderColors,
+                borderColor: backgroundColors,
                 borderWidth: 1,
             }
                 
@@ -232,6 +232,7 @@ function graph() {
             data: teleop,
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'bottom',
