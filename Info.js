@@ -1,4 +1,9 @@
 
+//drivetrain type
+//swerve/not sweve
+
+//where do they start/ avg auto
+
 // START MOVING GRAPH SLIDES STUFF
 
 var slideIndex = 1;
@@ -63,6 +68,7 @@ function graph() {
 
                 var cells = [[row0.insertCell(), row1.insertCell(), row2.insertCell()], 
                             [row0.insertCell(), row1.insertCell(), row2.insertCell()],
+                            [row0.insertCell(), row1.insertCell(), row2.insertCell()],
                             [row0.insertCell(), row1.insertCell(), row2.insertCell()]];
 
 
@@ -77,8 +83,8 @@ function graph() {
                 cells[2][0].innerHTML = "Ball Points Averages: " + TeamData[i].summary.ballPointsAverage;
                 cells[2][1].innerHTML = "Climb Points Averages: " + TeamData[i].summary.climbPointsAverages;
               
-                cells[2][0].innerHTML = "Ball Sum: " + TeamData[i].summary.ballPointsAverage;
-                cells[2][1].innerHTML = "Climb Points Averages: " + TeamData[i].summary.climbPointsAverages;
+                cells[3][0].innerHTML = "Ball Sum: " + TeamData[i].summary.ballSum;
+                cells[3][1].innerHTML = "Best Climb: " + TeamData[i].summary.bestClimb;
             }
         }
         
@@ -103,6 +109,12 @@ function graph() {
         let teleHighSuccess = {};
         let teleLowSuccess = {};
         let teleFail = {};
+
+        let ballPoints = {};
+        let climb = {};
+        let ballSum = {};
+        let bestClimb = {};
+
 
         let climbAttempted = {};
         let climbActual = {};
