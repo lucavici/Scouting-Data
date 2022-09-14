@@ -1,21 +1,8 @@
-// const {getAllData} = require('./CollectTeamData');
-// const {getDefendedData} = require('./CollectTeamData');
-// const {getNotDefendedData} = require('./CollectTeamData');
-// const {getData} = require('./CollectTeamData');
+function updateTeamData(allData_, defendedData_, notDefendedData_){
 
-//import CollectTeamData from "./CollectTeamData.js";
-
-const TeamData = new CollectTeamData();
-
-let allData =  TeamData.getAllData();
-let defendedData = TeamData.getDefendedData();
-let notDefendedData = TeamData.getNotDefendedData();
-
-function updateTeamData(){
-
-    allData = getAllData();
-    defendedData = getDefendedData();
-    notDefendedData = getNotDefendedData();
+    allData = allData_;
+    defendedData = defendedData_;
+    notDefendedData = notDefendedData_;
 
     updateAverageAutoBalls();
     updateAverageAutoScore();
