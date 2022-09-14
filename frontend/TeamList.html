@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="logo.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team List</title>
+    <script src="sorttable.js"></script>
+    <link rel="stylesheet" href="TeamList.css">
+</head>
+<body onload = "onload()">
+
+    <div id="sidenav" class="sidenav">
+
+        <a href="index.html"><img id="logo" src="logo.png" alt="logo"></a>
+        <a href="index.html">Team Info</a>
+        <a href="">Recent Matches</a>
+        <a href="GeneralScatter.html">General Scatter</a>
+        <a href="TeamList.html">Team List</a>
+        <a href="">Match Predictions</a>
+
+    </div>
+
+    <div class ="banana">
+
+    <div class="main">
+
+        <h1><span class="blue"></span>Team List</h1>
+        
+        <div style="position:fixed;bottom:30px;right:30px;top:150px;left:280px;overflow-y:scroll;overflow-x:scroll;">
+            <table class="sortable container" id="table">
+              <thead>
+                <tr>
+                  <th><h1>Team number</h1></th>
+                  <th><h1>Tele upper</h1></th>
+                  <th><h1>Ball sum</h1></th>
+                  <th><h1>Ball points</h1></th>
+                  <th><h1>Climb points</h1></th>
+                  <th><h1>Max climb</h1></th>
+                  <th><h1>Climb percent</h1></th>
+                  <th><h1>Broken matches</h1></th>
+                </tr>
+              </thead>
+              <tbody id="table-content">
+
+              </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+    </div>
+
+    <script>
+
+        var TeamData = null;
+
+        const init = async () => {
+            try {
+                TeamData = await (await fetch("TestData.json")).json();
+                //length = Object.keys(TeamData).length;
+            } catch(e) {
+                console.log(`Could not read file: ${e}`);
+            }
+        }
+
+        init().then(() => {
+
+            if (TeamData != null) {
+
+                console.log(TeamData);
+
+            }
+
+            var table = document.getElementById("table-content");
+
+            //console.log(TeamData[0].summary.ballPointsAverage);
+
+            for (let i = 0; i < TeamData.length; i++) {
+                var row = table.insertRow(i);
+                var cell0 = row.insertCell();
+                var cell1 = row.insertCell();
+                var cell2 = row.insertCell();
+                var cell3 = row.insertCell();
+                var cell4 = row.insertCell();
+                var cell5 = row.insertCell();
+                var cell6 = row.insertCell();
+                var cell7 = row.insertCell();
+                cell0.innerHTML = TeamData[i].number;
+                cell1.innerHTML = TeamData[i].summary.teleUpperAverage;
+                cell2.innerHTML = TeamData[i].summary.ballSum;
+                cell3.innerHTML = TeamData[i].summary.ballPointsAverage;
+                cell4.innerHTML = TeamData[i].summary.climbPointsAverages;
+                cell5.innerHTML = TeamData[i].summary.maxClimb;
+                cell6.innerHTML = TeamData[i].summary.climbPercent;
+                cell7.innerHTML = TeamData[i].summary.brokenMatches;
+            }
+
+            var newTableObject = document.getElementById(table);
+            console.log(newTableObject);
+
+            onLoad = function(){
+                var newTableObject = document.getElementById(table);
+                sorttable.makeSortable(newTableObject);
+            }
+
+            // using jQ
+            $(document).ready( onLoad())
+
+            //sorttable.makeSortable(document.getElementById('table'));
+
+        });
+
+    </script>
+
+
+
+</body>
+</html>

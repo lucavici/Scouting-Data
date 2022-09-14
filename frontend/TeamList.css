@@ -1,0 +1,365 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+    background-color: rgb(29, 25, 58);
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
+.main {
+  padding-left: 300px; 
+  padding-top: 30px;
+  white-space: nowrap;
+}
+
+.sidenav {
+    height: 100%;
+    width: 245px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 30px;
+  }
+  
+.sidenav a {
+  background-color: #111;
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 19px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+  font-size: 20px;
+}
+
+#logo {
+  background-color: #111;
+  padding: 7px 8px 25px 50px;
+  width: 75px;
+  transition: 0.5s;
+}
+
+#logo:hover {
+  width: 78px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+#search {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border-style: solid;
+}
+
+#searchbutton {
+  padding: 6px;
+  margin-top: 8px;
+  margin-right: 16px;
+  height: 35px;
+  background: rgb(56, 52, 52);
+  color: white;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+#searchbutton:hover {
+  background: rgb(25, 24, 24);
+  color: darkgrey;
+  font-size: 17px;
+  border: slateblue;
+  cursor: pointer;
+}
+
+::selection{
+  color: #fff;
+  background: #664AFF;
+}
+.wrapper{
+  max-width: 450px;
+}
+.wrapper .search-input{
+  background: #fff;
+  width: 100%;
+  border-radius: 5px;
+  position: relative;
+  box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.12);
+}
+.search-input input{
+  height: 55px;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  padding: 0 60px 0 20px;
+  font-size: 18px;
+  box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
+}
+.search-input.active input{
+  border-radius: 5px 5px 0 0;
+}
+.search-input .autocom-box{
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  max-height: 280px;
+  overflow-y: auto;
+}
+.search-input.active .autocom-box{
+  padding: 10px 8px;
+  opacity: 1;
+  pointer-events: auto;
+}
+.autocom-box li{
+  list-style: none;
+  padding: 8px 12px;
+  display: none;
+  width: 100%;
+  cursor: default;
+  border-radius: 3px;
+}
+.search-input.active .autocom-box li{
+  display: block;
+}
+.autocom-box li:hover{
+  background: #250d30;
+}
+.search-input .icon{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  height: 55px;
+  width: 55px;
+  text-align: center;
+  line-height: 55px;
+  font-size: 20px;
+  color: #644bff;
+  cursor: pointer;
+}
+
+.styled-table {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  column-width: 3000px;
+}
+
+.quickdata {
+  width:1000px; /* or whatever width you want. */
+  max-width:1000px; /* or whatever width you want. */
+  height:500px; /* or whatever width you want. */
+  max-height:500px; /* or whatever width you want. */
+  display: inline-block;
+  position:fixed;
+  bottom:100px;
+  right:60px;
+  top:200px;
+  left:300px;
+  overflow-y: hidden;
+  overflow-x:scroll;
+}
+
+.title {
+  color: grey;
+  font-size: 15px;
+}
+
+#teleopGraph, #autoGraph, #traversalGraph {
+  width:250px; /* or whatever width you want. */
+  max-width:400px; /* or whatever width you want. */
+  height:1000px; /* or whatever width you want. */
+  max-height:1200px; /* or whatever width you want. */
+  display: inline-block;
+}
+
+#showhide {
+  visibility: hidden;
+}
+
+.slideshow-container {
+  width:1000px; /* or whatever width you want. */
+  max-width:500px; /* or whatever width you want. */
+  height:450px; /* or whatever width you want. */
+  max-height:500px; /* or whatever width you want. */
+  display: inline-block;
+}
+
+/* Slideshow */
+.slideshow {
+  position: relative;
+}
+
+/* Slides */
+.mySlides {
+  display: none;
+  padding: 80px;
+  text-align: center;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -30px;
+  padding: 16px;
+  color: #888;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  position: absolute;
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+  color: white;
+}
+
+/* The dot/bullet/indicator container */
+.dot-container {
+    text-align: center;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 10px;
+  width: 10px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+/* Add a background color to the active dot/circle */
+.active, .dot:hover {
+  background-color: #717171;
+}
+ 
+
+/* teamlist page css */
+
+
+
+h1 {
+  font-size:3em; 
+  font-weight: 300;
+  line-height:1em;
+  color: #4DC3FA;
+}
+
+h2 {
+  font-size:1em; 
+  font-weight: 300;
+  text-align: center;
+  display: block;
+  line-height:1em;
+  padding-bottom: 2em;
+  color: #FB667A;
+}
+
+h2 a {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #FB667A;
+  text-decoration: none;
+}
+
+.blue { color: #185875; }
+.yellow { color: #FFF842; }
+
+.container th h1 {
+  width: 150px;
+  height: 1px;
+    font-weight: bold;
+    font-size: 10pt;
+  text-align: left;
+  color: #185875;
+}
+
+.container td {
+    font-weight: normal;
+    font-size: 1em;
+  -webkit-box-shadow: 0 2px 2px -2px #0E1119;
+     -moz-box-shadow: 0 2px 2px -2px #0E1119;
+          box-shadow: 0 2px 2px -2px #0E1119;
+}
+
+.container {
+    text-align: left;
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
+  display: table;
+  padding: 0 0 8em 0;
+}
+
+.container td, .container th {
+    padding-bottom: 2%;
+    padding-top: 2%;
+  padding-left:2%;  
+}
+
+.container td:first-child { color: #FB667A; }
+
+.container tr:hover {
+   background-color: #464A52;
+-webkit-box-shadow: 0 6px 6px -6px #0E1119;
+     -moz-box-shadow: 0 6px 6px -6px #0E1119;
+          box-shadow: 0 6px 6px -6px #0E1119;
+}
+
+@media (max-width: 800px) {
+.container td:nth-child(4),
+.container th:nth-child(4) { display: none; }
+}
+
+/* Sortable tables */
+table.sortable thead {
+  background-color:#eee;
+  color:#666666;
+  font-weight: bold;
+  cursor: default;
+}
+
+/* scatterplot page stuff */
+#generalScatterplot {
+  width:1000px; /* or whatever width you want. */
+  max-width:1000px; /* or whatever width you want. */
+  height:500px; /* or whatever width you want. */
+  max-height:500px; /* or whatever width you want. */
+  display: inline-block;
+  position:fixed;
+  bottom:100px;
+  right:60px;
+  top:200px;
+  left:300px;
+  overflow-y: hidden;
+  overflow-x:scroll;
+}
