@@ -1,4 +1,4 @@
-/*const fs = require("fs");
+const fs = require("fs");
 
 let data;
 try{
@@ -258,4 +258,3 @@ for (const [key, value] of Object.entries(data)){
     }
     
 }
-*/
