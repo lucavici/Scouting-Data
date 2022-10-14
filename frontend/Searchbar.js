@@ -4,7 +4,7 @@ var TeamData = null;
 
 const init = async () => {
     try {
-        TeamData = await (await fetch("TestData.json")).json();
+        TeamData = await (await fetch("json.json")).json();
         //length = Object.keys(TeamData).length;
     } catch(e) {
         console.log(`Could not read file: ${e}`);
